@@ -2,384 +2,1043 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#123d68">
-<title>PENCAPAIAN PRODUKSI FLATBED PRINT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#075985">
+<title>PENCAPAIAN PRODUKSI</title>
+
 <style>
-:root{--navy:#123d68;--blue:#2676a9;--line:#cfdae5;--ink:#18354e}
+:root{
+  --biru:#075985;
+  --biru2:#0284c7;
+  --gelap:#082f49;
+  --emas:#f4d28a;
+  --latar:#eaf2f8;
+  --putih:#ffffff;
+  --garis:#b8cedd;
+  --hijau:#15803d;
+  --merah:#b91c1c;
+}
+
 *{box-sizing:border-box}
-body{margin:0;padding:10px;background:#e8eff5;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-.page{max-width:1500px;margin:auto}
-.hero{padding:22px 10px 19px;text-align:center;color:#fff;border-radius:14px;background:linear-gradient(135deg,#0b2745,#18588c,#2879ac);border-bottom:4px solid #e9c16c;box-shadow:0 5px 14px #123d6830}
-.hero h1{margin:0;font-size:clamp(18px,3.8vw,30px);font-weight:900}
-.hero p{margin:8px 0 0;font-size:clamp(11px,2.4vw,15px);letter-spacing:1px;font-weight:bold;color:#e4f2ff}
-.card{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 3px 10px #123d6810}
-.filter-head,.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;background:#f4f8fb}
-.status{font-size:12px;font-weight:bold;min-width:0}.summary{font-weight:normal;color:#60788d;display:block;margin-top:3px}
-button{border:0;border-radius:8px;padding:10px 12px;font-size:12px;font-weight:bold;cursor:pointer}
-.primary{background:linear-gradient(135deg,#174d7c,#287bb1);color:#fff}.light{background:#eaf1f7;color:#174d7c;border:1px solid #d1deea}.danger{background:#fff0ef;color:#a52828;border:1px solid #f0ceca}
-.filter-body{padding:13px;border-top:1px solid #e1e9f0}.hidden{display:none!important}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
-.field label{display:block;margin-bottom:6px;font-size:11px;font-weight:bold;color:#526d83;text-transform:uppercase}
-.field input,.field select{width:100%;min-width:0;height:39px;padding:0 9px;border:1px solid #cbd9e6;border-radius:8px;background:#fff;color:#18354e;font-size:13px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
-.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}
-.metric{padding:12px 10px;border:1px solid #d0dfeb;border-radius:11px;background:linear-gradient(145deg,#fff,#edf5fb)}
-.metric .label{font-size:10px;font-weight:bold;color:#60798f}.metric .value{font-size:clamp(19px,4vw,27px);font-weight:900;color:#174d7c;margin-top:7px;overflow-wrap:anywhere}.metric .unit{font-size:10px;color:#70869a}
-.section-head h2{font-size:13px;margin:0;color:#123d68}.section-head small{font-size:10px;color:#60798f}
-.table-wrap{overflow-x:auto;width:100%}table{border-collapse:separate;border-spacing:0;width:100%;min-width:790px;font-size:12px}
-thead th{padding:11px 8px;text-align:center;white-space:nowrap;color:#fff;background:linear-gradient(180deg,#245e8e,#123d68);border-right:1px solid #ffffff25;border-bottom:1px solid #0c2e4e}
-thead tr:nth-child(2) th{background:#1b507d;padding:8px}
-tbody td{padding:12px 9px;text-align:center;white-space:nowrap;border-right:1px solid #dce6ef;border-bottom:1px solid #dce6ef}
-tbody tr:nth-child(even){background:#f1f6fa}tbody td:first-child{text-align:left;font-weight:bold;color:#174d7c}
-.total-cell{background:#dcecf8!important;color:#123d68;font-weight:900}.target-cell{background:#fff0ce!important;color:#79521b;font-weight:900}
-.total-row td{background:#d9e8f4!important;color:#123d68!important;font-weight:900;border-top:2px solid #7398b8}.total-row td.target-cell{background:#ffedc6!important}
-.rank{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;background:#e7edf3;color:#466078;font-weight:900}.rank.r1{background:#ffe3a0;color:#704600}.rank.r2{background:#e0e8ef;color:#405467}.rank.r3{background:#f3d4bd;color:#7b4527}
-.loading,.empty{padding:25px;text-align:center;color:#71879a}.error{padding:12px;margin:10px;background:#fff0ef;color:#a52828;border:1px solid #f0ceca;border-radius:8px;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}
-.note{padding:11px 12px;background:#f5f8fb;border-top:1px solid #e1e9f0;color:#617b91;font-size:10px;line-height:1.6}
-.target-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-@media(max-width:650px){body{padding:7px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{gap:6px}.metric{padding:9px 7px}.metric .label{font-size:9px}.target-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.filter-head,.section-head{padding:9px}}
-@media(max-width:360px){.grid,.metrics{grid-template-columns:1fr}}
+
+body{
+  margin:0;
+  padding:12px;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#dceaf5,#f4f7fb);
+  color:#17344a;
+}
+
+.container{
+  max-width:1400px;
+  margin:auto;
+}
+
+.header{
+  padding:23px 15px;
+  text-align:center;
+  color:white;
+  border-radius:17px;
+  background:linear-gradient(145deg,#0369a1,#075985 55%,#082f49);
+  box-shadow:0 6px 15px #0002,inset 0 1px 1px #ffffff70;
+  border:1px solid #ffffff70;
+}
+
+.header h1{
+  margin:0;
+  font-size:clamp(21px,5vw,32px);
+  font-weight:900;
+  text-shadow:0 2px 3px #0005;
+}
+
+.header p{
+  margin:9px 0 0;
+  font-size:13px;
+  color:#e0f2fe;
+}
+
+.toolbar{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.panel{
+  background:white;
+  border:1px solid var(--garis);
+  border-radius:12px;
+  padding:13px;
+  box-shadow:0 3px 9px #0c4a6e12;
+}
+
+.panel label{
+  display:block;
+  font-weight:800;
+  font-size:13px;
+  margin-bottom:8px;
+  color:var(--gelap);
+}
+
+select,input,button{
+  font-family:inherit;
+  font-size:14px;
+}
+
+select,input{
+  width:100%;
+  padding:11px;
+  border:1px solid #9bb7c9;
+  border-radius:8px;
+  background:white;
+  color:#12334a;
+  outline-color:var(--biru2);
+}
+
+button{
+  border:0;
+  border-radius:8px;
+  padding:11px 14px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.btn-primary{
+  background:linear-gradient(145deg,#0284c7,#075985);
+  color:white;
+  box-shadow:0 3px 7px #07598535;
+}
+
+.btn-secondary{
+  background:#e0f2fe;
+  color:#075985;
+  border:1px solid #bae6fd;
+}
+
+.btn-save{
+  background:#166534;
+  color:white;
+}
+
+.button-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+
+.status{
+  margin-top:12px;
+  padding:11px 13px;
+  border-radius:9px;
+  background:#fff;
+  border:1px solid var(--garis);
+  font-size:13px;
+  line-height:1.5;
+  overflow-wrap:anywhere;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:13px;
+}
+
+.card{
+  border-radius:12px;
+  padding:15px 10px;
+  color:white;
+  text-align:center;
+  background:linear-gradient(145deg,#0284c7,#075985,#082f49);
+  box-shadow:0 4px 9px #0002,inset 0 1px 1px #ffffff55;
+}
+
+.card .caption{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.5px;
+  color:#dbeafe;
+}
+
+.card .number{
+  margin-top:9px;
+  font-size:clamp(17px,4.5vw,27px);
+  font-weight:900;
+  overflow-wrap:anywhere;
+}
+
+.card .unit{
+  font-size:11px;
+  margin-top:5px;
+  color:#e0f2fe;
+}
+
+.table-panel{
+  margin-top:14px;
+  background:white;
+  border:1px solid var(--garis);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 12px #0c4a6e12;
+}
+
+.table-title{
+  padding:14px;
+  color:white;
+  font-size:16px;
+  font-weight:900;
+  text-align:center;
+  background:linear-gradient(145deg,#0369a1,#082f49);
+}
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+}
+
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:650px;
+}
+
+thead th{
+  background:#d8eaf5;
+  color:#082f49;
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+  padding:12px 9px;
+  border:1px solid #a8c4d5;
+  white-space:nowrap;
+}
+
+tbody td{
+  border:1px solid #c4d7e2;
+  padding:11px 9px;
+  text-align:center;
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+tbody tr:nth-child(even){
+  background:#f0f7fb;
+}
+
+tbody tr:hover{
+  background:#e0f2fe;
+}
+
+.mc-name{
+  color:#075985;
+  font-weight:900;
+}
+
+.target-input{
+  width:110px;
+  min-width:90px;
+  text-align:right;
+  font-weight:800;
+  padding:9px 7px;
+}
+
+.percent{
+  font-weight:900;
+  color:#075985;
+}
+
+.progress{
+  height:7px;
+  min-width:60px;
+  margin-top:6px;
+  border-radius:20px;
+  background:#dbeafe;
+  overflow:hidden;
+}
+
+.progress div{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#22c55e,#15803d);
+  border-radius:20px;
+}
+
+.total-row{
+  background:#c9e4f3 !important;
+  color:#082f49;
+  font-weight:900;
+}
+
+.total-row td{
+  padding:14px 9px;
+  font-size:13px;
+  border:1px solid #8db5cc;
+}
+
+.negative{color:var(--merah)}
+.positive{color:var(--hijau)}
+
+.empty{
+  padding:25px 12px;
+  text-align:center;
+  color:#64748b;
+  font-weight:700;
+  white-space:normal;
+}
+
+.footer{
+  text-align:center;
+  font-size:11px;
+  color:#526b7d;
+  padding:17px 5px 8px;
+}
+
+@media(max-width:600px){
+  body{padding:8px}
+  .toolbar{grid-template-columns:1fr}
+  .cards{gap:7px}
+  .card{padding:12px 5px}
+  .card .caption{font-size:10px}
+  .header{padding:20px 10px}
+  tbody td{padding:10px 7px}
+}
+
+@media(min-width:900px){
+  .toolbar{grid-template-columns:1.3fr 1fr 1fr}
+}
 </style>
 </head>
+
 <body>
-<div class="page">
-<header class="hero">
-<h1>PENCAPAIAN PRODUKSI FLATBED PRINT</h1>
-<p>DEPARTEMEN PRINTING PT BEHAESTEX</p>
-</header>
+<div class="container">
 
-<section class="card">
- <div class="filter-head">
-  <div class="status">FILTER PRODUKSI <span id="filterSummary" class="summary">Semua data</span></div>
-  <button id="toggleFilter" class="primary">BUKA FILTER</button>
- </div>
- <div id="filterBody" class="filter-body hidden">
-  <div class="grid">
-   <div class="field"><label for="dateFrom">Tanggal dari</label><input type="date" id="dateFrom"></div>
-   <div class="field"><label for="dateTo">Tanggal sampai</label><input type="date" id="dateTo"></div>
-   <div class="field"><label for="groupFilter">Grup</label><select id="groupFilter"><option value="">Semua grup</option><option value="A">Grup A</option><option value="B">Grup B</option><option value="C">Grup C</option></select></div>
-   <div class="field"><label for="machineFilter">Mesin</label><select id="machineFilter"><option value="">Semua mesin</option></select></div>
-   <div class="field"><label for="motifFilter">Motif</label><select id="motifFilter"><option value="">Semua motif</option></select></div>
-   <div class="field"><label for="blockFilter">Blok</label><select id="blockFilter"><option value="">Semua blok</option></select></div>
-   <div class="field"><label for="productFilter">Kode produk</label><select id="productFilter"><option value="">Semua kode produk</option></select></div>
+  <header class="header">
+    <h1>PENCAPAIAN PRODUKSI</h1>
+    <p>MONITORING TARGET DAN AKTUAL PER MESIN</p>
+  </header>
+
+  <section class="toolbar">
+
+    <div class="panel">
+      <label for="filterMC">FILTER MESIN (MC)</label>
+      <select id="filterMC" multiple size="4"
+        aria-label="Pilih satu atau beberapa mesin MC">
+      </select>
+      <div class="button-row">
+        <button class="btn-secondary" id="btnFirst">
+          PILIH MC PERTAMA
+        </button>
+        <button class="btn-secondary" id="btnClear">
+          KOSONGKAN
+        </button>
+      </div>
+      <div style="font-size:11px;color:#64748b;margin-top:8px">
+        Tekan Ctrl saat memilih beberapa mesin di PC.
+        Di HP, pilih mesin yang diinginkan.
+      </div>
+    </div>
+
+    <div class="panel">
+      <label for="filterTanggal">TANGGAL PRODUKSI</label>
+      <input type="date" id="filterTanggal">
+      <div class="button-row">
+        <button class="btn-primary" id="btnRefresh">
+          MUAT DATA
+        </button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <label>KELOLA TARGET PRODUKSI</label>
+      <div style="font-size:12px;line-height:1.6;color:#526b7d">
+        Isi target di kolom TARGET setiap MC.
+        Klik SIMPAN TARGET untuk menyimpan di browser ini.
+      </div>
+      <div class="button-row">
+        <button class="btn-save" id="btnSave">
+          SIMPAN TARGET
+        </button>
+        <button class="btn-secondary" id="btnReset">
+          RESET TARGET
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="status" id="status">
+    Menyiapkan dashboard...
   </div>
-  <div class="actions">
-   <button id="applyFilter" class="primary">TERAPKAN FILTER</button>
-   <button id="resetFilter" class="danger">RESET SEMUA</button>
-   <button id="cancelFilter" class="light">BATAL</button>
+
+  <section class="cards">
+    <div class="card">
+      <div class="caption">JUMLAH MC TAMPIL</div>
+      <div class="number" id="cardMC">0</div>
+      <div class="unit">MESIN TERFILTER</div>
+    </div>
+
+    <div class="card">
+      <div class="caption">TOTAL TARGET</div>
+      <div class="number" id="cardTarget">0</div>
+      <div class="unit">UNIT TARGET</div>
+    </div>
+
+    <div class="card">
+      <div class="caption">TOTAL AKTUAL</div>
+      <div class="number" id="cardAktual">0</div>
+      <div class="unit">UNIT PRODUKSI</div>
+    </div>
+  </section>
+
+  <section class="table-panel">
+    <div class="table-title">
+      RINCIAN PENCAPAIAN PER MC
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>NO</th>
+            <th>MC</th>
+            <th>TARGET</th>
+            <th>AKTUAL</th>
+            <th>SELISIH</th>
+            <th>PENCAPAIAN</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td colspan="6" class="empty">
+              Memuat data produksi...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="footer">
+    PENCAPAIAN PRODUKSI • TARGET TERSIMPAN DI BROWSER
   </div>
- </div>
-</section>
 
-<section class="metrics">
- <div class="metric"><div class="label">TOTAL PRODUKSI</div><div class="value" id="metricPcs">0</div><div class="unit">PCS</div></div>
- <div class="metric"><div class="label">TOTAL PENCAPAIAN</div><div class="value" id="metricKd">0</div><div class="unit">KD</div></div>
- <div class="metric"><div class="label">TOTAL TARGET</div><div class="value" id="metricTarget">0</div><div class="unit">KD</div></div>
-</section>
-
-<section class="card">
- <div class="section-head"><h2>REKAP PENCAPAIAN PRODUKSI</h2><small id="dataInfo">Memuat data...</small></div>
- <div id="loading" class="loading">Menghubungkan ke Apps Script...</div>
- <div id="errorBox" class="error hidden"></div>
- <div class="table-wrap">
-  <table>
-   <thead><tr><th rowspan="2">MESIN</th><th rowspan="2">GRUP A<br>(PCS)</th><th rowspan="2">GRUP B<br>(PCS)</th><th rowspan="2">GRUP C<br>(PCS)</th><th rowspan="2">TOTAL<br>(KD)</th><th rowspan="2">TARGET<br>(KD)</th><th colspan="3">RANKING</th></tr><tr><th>A</th><th>B</th><th>C</th></tr></thead>
-   <tbody id="tableBody"><tr><td colspan="9" class="empty">Memuat data...</td></tr></tbody>
-  </table>
- </div>
- <div class="note">Grup A, B, C ditampilkan dalam PCS. TOTAL dan TARGET dalam KD. Ranking 1, 2, 3 ditentukan dari produksi tertinggi pada masing-masing grup. Periksa standar konversi KD pada konfigurasi sebelum digunakan sebagai laporan resmi.</div>
-</section>
-
-<section class="card">
- <div class="section-head"><h2>PENGATURAN TARGET & TANGGAL MULAI MESIN</h2><button id="toggleTarget" class="light">BUKA PENGATURAN</button></div>
- <div id="targetBody" class="filter-body hidden">
-  <div id="targetGrid" class="target-grid"></div>
-  <div class="note">Target diisi dalam KD per hari. Tanggal mulai setiap mesin dapat berbeda. Pengaturan tersimpan di browser ini. Hari Minggu tidak dihitung sebagai hari kerja. Jika tanggal mulai kosong, target dihitung mulai tanggal pertama data mesin yang masuk filter.</div>
-  <div class="actions"><button id="saveTargets" class="primary">SIMPAN TARGET</button><button id="defaultTargets" class="light">KEMBALIKAN TARGET AWAL</button></div>
- </div>
-</section>
 </div>
 
 <script>
 "use strict";
 
-/* KONFIGURASI */
-const API_URL="https://script.google.com/macros/s/AKfycbwJ9bH0_V1p--6hRJqXO7yi2k4GY4jLfONJMGxIGcqfh8UmLTxphSNFhAY9ifdFhCpnag/exec?action=flat";
-// Pastikan rasio PCS per KD sesuai standar departemen.
-const PCS_PER_KD=20;
-const INCLUDE_SUNDAY=false;
-const FILTER_KEY="FLATBED_FILTER_V1";
-const TARGET_KEY="FLATBED_TARGET_V1";
-const DEFAULT_TARGETS={
- "FLAT 1":{kd:100,start:""},"FLAT 2":{kd:100,start:""},
- "FLAT 3":{kd:100,start:""},"FLAT 4":{kd:100,start:""},
- "FLAT 5":{kd:133,start:""},"FLAT 6":{kd:133,start:""},
- "FLAT 7":{kd:133,start:""}
-};
-const MACHINES=Object.keys(DEFAULT_TARGETS);
-let allData=[],currentFilters=emptyFilters(),draftFilters=emptyFilters(),targets=loadTargets();
+/* =====================================================
+   KONFIGURASI
+   ===================================================== */
 
-function $(id){return document.getElementById(id)}
-function emptyFilters(){return {from:"",to:"",group:"",machine:"",motif:"",block:"",product:""}}
-function str(v){return String(v??"").trim()}
-function norm(v){return str(v).toLowerCase().replace(/[\s_-]+/g,"")}
-function first(obj,aliases){
- if(!obj||typeof obj!=="object")return "";
- const ks=Object.keys(obj);
- for(const a of aliases){const k=ks.find(x=>norm(x)===norm(a));if(k!==undefined&&obj[k]!==""&&obj[k]!=null)return obj[k]}
- return "";
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwJ9bH0_V1p--6hRJqXO7yi2k4GY4jLfONJMGxIGcqfh8UmLTxphSNFhAY9ifdFhCpnag/exec?action=flat";
+
+const STORAGE_KEY = "TARGET_PENCAPAIAN_MC_V1";
+
+/*
+  Target tidak diisi otomatis.
+  Bos mengisi sendiri sesuai target masing-masing MC.
+*/
+
+let dataProduksi = [];
+let daftarMC = [];
+let targetMC = bacaTarget();
+let loading = false;
+
+const $ = id => document.getElementById(id);
+
+function bacaTarget(){
+  try{
+    const value = localStorage.getItem(STORAGE_KEY);
+    return value ? JSON.parse(value) : {};
+  }catch(e){
+    return {};
+  }
 }
-function number(v){
- if(typeof v==="number")return Number.isFinite(v)?v:0;
- if(v==null||v==="")return 0;
- let s=str(v);
- if(/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(s))s=s.replace(/\./g,"").replace(",",".");
- else if(/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s))s=s.replace(/,/g,"");
- else s=s.replace(",",".");
- const n=Number(s);return Number.isFinite(n)?n:0;
+
+function simpanTarget(){
+  try{
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(targetMC)
+    );
+    setStatus(
+      "Target berhasil disimpan di browser ini."
+    );
+  }catch(e){
+    setStatus(
+      "Gagal menyimpan target. Periksa penyimpanan browser."
+    );
+  }
 }
-function fmt(v){return Number(v||0).toLocaleString("id-ID",{maximumFractionDigits:2})}
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function dateISO(v){
- if(v instanceof Date&&!isNaN(v))return `${v.getFullYear()}-${String(v.getMonth()+1).padStart(2,"0")}-${String(v.getDate()).padStart(2,"0")}`;
- let s=str(v);if(!s)return "";
- let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
- m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
- const d=new Date(s);return isNaN(d)?"":dateISO(d);
+
+function formatAngka(n){
+  return Number(n || 0).toLocaleString("id-ID",{
+    maximumFractionDigits:2
+  });
 }
-function loadTargets(){
- try{const saved=JSON.parse(localStorage.getItem(TARGET_KEY)||"{}");const out={};
- for(const m of MACHINES)out[m]={...DEFAULT_TARGETS[m],...(saved[m]||{})};return out;
- }catch(e){return JSON.parse(JSON.stringify(DEFAULT_TARGETS))}
+
+function formatPersen(n){
+  return Number(n || 0).toLocaleString("id-ID",{
+    minimumFractionDigits:0,
+    maximumFractionDigits:2
+  }) + "%";
 }
-function saveFilter(){try{localStorage.setItem(FILTER_KEY,JSON.stringify(currentFilters))}catch(e){}}
-function loadFilter(){
- try{const x=JSON.parse(localStorage.getItem(FILTER_KEY)||"{}");return {...emptyFilters(),...x}}catch(e){return emptyFilters()}
+
+function angka(value){
+  if(typeof value === "number"){
+    return Number.isFinite(value) ? value : 0;
+  }
+
+  if(value === null || value === undefined || value === ""){
+    return 0;
+  }
+
+  let s = String(value).trim();
+  s = s.replace(/\s/g,"");
+
+  if(s.includes(",") && s.includes(".")){
+    if(s.lastIndexOf(",") > s.lastIndexOf(".")){
+      s = s.replace(/\./g,"").replace(",",".");
+    }else{
+      s = s.replace(/,/g,"");
+    }
+  }else if(s.includes(",")){
+    s = s.replace(",",".");
+  }
+
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
 }
-function normalizeMachine(v){
- const s=str(v).toUpperCase().replace(/[_-]+/g," ").replace(/\s+/g," ").trim();
- let m=s.match(/(?:FLAT\s*)?([1-7])$/);return m?"FLAT "+m[1]:s;
+
+function normalisasiNama(value){
+  return String(value ?? "").trim();
 }
-function normalizeGroup(v){
- let s=str(v).toUpperCase().replace(/^GRUP\s*/,"").trim();
- return ["A","B","C"].includes(s)?s:"";
+
+function setStatus(message){
+  $("status").textContent = message;
 }
-function normalizeRecord(r){
- const date=dateISO(first(r,["tanggal","tgl","tanggal produksi","date","production date","timestamp"]));
- const machine=normalizeMachine(first(r,["mesin","machine","nama mesin","kode mesin","mc"]));
- const group=normalizeGroup(first(r,["grup","group","shift","grup produksi"]));
- const motif=str(first(r,["motif","nama motif","motif produk"]));
- const block=str(first(r,["blok","block","kode blok"]));
- const product=str(first(r,["kode produk","kode_produk","kodeproduk","produk","product code","kode","kd produk"]));
- const pcs=number(first(r,["pcs","qty","quantity","jumlah","hasil","total pcs","jumlah pcs","output"]));
- const kd=number(first(r,["kd","total kd","hasil kd","jumlah kd"]));
- return {date,machine,group,motif,block,product,pcs,kd:kd||((pcs&&PCS_PER_KD)?pcs/PCS_PER_KD:0),raw:r};
+
+/* =====================================================
+   MEMBACA BENTUK DATA API
+   Mendukung array objek atau array baris.
+   ===================================================== */
+
+function cariKunci(obj, aliases){
+  const keys = Object.keys(obj || {});
+  for(const alias of aliases){
+    const found = keys.find(
+      k => k.trim().toLowerCase() === alias.toLowerCase()
+    );
+    if(found !== undefined) return obj[found];
+  }
+  return undefined;
 }
-function extractRows(payload){
- if(Array.isArray(payload))return payload;
- if(!payload||typeof payload!=="object")return [];
- for(const k of ["data","rows","result","results","records","items","flat"])if(Array.isArray(payload[k]))return payload[k];
- if(payload.data&&Array.isArray(payload.data.rows))return payload.data.rows;
- return [];
+
+function ubahBaris(row, header){
+  if(Array.isArray(row)){
+    const obj = {};
+    header.forEach((h,i)=>{
+      obj[String(h)] = row[i];
+    });
+    return obj;
+  }
+  return row && typeof row === "object" ? row : {};
 }
-function setOptions(id,values,firstLabel,selected){
- const el=$(id),old=selected!==undefined?selected:el.value;
- el.innerHTML="";
- const op=document.createElement("option");op.value="";op.textContent=firstLabel;el.appendChild(op);
- [...new Set(values.map(str).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"id",{numeric:true})).forEach(v=>{
-  const o=document.createElement("option");o.value=v;o.textContent=v;el.appendChild(o);
- });
- if([...el.options].some(o=>o.value===old))el.value=old;else el.value="";
+
+function ambilDaftarBaris(json){
+  if(Array.isArray(json)){
+    if(json.length === 0) return [];
+    if(Array.isArray(json[0])){
+      const header = json[0].map(v=>String(v ?? ""));
+      return json.slice(1).map(r=>ubahBaris(r,header));
+    }
+    return json;
+  }
+
+  if(!json || typeof json !== "object") return [];
+
+  const candidates = [
+    json.data,
+    json.rows,
+    json.result,
+    json.results,
+    json.values,
+    json.records,
+    json.flat
+  ];
+
+  for(const candidate of candidates){
+    if(Array.isArray(candidate)){
+      if(candidate.length === 0) return [];
+      if(Array.isArray(candidate[0])){
+        const header = candidate[0].map(v=>String(v ?? ""));
+        return candidate.slice(1).map(r=>ubahBaris(r,header));
+      }
+      return candidate;
+    }
+  }
+
+  return [];
 }
-function updateFilterOptions(){
- const base=allData.filter(r=>
-  (!draftFilters.from||!r.date||r.date>=draftFilters.from)&&
-  (!draftFilters.to||!r.date||r.date<=draftFilters.to)&&
-  (!draftFilters.group||r.group===draftFilters.group)&&
-  (!draftFilters.machine||r.machine===draftFilters.machine)&&
-  (!draftFilters.motif||r.motif===draftFilters.motif)&&
-  (!draftFilters.block||r.block===draftFilters.block)&&
-  (!draftFilters.product||r.product===draftFilters.product)
- );
- setOptions("machineFilter",allData.map(r=>r.machine),"Semua mesin",draftFilters.machine);
- setOptions("motifFilter",base.map(r=>r.motif),"Semua motif",draftFilters.motif);
- setOptions("blockFilter",base.map(r=>r.block),"Semua blok",draftFilters.block);
- setOptions("productFilter",base.map(r=>r.product),"Semua kode produk",draftFilters.product);
+
+function tanggalBaris(row){
+  return cariKunci(row,[
+    "tanggal","tgl","date","tanggal produksi","production date"
+  ]);
 }
-function readDraft(){
- draftFilters={
-  from:$("dateFrom").value,to:$("dateTo").value,group:$("groupFilter").value,
-  machine:$("machineFilter").value,motif:$("motifFilter").value,
-  block:$("blockFilter").value,product:$("productFilter").value
- };
+
+function tanggalKeISO(value){
+  if(value === undefined || value === null || value === ""){
+    return "";
+  }
+
+  if(typeof value === "number"){
+    const d = new Date(value);
+    if(Number.isFinite(d.getTime())){
+      return d.getFullYear()+"-"+
+        String(d.getMonth()+1).padStart(2,"0")+"-"+
+        String(d.getDate()).padStart(2,"0");
+    }
+  }
+
+  const s = String(value).trim();
+
+  if(/^\d{4}-\d{2}-\d{2}/.test(s)){
+    return s.slice(0,10);
+  }
+
+  const match = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+  if(match){
+    return match[3]+"-"+
+      String(match[2]).padStart(2,"0")+"-"+
+      String(match[1]).padStart(2,"0");
+  }
+
+  const d = new Date(s);
+  if(!Number.isNaN(d.getTime())){
+    return d.getFullYear()+"-"+
+      String(d.getMonth()+1).padStart(2,"0")+"-"+
+      String(d.getDate()).padStart(2,"0");
+  }
+
+  return "";
 }
-function fillFilterUI(f){
- $("dateFrom").value=f.from||"";$("dateTo").value=f.to||"";
- $("groupFilter").value=f.group||"";
- draftFilters={...f};updateFilterOptions();
- $("machineFilter").value=f.machine||"";
- $("motifFilter").value=f.motif||"";$("blockFilter").value=f.block||"";
- $("productFilter").value=f.product||"";
+
+function ambilMC(row){
+  return normalisasiNama(cariKunci(row,[
+    "MC","mesin","machine","kode mesin","no mesin"
+  ]));
 }
-function selectedRows(){
- return allData.filter(r=>
-  (!currentFilters.from||!r.date||r.date>=currentFilters.from)&&
-  (!currentFilters.to||!r.date||r.date<=currentFilters.to)&&
-  (!currentFilters.group||r.group===currentFilters.group)&&
-  (!currentFilters.machine||r.machine===currentFilters.machine)&&
-  (!currentFilters.motif||r.motif===currentFilters.motif)&&
-  (!currentFilters.block||r.block===currentFilters.block)&&
-  (!currentFilters.product||r.product===currentFilters.product)
- );
+
+function ambilQty(row){
+  return angka(cariKunci(row,[
+    "qty","aktual","jumlah","hasil","quantity",
+    "produksi","total qty","output"
+  ]));
 }
-function workingDays(from,to){
- if(!from||!to||from>to)return 0;
- let n=0,d=new Date(from+"T12:00:00"),end=new Date(to+"T12:00:00");
- while(d<=end){if(INCLUDE_SUNDAY||d.getDay()!==0)n++;d.setDate(d.getDate()+1)}
- return n;
+
+/* =====================================================
+   FILTER TANGGAL
+   ===================================================== */
+
+function tanggalHariIni(){
+  const d = new Date();
+  return d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0")+"-"+
+    String(d.getDate()).padStart(2,"0");
 }
-function targetFor(machine,rows,from,to){
- const conf=targets[machine]||DEFAULT_TARGETS[machine];
- const dates=rows.filter(r=>r.machine===machine&&r.date).map(r=>r.date).sort();
- const start=conf.start||dates[0]||from;
- const end=to||dates[dates.length-1]||start;
- const actualFrom=from&&from>start?from:start;
- if(!actualFrom||!end||actualFrom>end)return 0;
- return number(conf.kd)*workingDays(actualFrom,end);
+
+$("filterTanggal").value = tanggalHariIni();
+
+function dataSesuaiTanggal(){
+  const tanggal = $("filterTanggal").value;
+  if(!tanggal) return dataProduksi;
+
+  return dataProduksi.filter(row=>{
+    const t = tanggalKeISO(tanggalBaris(row));
+    return t === tanggal;
+  });
 }
-function ranking(sums,g){
- return [...MACHINES].sort((a,b)=>(sums[b][g]-sums[a][g])||(a.localeCompare(b,"id",{numeric:true}))).slice(0,3);
+
+/* =====================================================
+   FILTER MC
+   ===================================================== */
+
+function mcTerpilih(){
+  return Array.from($("filterMC").selectedOptions)
+    .map(option=>option.value)
+    .filter(Boolean);
 }
-function rankHTML(rank,machine){
- const i=rank.indexOf(machine);
- return i<0?'<span class="rank">-</span>':`<span class="rank r${i+1}">${i+1}</span>`;
+
+function bangunFilterMC(){
+  const select = $("filterMC");
+  const sebelumnya = mcTerpilih();
+
+  select.innerHTML = "";
+
+  daftarMC.forEach(mc=>{
+    const option = document.createElement("option");
+    option.value = mc;
+    option.textContent = mc;
+    select.appendChild(option);
+  });
+
+  const masihAda = sebelumnya.filter(mc=>daftarMC.includes(mc));
+
+  if(masihAda.length){
+    Array.from(select.options).forEach(option=>{
+      option.selected = masihAda.includes(option.value);
+    });
+  }else if(select.options.length){
+    /*
+      Default hanya MC pertama, bukan seluruh 7 mesin.
+    */
+    select.options[0].selected = true;
+  }
 }
+
+/* =====================================================
+   HITUNG AKTUAL PER MC
+   ===================================================== */
+
+function hitungAktual(){
+  const hasil = {};
+  const rows = dataSesuaiTanggal();
+
+  rows.forEach(row=>{
+    const mc = ambilMC(row);
+    if(!mc) return;
+
+    if(!Object.prototype.hasOwnProperty.call(hasil,mc)){
+      hasil[mc] = 0;
+    }
+
+    hasil[mc] += ambilQty(row);
+  });
+
+  return hasil;
+}
+
+/* =====================================================
+   RENDER TABEL
+   ===================================================== */
+
 function render(){
- const rows=selectedRows();
- const sums={};MACHINES.forEach(m=>sums[m]={A:0,B:0,C:0,kd:0,pcs:0});
- rows.forEach(r=>{
-  const m=normalizeMachine(r.machine);if(!sums[m])return;
-  if(r.group&&["A","B","C"].includes(r.group))sums[m][r.group]+=r.pcs;
-  sums[m].kd+=r.kd;sums[m].pcs+=r.pcs;
- });
- const visible=currentFilters.machine?[currentFilters.machine]:MACHINES;
- const rankA=ranking(sums,"A"),rankB=ranking(sums,"B"),rankC=ranking(sums,"C");
- let total={A:0,B:0,C:0,kd:0,pcs:0,target:0};
- let html="";
- visible.filter(m=>MACHINES.includes(m)).forEach(m=>{
-  const s=sums[m],target=targetFor(m,rows,currentFilters.from,currentFilters.to);
-  total.A+=s.A;total.B+=s.B;total.C+=s.C;total.kd+=s.kd;total.pcs+=s.pcs;total.target+=target;
-  html+=`<tr><td>${esc(m)}</td><td>${fmt(s.A)}</td><td>${fmt(s.B)}</td><td>${fmt(s.C)}</td><td class="total-cell">${fmt(s.kd)}</td><td class="target-cell">${fmt(target)}</td><td>${rankHTML(rankA,m)}</td><td>${rankHTML(rankB,m)}</td><td>${rankHTML(rankC,m)}</td></tr>`;
- });
- if(!html)html='<tr><td colspan="9" class="empty">Tidak ada mesin yang sesuai filter.</td></tr>';
- html+=`<tr class="total-row"><td>TOTAL</td><td>${fmt(total.A)}</td><td>${fmt(total.B)}</td><td>${fmt(total.C)}</td><td class="total-cell">${fmt(total.kd)}</td><td class="target-cell">${fmt(total.target)}</td><td>-</td><td>-</td><td>-</td></tr>`;
- $("tableBody").innerHTML=html;
- $("metricPcs").textContent=fmt(total.A+total.B+total.C);
- $("metricKd").textContent=fmt(total.kd);
- $("metricTarget").textContent=fmt(total.target);
- $("dataInfo").textContent=`${rows.length.toLocaleString("id-ID")} baris data`;
- const labels=[];
- if(currentFilters.from)labels.push("Dari "+currentFilters.from);
- if(currentFilters.to)labels.push("Sampai "+currentFilters.to);
- if(currentFilters.group)labels.push("Grup "+currentFilters.group);
- if(currentFilters.machine)labels.push(currentFilters.machine);
- if(currentFilters.motif)labels.push("Motif "+currentFilters.motif);
- if(currentFilters.block)labels.push("Blok "+currentFilters.block);
- if(currentFilters.product)labels.push("Kode "+currentFilters.product);
- $("filterSummary").textContent=labels.join(" • ")||"Semua data";
-}
-function renderTargets(){
- $("targetGrid").innerHTML=MACHINES.map(m=>`
- <div class="field">
-  <label>${m} — target KD/hari</label>
-  <input type="number" min="0" step="1" id="target_${m.replace(" ","")}" value="${number(targets[m].kd)}">
-  <label style="margin-top:8px">Tanggal mulai produksi</label>
-  <input type="date" id="start_${m.replace(" ","")}" value="${esc(targets[m].start||"")}">
- </div>`).join("");
-}
-function readTargets(){
- MACHINES.forEach(m=>{
-  const id=m.replace(" ","");
-  targets[m]={kd:Math.max(0,number($("target_"+id).value)),start:$("start_"+id).value};
- });
- try{localStorage.setItem(TARGET_KEY,JSON.stringify(targets))}catch(e){}
- render();
-}
-async function loadData(){
- $("loading").classList.remove("hidden");$("errorBox").classList.add("hidden");
- try{
-  // Endpoint Apps Script perlu mengizinkan akses dari GitHub Pages.
-  const response=await fetch(API_URL,{method:"GET",redirect:"follow",cache:"no-store"});
-  if(!response.ok)throw new Error("HTTP "+response.status);
-  const text=await response.text();
-  let payload;
-  try{payload=JSON.parse(text)}catch(e){throw new Error("Respons Apps Script bukan JSON. Pastikan URL action=flat mengembalikan data JSON, bukan halaman HTML/login.")}
-  const rows=extractRows(payload);
-  if(!rows.length){
-   throw new Error("JSON berhasil dibaca, tetapi array data tidak ditemukan. Periksa apakah respons memakai properti data, rows, result, results, records, items, atau flat.");
+  const body = $("tableBody");
+  const pilihan = mcTerpilih();
+  const aktual = hitungAktual();
+
+  body.innerHTML = "";
+
+  const mesinTampil = pilihan.filter(mc=>
+    daftarMC.includes(mc)
+  );
+
+  if(mesinTampil.length === 0){
+    body.innerHTML =
+      '<tr><td colspan="6" class="empty">'+
+      'Pilih MC pada filter untuk menampilkan data.'+
+      '</td></tr>';
+
+    updateCards(0,0,0);
+    return;
   }
-  allData=rows.map(normalizeRecord).filter(r=>r.machine);
-  if(!allData.length)throw new Error("Data diterima tetapi kolom mesin tidak dikenali. Periksa nama kolom mesin pada JSON Apps Script.");
-  $("loading").classList.add("hidden");
-  fillFilterUI(currentFilters);
-  render();
- }catch(e){
-  $("loading").classList.add("hidden");
-  $("errorBox").classList.remove("hidden");
-  $("errorBox").textContent="GAGAL MEMUAT DATA\n"+e.message+"\n\nPeriksa akses Web App Apps Script (Anyone/Siapa saja), format JSON, dan nama kolom respons. HTML tidak dapat memperbaiki izin atau struktur data yang tidak cocok.";
-  $("dataInfo").textContent="Data belum tersedia";
-  $("tableBody").innerHTML='<tr><td colspan="9" class="empty">Data belum berhasil dimuat. Detail ada di kotak pesan di atas.</td></tr>';
- }
+
+  let totalTarget = 0;
+  let totalAktual = 0;
+
+  mesinTampil.forEach((mc,index)=>{
+    const target = Math.max(0,angka(targetMC[mc]));
+    const hasil = angka(aktual[mc]);
+    const selisih = hasil-target;
+    const persen = target > 0 ? hasil/target*100 : 0;
+
+    totalTarget += target;
+    totalAktual += hasil;
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${index+1}</td>
+      <td class="mc-name"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    `;
+
+    tr.children[1].textContent = mc;
+
+    const targetCell = tr.children[2];
+    const input = document.createElement("input");
+    input.type = "number";
+    input.min = "0";
+    input.step = "any";
+    input.inputMode = "decimal";
+    input.className = "target-input";
+    input.setAttribute("aria-label","Target "+mc);
+    input.placeholder = "Isi target";
+    input.value = targetMC[mc] ?? "";
+
+    input.addEventListener("input",()=>{
+      targetMC[mc] = input.value === ""
+        ? 0
+        : Math.max(0,angka(input.value));
+
+      render();
+      /*
+        Fokus dipulihkan agar input tetap nyaman diedit.
+      */
+      const inputs = Array.from(
+        document.querySelectorAll(".target-input")
+      );
+      const same = inputs.find(el=>
+        el.getAttribute("aria-label") === "Target "+mc
+      );
+      if(same){
+        same.focus();
+        same.setSelectionRange(
+          same.value.length,same.value.length
+        );
+      }
+    });
+
+    targetCell.appendChild(input);
+
+    tr.children[3].textContent = formatAngka(hasil);
+
+    tr.children[4].textContent =
+      (selisih > 0 ? "+" : "") + formatAngka(selisih);
+
+    tr.children[4].className =
+      selisih < 0 ? "negative" :
+      selisih > 0 ? "positive" : "";
+
+    const percentCell = tr.children[5];
+    percentCell.innerHTML = `
+      <div class="percent"></div>
+      <div class="progress"><div></div></div>
+    `;
+
+    percentCell.querySelector(".percent").textContent =
+      target > 0 ? formatPersen(persen) : "Isi target";
+
+    percentCell.querySelector(".progress div").style.width =
+      Math.min(100,Math.max(0,persen))+"%";
+
+    body.appendChild(tr);
+  });
+
+  const persenTotal =
+    totalTarget > 0 ? totalAktual/totalTarget*100 : 0;
+
+  const totalRow = document.createElement("tr");
+  totalRow.className = "total-row";
+
+  totalRow.innerHTML = `
+    <td colspan="2">TOTAL (${mesinTampil.length} MC)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  `;
+
+  totalRow.children[1].textContent = formatAngka(totalTarget);
+  totalRow.children[2].textContent = formatAngka(totalAktual);
+
+  const selisihTotal = totalAktual-totalTarget;
+  totalRow.children[3].textContent =
+    (selisihTotal>0?"+":"")+formatAngka(selisihTotal);
+
+  totalRow.children[3].className =
+    selisihTotal<0?"negative":
+    selisihTotal>0?"positive":"";
+
+  totalRow.children[4].textContent =
+    totalTarget>0?formatPersen(persenTotal):"Isi target";
+
+  body.appendChild(totalRow);
+
+  updateCards(mesinTampil.length,totalTarget,totalAktual);
 }
 
-/* EVENT FILTER */
-$("toggleFilter").addEventListener("click",()=>{
- const open=$("filterBody").classList.toggle("hidden")===false;
- $("toggleFilter").textContent=open?"TUTUP FILTER":"BUKA FILTER";
- if(open)fillFilterUI(currentFilters);
-});
-["dateFrom","dateTo","groupFilter","machineFilter","motifFilter","blockFilter","productFilter"].forEach(id=>{
- $(id).addEventListener("change",()=>{
-  readDraft();
-  if(id==="dateFrom"||id==="dateTo"||id==="groupFilter"||id==="machineFilter"||id==="motifFilter"||id==="blockFilter"){
-   updateFilterOptions();
-   // Pertahankan nilai pilihan jika masih tersedia.
-   $("machineFilter").value=draftFilters.machine||"";
-   $("motifFilter").value=draftFilters.motif||"";
-   $("blockFilter").value=draftFilters.block||"";
-   $("productFilter").value=draftFilters.product||"";
+function updateCards(jumlah,target,aktual){
+  $("cardMC").textContent = formatAngka(jumlah);
+  $("cardTarget").textContent = formatAngka(target);
+  $("cardAktual").textContent = formatAngka(aktual);
+}
+
+/* =====================================================
+   AMBIL DATA DARI APPS SCRIPT
+   ===================================================== */
+
+async function muatData(){
+  if(loading) return;
+
+  loading = true;
+  $("btnRefresh").disabled = true;
+  $("btnRefresh").textContent = "MEMUAT...";
+
+  setStatus("Mengambil data dari Apps Script...");
+
+  try{
+    const url = API_URL+
+      "&_="+Date.now();
+
+    const response = await fetch(url,{
+      method:"GET",
+      cache:"no-store",
+      redirect:"follow"
+    });
+
+    if(!response.ok){
+      throw new Error("HTTP "+response.status);
+    }
+
+    const json = await response.json();
+
+    if(json && json.error){
+      throw new Error(String(json.error));
+    }
+
+    const rows = ambilDaftarBaris(json);
+
+    if(rows.length===0){
+      dataProduksi = [];
+      daftarMC = [];
+      bangunFilterMC();
+      render();
+
+      setStatus(
+        "API merespons, tetapi data belum terbaca. " +
+        "Periksa format JSON dari action=flat."
+      );
+      return;
+    }
+
+    dataProduksi = rows;
+
+    /*
+      Daftar MC diambil dari seluruh data API,
+      supaya filter tetap mengenali mesin meski pada
+      tanggal terpilih belum ada produksi.
+    */
+    daftarMC = [...new Set(
+      rows.map(ambilMC).filter(Boolean)
+    )].sort((a,b)=>
+      a.localeCompare(b,"id",{
+        numeric:true,
+        sensitivity:"base"
+      })
+    );
+
+    bangunFilterMC();
+    render();
+
+    setStatus(
+      "Data berhasil dimuat. "+
+      rows.length+" baris data API • "+
+      daftarMC.length+" MC terdeteksi. "+
+      "Tanggal: "+$("filterTanggal").value+
+      ". Target belum tersimpan? Klik SIMPAN TARGET."
+    );
+
+  }catch(error){
+    console.error(error);
+
+    setStatus(
+      "Gagal mengambil data: "+error.message+
+      ". Periksa URL Apps Script, akses deployment, " +
+      "dan format respons API."
+    );
+
+    $("tableBody").innerHTML =
+      '<tr><td colspan="6" class="empty">'+
+      'Data gagal dimuat. Periksa pesan status di atas.'+
+      '</td></tr>';
+
+  }finally{
+    loading = false;
+    $("btnRefresh").disabled = false;
+    $("btnRefresh").textContent = "MUAT DATA";
   }
- });
+}
+
+/* =====================================================
+   TOMBOL
+   ===================================================== */
+
+$("filterMC").addEventListener("change",render);
+
+$("filterTanggal").addEventListener("change",()=>{
+  render();
+  setStatus(
+    "Tanggal produksi: "+$("filterTanggal").value+
+    ". Periksa data aktual sesuai tanggal yang dipilih."
+  );
 });
-$("applyFilter").addEventListener("click",()=>{
- readDraft();
- if(draftFilters.from&&draftFilters.to&&draftFilters.from>draftFilters.to){
-  alert("Tanggal dari tidak boleh melewati tanggal sampai.");return;
- }
- currentFilters={...draftFilters};saveFilter();render();
- $("filterBody").classList.add("hidden");$("toggleFilter").textContent="BUKA FILTER";
+
+$("btnRefresh").addEventListener("click",muatData);
+
+$("btnSave").addEventListener("click",()=>{
+  /*
+    Simpan hanya target untuk mesin yang terdeteksi.
+  */
+  try{
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(targetMC)
+    );
+    setStatus(
+      "Target berhasil disimpan di browser ini. "+
+      "Target dapat diedit kapan saja."
+    );
+  }catch(e){
+    setStatus("Gagal menyimpan target: "+e.message);
+  }
 });
-$("cancelFilter").addEventListener("click",()=>{
- fillFilterUI(currentFilters);$("filterBody").classList.add("hidden");$("toggleFilter").textContent="BUKA FILTER";
+
+$("btnFirst").addEventListener("click",()=>{
+  const select = $("filterMC");
+  Array.from(select.options).forEach((option,index)=>{
+    option.selected = index===0;
+  });
+  render();
 });
-$("resetFilter").addEventListener("click",()=>{
- currentFilters=emptyFilters();draftFilters=emptyFilters();saveFilter();fillFilterUI(currentFilters);render();
+
+$("btnClear").addEventListener("click",()=>{
+  Array.from($("filterMC").options).forEach(option=>{
+    option.selected = false;
+  });
+  render();
 });
-$("toggleTarget").addEventListener("click",()=>{
- const open=$("targetBody").classList.toggle("hidden")===false;
- $("toggleTarget").textContent=open?"TUTUP PENGATURAN":"BUKA PENGATURAN";
-});
-$("saveTargets").addEventListener("click",()=>{readTargets();alert("Pengaturan target tersimpan di browser ini.")});
-$("defaultTargets").addEventListener("click",()=>{
- targets=JSON.parse(JSON.stringify(DEFAULT_TARGETS));renderTargets();
- try{localStorage.setItem(TARGET_KEY,JSON.stringify(targets))}catch(e){}
- render();
+
+$("btnReset").addEventListener("click",()=>{
+  if(!confirm(
+    "Hapus seluruh target yang tersimpan di browser ini?"
+  )){
+    return;
+  }
+
+  targetMC = {};
+
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+    setStatus(
+      "Seluruh target tersimpan di browser ini telah dihapus."
+    );
+  }catch(e){
+    setStatus("Gagal menghapus target: "+e.message);
+  }
 });
 
 /* MULAI */
-currentFilters=loadFilter();draftFilters={...currentFilters};
-renderTargets();loadData();
+muatData();
 </script>
 </body>
 </html>
