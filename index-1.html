@@ -59,7 +59,7 @@ tbody tr:nth-child(even){background:#f1f6fa}tbody td:first-child{text-align:left
    <div class="field"><label for="dateFrom">Tanggal dari</label><input type="date" id="dateFrom"></div>
    <div class="field"><label for="dateTo">Tanggal sampai</label><input type="date" id="dateTo"></div>
    <div class="field"><label for="groupFilter">Grup</label><select id="groupFilter"><option value="">Semua grup</option><option value="A">Grup A</option><option value="B">Grup B</option><option value="C">Grup C</option></select></div>
-   <div class="field"><label for="machineFilter">Mesin</label><select id="machineFilter"><option value="">Semua mesin</option></select></div>
+   <div class="field"><label for="machineFilter">MC</label><select id="machineFilter"><option value="">Semua MC</option></select></div>
    <div class="field"><label for="motifFilter">Motif</label><select id="motifFilter"><option value="">Semua motif</option></select></div>
    <div class="field"><label for="blockFilter">Blok</label><select id="blockFilter"><option value="">Semua blok</option></select></div>
    <div class="field"><label for="productFilter">Kode produk</label><select id="productFilter"><option value="">Semua kode produk</option></select></div>
@@ -84,7 +84,7 @@ tbody tr:nth-child(even){background:#f1f6fa}tbody td:first-child{text-align:left
  <div id="errorBox" class="error hidden"></div>
  <div class="table-wrap">
   <table>
-   <thead><tr><th rowspan="2">MESIN</th><th rowspan="2">GRUP A<br>(PCS)</th><th rowspan="2">GRUP B<br>(PCS)</th><th rowspan="2">GRUP C<br>(PCS)</th><th rowspan="2">TOTAL<br>(KD)</th><th rowspan="2">TARGET<br>(KD)</th><th colspan="3">RANKING</th></tr><tr><th>A</th><th>B</th><th>C</th></tr></thead>
+   <thead><tr><th rowspan="2">MC</th><th rowspan="2">GRUP A<br>(PCS)</th><th rowspan="2">GRUP B<br>(PCS)</th><th rowspan="2">GRUP C<br>(PCS)</th><th rowspan="2">TOTAL<br>(KD)</th><th rowspan="2">TARGET<br>(KD)</th><th colspan="3">RANKING</th></tr><tr><th>A</th><th>B</th><th>C</th></tr></thead>
    <tbody id="tableBody"><tr><td colspan="9" class="empty">Memuat data...</td></tr></tbody>
   </table>
  </div>
@@ -92,10 +92,10 @@ tbody tr:nth-child(even){background:#f1f6fa}tbody td:first-child{text-align:left
 </section>
 
 <section class="card">
- <div class="section-head"><h2>PENGATURAN TARGET & TANGGAL MULAI MESIN</h2><button id="toggleTarget" class="light">BUKA PENGATURAN</button></div>
+ <div class="section-head"><h2>PENGATURAN TARGET & TANGGAL MULAI MC</h2><button id="toggleTarget" class="light">BUKA PENGATURAN</button></div>
  <div id="targetBody" class="filter-body hidden">
   <div id="targetGrid" class="target-grid"></div>
-  <div class="note">Target diisi dalam KD per hari. Tanggal mulai setiap mesin dapat berbeda. Pengaturan tersimpan di browser ini. Hari Minggu tidak dihitung sebagai hari kerja. Jika tanggal mulai kosong, target dihitung mulai tanggal pertama data mesin yang masuk filter.</div>
+  <div class="note">Target diisi dalam KD per hari. Tanggal mulai setiap MC dapat berbeda. Pengaturan tersimpan di browser ini. Hari Minggu tidak dihitung sebagai hari kerja. Jika tanggal mulai kosong, target dihitung mulai tanggal pertama data MC yang masuk filter.</div>
   <div class="actions"><button id="saveTargets" class="primary">SIMPAN TARGET</button><button id="defaultTargets" class="light">KEMBALIKAN TARGET AWAL</button></div>
  </div>
 </section>
@@ -104,9 +104,7 @@ tbody tr:nth-child(even){background:#f1f6fa}tbody td:first-child{text-align:left
 <script>
 "use strict";
 
-/* KONFIGURASI */
 const API_URL="https://script.google.com/macros/s/AKfycbwJ9bH0_V1p--6hRJqXO7yi2k4GY4jLfONJMGxIGcqfh8UmLTxphSNFhAY9ifdFhCpnag/exec?action=flat";
-// Pastikan rasio PCS per KD sesuai standar departemen.
 const PCS_PER_KD=20;
 const INCLUDE_SUNDAY=false;
 const FILTER_KEY="FLATBED_FILTER_V1";
@@ -127,7 +125,10 @@ function norm(v){return str(v).toLowerCase().replace(/[\s_-]+/g,"")}
 function first(obj,aliases){
  if(!obj||typeof obj!=="object")return "";
  const ks=Object.keys(obj);
- for(const a of aliases){const k=ks.find(x=>norm(x)===norm(a));if(k!==undefined&&obj[k]!==""&&obj[k]!=null)return obj[k]}
+ for(const a of aliases){
+  const k=ks.find(x=>norm(x)===norm(a));
+  if(k!==undefined&&obj[k]!==""&&obj[k]!=null)return obj[k]
+ }
  return "";
 }
 function number(v){
@@ -144,22 +145,29 @@ function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 function dateISO(v){
  if(v instanceof Date&&!isNaN(v))return `${v.getFullYear()}-${String(v.getMonth()+1).padStart(2,"0")}-${String(v.getDate()).padStart(2,"0")}`;
  let s=str(v);if(!s)return "";
- let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
- m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
+ let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+ if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
+ m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+ if(m)return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
  const d=new Date(s);return isNaN(d)?"":dateISO(d);
 }
 function loadTargets(){
- try{const saved=JSON.parse(localStorage.getItem(TARGET_KEY)||"{}");const out={};
- for(const m of MACHINES)out[m]={...DEFAULT_TARGETS[m],...(saved[m]||{})};return out;
+ try{
+  const saved=JSON.parse(localStorage.getItem(TARGET_KEY)||"{}");
+  const out={};
+  for(const m of MACHINES)out[m]={...DEFAULT_TARGETS[m],...(saved[m]||{})};
+  return out;
  }catch(e){return JSON.parse(JSON.stringify(DEFAULT_TARGETS))}
 }
 function saveFilter(){try{localStorage.setItem(FILTER_KEY,JSON.stringify(currentFilters))}catch(e){}}
 function loadFilter(){
- try{const x=JSON.parse(localStorage.getItem(FILTER_KEY)||"{}");return {...emptyFilters(),...x}}catch(e){return emptyFilters()}
+ try{const x=JSON.parse(localStorage.getItem(FILTER_KEY)||"{}");return {...emptyFilters(),...x}}
+ catch(e){return emptyFilters()}
 }
 function normalizeMachine(v){
  const s=str(v).toUpperCase().replace(/[_-]+/g," ").replace(/\s+/g," ").trim();
- let m=s.match(/(?:FLAT\s*)?([1-7])$/);return m?"FLAT "+m[1]:s;
+ let m=s.match(/(?:FLAT\s*)?([1-7])$/);
+ return m?"FLAT "+m[1]:s;
 }
 function normalizeGroup(v){
  let s=str(v).toUpperCase().replace(/^GRUP\s*/,"").trim();
@@ -167,7 +175,7 @@ function normalizeGroup(v){
 }
 function normalizeRecord(r){
  const date=dateISO(first(r,["tanggal","tgl","tanggal produksi","date","production date","timestamp"]));
- const machine=normalizeMachine(first(r,["mesin","machine","nama mesin","kode mesin","mc"]));
+ const machine=normalizeMachine(first(r,["mc","nama mc","kode mc"]));
  const group=normalizeGroup(first(r,["grup","group","shift","grup produksi"]));
  const motif=str(first(r,["motif","nama motif","motif produk"]));
  const block=str(first(r,["blok","block","kode blok"]));
@@ -179,7 +187,9 @@ function normalizeRecord(r){
 function extractRows(payload){
  if(Array.isArray(payload))return payload;
  if(!payload||typeof payload!=="object")return [];
- for(const k of ["data","rows","result","results","records","items","flat"])if(Array.isArray(payload[k]))return payload[k];
+ for(const k of ["data","rows","result","results","records","items","flat"]){
+  if(Array.isArray(payload[k]))return payload[k];
+ }
  if(payload.data&&Array.isArray(payload.data.rows))return payload.data.rows;
  return [];
 }
@@ -202,7 +212,7 @@ function updateFilterOptions(){
   (!draftFilters.block||r.block===draftFilters.block)&&
   (!draftFilters.product||r.product===draftFilters.product)
  );
- setOptions("machineFilter",allData.map(r=>r.machine),"Semua mesin",draftFilters.machine);
+ setOptions("machineFilter",allData.map(r=>r.machine),"Semua MC",draftFilters.machine);
  setOptions("motifFilter",base.map(r=>r.motif),"Semua motif",draftFilters.motif);
  setOptions("blockFilter",base.map(r=>r.block),"Semua blok",draftFilters.block);
  setOptions("productFilter",base.map(r=>r.product),"Semua kode produk",draftFilters.product);
@@ -272,7 +282,7 @@ function render(){
   total.A+=s.A;total.B+=s.B;total.C+=s.C;total.kd+=s.kd;total.pcs+=s.pcs;total.target+=target;
   html+=`<tr><td>${esc(m)}</td><td>${fmt(s.A)}</td><td>${fmt(s.B)}</td><td>${fmt(s.C)}</td><td class="total-cell">${fmt(s.kd)}</td><td class="target-cell">${fmt(target)}</td><td>${rankHTML(rankA,m)}</td><td>${rankHTML(rankB,m)}</td><td>${rankHTML(rankC,m)}</td></tr>`;
  });
- if(!html)html='<tr><td colspan="9" class="empty">Tidak ada mesin yang sesuai filter.</td></tr>';
+ if(!html)html='<tr><td colspan="9" class="empty">Tidak ada MC yang sesuai filter.</td></tr>';
  html+=`<tr class="total-row"><td>TOTAL</td><td>${fmt(total.A)}</td><td>${fmt(total.B)}</td><td>${fmt(total.C)}</td><td class="total-cell">${fmt(total.kd)}</td><td class="target-cell">${fmt(total.target)}</td><td>-</td><td>-</td><td>-</td></tr>`;
  $("tableBody").innerHTML=html;
  $("metricPcs").textContent=fmt(total.A+total.B+total.C);
@@ -309,31 +319,30 @@ function readTargets(){
 async function loadData(){
  $("loading").classList.remove("hidden");$("errorBox").classList.add("hidden");
  try{
-  // Endpoint Apps Script perlu mengizinkan akses dari GitHub Pages.
   const response=await fetch(API_URL,{method:"GET",redirect:"follow",cache:"no-store"});
   if(!response.ok)throw new Error("HTTP "+response.status);
   const text=await response.text();
   let payload;
-  try{payload=JSON.parse(text)}catch(e){throw new Error("Respons Apps Script bukan JSON. Pastikan URL action=flat mengembalikan data JSON, bukan halaman HTML/login.")}
+  try{payload=JSON.parse(text)}
+  catch(e){throw new Error("Respons Apps Script bukan JSON. Pastikan URL action=flat mengembalikan data JSON, bukan halaman HTML/login.")}
   const rows=extractRows(payload);
   if(!rows.length){
-   throw new Error("JSON berhasil dibaca, tetapi array data tidak ditemukan. Periksa apakah respons memakai properti data, rows, result, results, records, items, atau flat.");
+   throw new Error("JSON berhasil dibaca, tetapi array data tidak ditemukan. Periksa properti data, rows, result, results, records, items, atau flat.");
   }
   allData=rows.map(normalizeRecord).filter(r=>r.machine);
-  if(!allData.length)throw new Error("Data diterima tetapi kolom mesin tidak dikenali. Periksa nama kolom mesin pada JSON Apps Script.");
+  if(!allData.length)throw new Error("Data diterima tetapi kolom MC tidak dikenali. Pastikan nama kolom sumber adalah MC, NAMA MC, atau KODE MC.");
   $("loading").classList.add("hidden");
   fillFilterUI(currentFilters);
   render();
  }catch(e){
   $("loading").classList.add("hidden");
   $("errorBox").classList.remove("hidden");
-  $("errorBox").textContent="GAGAL MEMUAT DATA\n"+e.message+"\n\nPeriksa akses Web App Apps Script (Anyone/Siapa saja), format JSON, dan nama kolom respons. HTML tidak dapat memperbaiki izin atau struktur data yang tidak cocok.";
+  $("errorBox").textContent="GAGAL MEMUAT DATA\n"+e.message+"\n\nPeriksa akses Web App Apps Script (Anyone/Siapa saja), format JSON, dan nama kolom respons.";
   $("dataInfo").textContent="Data belum tersedia";
   $("tableBody").innerHTML='<tr><td colspan="9" class="empty">Data belum berhasil dimuat. Detail ada di kotak pesan di atas.</td></tr>';
  }
 }
 
-/* EVENT FILTER */
 $("toggleFilter").addEventListener("click",()=>{
  const open=$("filterBody").classList.toggle("hidden")===false;
  $("toggleFilter").textContent=open?"TUTUP FILTER":"BUKA FILTER";
@@ -344,7 +353,6 @@ $("toggleFilter").addEventListener("click",()=>{
   readDraft();
   if(id==="dateFrom"||id==="dateTo"||id==="groupFilter"||id==="machineFilter"||id==="motifFilter"||id==="blockFilter"){
    updateFilterOptions();
-   // Pertahankan nilai pilihan jika masih tersedia.
    $("machineFilter").value=draftFilters.machine||"";
    $("motifFilter").value=draftFilters.motif||"";
    $("blockFilter").value=draftFilters.block||"";
@@ -377,7 +385,6 @@ $("defaultTargets").addEventListener("click",()=>{
  render();
 });
 
-/* MULAI */
 currentFilters=loadFilter();draftFilters={...currentFilters};
 renderTargets();loadData();
 </script>
