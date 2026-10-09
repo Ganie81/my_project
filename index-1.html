@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -364,25 +365,40 @@ function jsonp(params){
     const script=document.createElement("script");
     const query=new URLSearchParams({...params,callback:cb,_:Date.now()});
     let done=false;
+
     const clean=()=>{
       script.remove();
       try{delete window[cb]}catch(e){window[cb]=undefined}
     };
+
     const timer=setTimeout(()=>{
-      if(done)return;done=true;clean();
-      reject(new Error("Timeout. Periksa Apps Script dan deployment."));
-    },30000);
+      if(done)return;
+      done=true;
+      clean();
+      reject(new Error("Waktu tunggu 60 detik habis. Periksa eksekusi Apps Script, jumlah data, dan deployment."));
+    },60000);
+
     window[cb]=data=>{
-      if(done)return;done=true;clearTimeout(timer);clean();resolve(data);
+      if(done)return;
+      done=true;
+      clearTimeout(timer);
+      clean();
+      resolve(data);
     };
+
     script.onerror=()=>{
-      if(done)return;done=true;clearTimeout(timer);clean();
-      reject(new Error("URL Apps Script tidak dapat diakses."));
+      if(done)return;
+      done=true;
+      clearTimeout(timer);
+      clean();
+      reject(new Error("URL Apps Script tidak dapat diakses. Periksa URL dan izin Web App."));
     };
+
     script.src=API+"?"+query.toString();
     document.head.appendChild(script);
   });
 }
+
 function populateList(id,values){
   el(id).innerHTML=(values||[]).map(v=>"<option value=\""+esc(v)+"\"></option>").join("");
 }
@@ -392,23 +408,34 @@ function updateOptions(o){
   populateList("warnaList",o.warna);
   populateList("kodeList",o.kode);
 }
+
 async function loadDashboard(){
   if(loading)return;
-  loading=true;el("refresh").disabled=true;
+  loading=true;
+  el("refresh").disabled=true;
   el("refresh").textContent="MEMUAT...";
   setStatus("Mengambil data produksi...");
+
   try{
     const result=await jsonp(filterLocked&&lockedFilters?lockedFilters:{});
-    if(!result||result.success!==true)throw new Error(result?.message||"Respons API tidak valid.");
-    dashboard=result;updateOptions(result.options);render(result);
+    if(!result||result.success!==true){
+      throw new Error(result?.message||"Respons API tidak valid.");
+    }
+
+    dashboard=result;
+    updateOptions(result.options);
+    render(result);
     setStatus("Data berhasil diperbarui.","ok");
   }catch(e){
-    console.error(e);setStatus("Gagal memuat data: "+e.message,"error");
+    console.error(e);
+    setStatus("Gagal memuat data: "+e.message,"error");
   }finally{
-    loading=false;el("refresh").disabled=false;
+    loading=false;
+    el("refresh").disabled=false;
     el("refresh").textContent="↻ PERBARUI DATA";
   }
 }
+
 function render(d){
   const s=d.summary||{};
   el("allKD").textContent=num(s.totalKD)+" KD";
@@ -423,6 +450,7 @@ function render(d){
   renderMain(d.data||[]);
   renderDetail(d.detail||[]);
 }
+
 function renderMain(items){
   const filtered=items.filter(x=>
     x.aPCS||x.bPCS||x.cPCS||x.totalPCS
@@ -464,6 +492,7 @@ function renderMain(items){
     <td>-</td><td>-</td><td>-</td>
   </tr>`;
 }
+
 function renderDetail(items){
   const body=el("detailBody"),foot=el("detailFoot");
   el("detailCount").textContent=num(items.length)+" jenis kombinasi";
