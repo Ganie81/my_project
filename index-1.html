@@ -2,476 +2,159 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#075985">
-<meta name="mobile-web-app-capable" content="yes">
-<title>PENCAPAIAN PRODUKSI FLAT</title>
+<title>PENCAPAIAN PRODUKSI FLATBED PRINT</title>
 
 <style>
 :root{
+  --navy:#063c66;
   --blue:#075985;
-  --blue2:#0284c7;
-  --navy:#082f49;
-  --bg:#edf4f8;
-  --white:#ffffff;
-  --text:#163247;
-  --border:#d4e2ec;
-  --green:#087443;
-  --orange:#b45309;
+  --line:#b8d9ed;
+  --text:#12364e;
 }
-
-*{
-  box-sizing:border-box;
-}
-
+*{box-sizing:border-box}
 body{
   margin:0;
+  min-height:100vh;
   font-family:Arial,Helvetica,sans-serif;
   color:var(--text);
-  background:linear-gradient(145deg,#e6f0f7,#f7fafc);
-  min-height:100vh;
+  background:#dcecf7 url("FLAT.jpg") center/cover fixed no-repeat;
 }
-
-.container{
-  width:100%;
-  max-width:1600px;
-  margin:auto;
-  padding:14px;
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(225,241,251,.78);
+  z-index:-1;
 }
-
-/* HEADER */
-
+button,input,select{font:inherit}
+button{cursor:pointer}
+.container{width:100%;max-width:1700px;margin:auto;padding:12px}
 .header{
-  position:relative;
-  overflow:hidden;
-  padding:25px 18px;
-  border-radius:18px;
-  color:white;
-  text-align:center;
-  background:
-    linear-gradient(145deg,#38bdf8 0%,#0875b9 35%,
-    #075985 65%,#082f49 100%);
-  box-shadow:
-    inset 0 2px 2px rgba(255,255,255,.55),
-    inset 0 -5px 8px rgba(0,0,0,.22),
-    0 7px 16px rgba(3,55,85,.25);
+  text-align:center;padding:23px 10px;color:white;border-radius:15px;
+  background:linear-gradient(160deg,#5bc8f3,#168fc7 25%,#07669d 60%,#063655);
+  border:1px solid #bceaff;
+  box-shadow:inset 0 2px 3px #ffffff70,inset 0 -5px 8px #0004,0 7px 17px #03314d50;
 }
-
-.header:before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:43%;
-  background:linear-gradient(
-    180deg,rgba(255,255,255,.22),transparent
-  );
-  pointer-events:none;
-}
-
-.header h1{
-  position:relative;
-  margin:0;
-  font-size:clamp(21px,4vw,34px);
-  font-weight:900;
-  letter-spacing:1px;
-  line-height:1.35;
-  text-shadow:0 2px 3px rgba(0,0,0,.35);
-}
-
-.header p{
-  position:relative;
-  margin:8px 0 0;
-  font-size:13px;
-  letter-spacing:1.3px;
-  font-weight:bold;
-  color:#e0f2fe;
-}
-
-/* STATUS */
-
+.header h1{margin:0;font-size:clamp(20px,3.4vw,34px);font-weight:900}
+.subtitle{margin-top:7px;font-size:clamp(11px,2vw,15px);font-weight:800;letter-spacing:1px}
 .status{
-  margin:13px 2px;
-  padding:10px 13px;
-  border-radius:9px;
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412;
-  font-size:13px;
-  font-weight:bold;
+  margin:10px 0;padding:10px 12px;border-radius:8px;
+  background:#e9f5ff;border:1px solid var(--line);
+  font-size:12px;font-weight:bold;overflow-wrap:anywhere
 }
-
-.status.ok{
-  background:#ecfdf5;
-  border-color:#a7f3d0;
-  color:#065f46;
+.status.ok{background:#ecfdf5;color:#065f46}
+.status.error{background:#fff1f2;color:#991b1b}
+.filter-box,.section{
+  margin-bottom:13px;border:1px solid #9dc8e3;border-radius:12px;
+  background:linear-gradient(145deg,#f7fcff,#dceefa);
+  box-shadow:0 4px 12px #0332522e,inset 0 1px 0 white;
+  overflow:hidden
 }
-
-.status.error{
-  background:#fef2f2;
-  border-color:#fecaca;
-  color:#b91c1c;
+.filter-slim{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:11px 13px;min-height:51px
 }
-
-/* SUMMARY CARDS */
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;
-  margin:15px 0;
-}
-
-.card{
-  position:relative;
-  overflow:hidden;
-  min-width:0;
-  padding:17px 14px;
-  border:1px solid #dbe7ef;
-  border-radius:14px;
-  background:linear-gradient(145deg,#fff,#edf6fc);
-  box-shadow:
-    0 4px 10px rgba(15,50,75,.08),
-    inset 0 1px 0 white;
-}
-
-.card:after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:4px;
-  background:linear-gradient(90deg,#0284c7,#38bdf8);
-}
-
-.card-label{
-  font-size:clamp(10px,2vw,13px);
-  color:#526b7c;
-  font-weight:bold;
-  line-height:1.5;
-  text-transform:uppercase;
-}
-
-.card-value{
-  margin-top:10px;
-  font-size:clamp(19px,4vw,32px);
-  font-weight:900;
-  color:#075985;
-  overflow-wrap:anywhere;
-  font-variant-numeric:tabular-nums;
-}
-
-.card:nth-child(2) .card-value{
-  color:#087443;
-}
-
-.card:nth-child(3) .card-value{
-  color:#b45309;
-}
-
-/* FILTERS */
-
-.panel{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:15px;
-  margin-bottom:14px;
-  box-shadow:0 3px 9px rgba(15,50,75,.05);
-}
-
-.panel-title{
-  font-size:15px;
-  font-weight:900;
-  color:#075985;
-  margin:0 0 13px;
-}
-
-.filters{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:11px;
-}
-
-.field{
-  min-width:0;
-}
-
-.field label{
-  display:block;
-  margin-bottom:6px;
-  font-size:12px;
-  font-weight:bold;
-  color:#526b7c;
-}
-
-.field input,
-.field select{
-  width:100%;
-  min-width:0;
-  height:42px;
-  padding:0 10px;
-  border:1px solid #cbdbe6;
-  border-radius:8px;
-  background:#fafdff;
-  color:#163247;
-  font-size:13px;
-  outline:none;
-}
-
-.field input:focus,
-.field select:focus{
-  border-color:#0284c7;
-  box-shadow:0 0 0 3px rgba(2,132,199,.12);
-}
-
-.actions{
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  margin-top:13px;
-}
-
+.filter-slim strong{display:block;font-size:13px;color:var(--navy)}
+.filter-slim small{display:block;margin-top:4px;font-size:11px;color:#526e81}
 .btn{
-  min-height:40px;
-  border:0;
-  border-radius:8px;
-  padding:10px 16px;
-  font-size:13px;
-  font-weight:bold;
-  cursor:pointer;
-  color:#fff;
-  background:linear-gradient(145deg,#0284c7,#075985);
-  box-shadow:0 3px 6px rgba(7,89,133,.18);
+  border:1px solid #ffffff80;border-radius:8px;padding:9px 13px;
+  min-height:37px;font-size:12px;font-weight:800;color:white;
+  background:linear-gradient(160deg,#25a4dd,#075985);
+  box-shadow:inset 0 1px 1px #ffffff80,0 3px 6px #03416735
 }
-
-.btn:active{
-  transform:translateY(1px);
+.btn.reset{color:#154763;background:linear-gradient(160deg,#fff,#d7eaf6)}
+.btn.green{background:linear-gradient(160deg,#22a765,#087443)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.filter-detail{padding:12px;border-top:1px solid #bfdceb}
+.filter-detail[hidden]{display:none}
+.filter-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.field{min-width:0}
+.field label{display:block;margin-bottom:5px;color:#31566d;font-size:11px;font-weight:900}
+.field input,.field select{
+  width:100%;height:39px;padding:0 9px;min-width:0;
+  border:1px solid #b6d2e3;border-radius:7px;color:#12364e;background:white;font-size:12px
 }
-
-.btn.secondary{
-  color:#164e63;
-  background:#e0f2fe;
-  box-shadow:none;
+.field input:disabled,.field select:disabled{background:#e8eef2;color:#617786}
+.filter-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.lock-note{margin-top:10px;color:#526e81;font-size:11px;line-height:1.5}
+.period{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:7px;
+  padding:10px 12px;margin-bottom:12px;border:1px solid #b6d6e9;
+  border-radius:9px;background:linear-gradient(140deg,#fff,#e5f4fd);
+  color:#164e63;font-size:12px;font-weight:800
 }
-
-.btn.green{
-  background:linear-gradient(145deg,#16a34a,#166534);
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:13px}
+.card{
+  position:relative;overflow:hidden;min-width:0;padding:13px 12px;
+  border:1px solid #acd1e7;border-radius:11px;
+  background:linear-gradient(145deg,#fff,#d9effc);
+  box-shadow:0 4px 12px #0332522e,inset 0 1px 0 white
 }
-
-.btn:disabled{
-  opacity:.55;
-  cursor:wait;
+.card:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0284c7,#7dd3fc)}
+.card-label{color:#42657a;font-size:10px;font-weight:900}
+.card-value{margin-top:7px;color:#075985;font-size:clamp(19px,3.3vw,30px);font-weight:900;overflow-wrap:anywhere}
+.card:nth-child(2) .card-value{color:#087443}
+.card:nth-child(3) .card-value{color:#9a5b0a}
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  padding:12px;border-bottom:1px solid #b6d6e9;background:linear-gradient(145deg,#f8fdff,#d5eafa)
 }
-
-/* TABLE */
-
-.table-panel{
-  padding:0;
-  overflow:hidden;
-}
-
-.table-heading{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  padding:15px;
-  border-bottom:1px solid var(--border);
-}
-
-.table-heading h2{
-  margin:0;
-  font-size:16px;
-  font-weight:900;
-  color:#075985;
-}
-
-.table-info{
-  color:#64748b;
-  font-size:12px;
-}
-
-.table-wrap{
-  width:100%;
-  overflow:auto;
-  max-height:70vh;
-  -webkit-overflow-scrolling:touch;
-}
-
-table{
-  width:100%;
-  min-width:1250px;
-  border-collapse:separate;
-  border-spacing:0;
-  font-size:12px;
-}
-
+.section-head h2{margin:0;color:#075985;font-size:14px;font-weight:900}
+.section-head small{font-size:11px;color:#526e81}
+.table-scroll{width:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+.main-scroll{max-height:65vh}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
+.main-table{min-width:900px}
 thead th{
-  position:sticky;
-  top:0;
-  z-index:2;
-  padding:13px 10px;
-  color:#fff;
-  background:linear-gradient(180deg,#087db6,#075985);
-  text-align:center;
-  font-size:11px;
-  font-weight:900;
-  white-space:nowrap;
-  border-right:1px solid rgba(255,255,255,.15);
+  position:sticky;top:0;z-index:4;padding:10px 9px;color:white;
+  background:linear-gradient(180deg,#0b6595,#063c66);text-align:center;
+  white-space:nowrap;font-size:11px;font-weight:900;
+  border-right:1px solid #ffffff30;border-bottom:1px solid #8bbbd7
 }
-
+.main-table thead tr:nth-child(2) th{top:35px}
+thead th[rowspan="2"]{vertical-align:middle}
 tbody td{
-  padding:11px 10px;
-  border-bottom:1px solid #e1eaf0;
-  border-right:1px solid #e7eef3;
-  white-space:nowrap;
-  text-align:center;
-  background:#fff;
+  padding:9px;border-right:1px solid #c6e0ef;border-bottom:1px solid #c6e0ef;
+  text-align:center;white-space:nowrap;background:#f5fbff;font-variant-numeric:tabular-nums
 }
-
-tbody tr:nth-child(even) td{
-  background:#f0f8fd;
-}
-
-tbody tr:hover td{
-  background:#dff2ff;
-}
-
-td.text-left{
-  text-align:left;
-}
-
-td.qty{
-  font-weight:900;
-  color:#075985;
-  font-variant-numeric:tabular-nums;
-}
-
+tbody tr:nth-child(even) td{background:#e6f4fd}
+tbody tr:hover td{background:#d1edfc}
+td.mc{font-weight:900;text-align:left;color:#064b75}
+td.number{text-align:right;padding-right:12px}
+td.achievement{color:#075985;font-weight:800}
+td.target{color:#725017;font-weight:800}
+td.rank{font-weight:900;color:#075985}
 tfoot td{
-  position:sticky;
-  bottom:0;
-  z-index:1;
-  padding:13px 10px;
-  font-weight:900;
-  color:#fff;
-  background:#164e63;
-  text-align:center;
-  border-right:1px solid rgba(255,255,255,.16);
+  position:sticky;bottom:0;z-index:3;padding:11px 9px;color:white;
+  background:linear-gradient(180deg,#075985,#063451);font-weight:900;
+  white-space:nowrap;text-align:center;border-right:1px solid #ffffff30;
+  border-top:2px solid #7dc6ed
 }
-
-.empty{
-  padding:30px 15px;
-  text-align:center;
-  color:#64748b;
-  font-size:13px;
+tfoot td.number{text-align:right;padding-right:12px}
+.detail-scroll{max-height:440px}
+.detail-table{min-width:850px}
+.detail-table thead th{top:0;padding:11px 9px}
+.detail-table tfoot td{bottom:0}
+td.left{text-align:left;white-space:normal}
+.empty{padding:26px 12px!important;color:#5a7588;text-align:center!important;white-space:normal!important}
+.footer{padding:13px 4px;text-align:center;font-size:10px;color:#4e6a7d}
+@media(max-width:760px){
+  .container{padding:8px}
+  .header{padding:20px 8px}
+  .filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .filter-slim{padding:10px}
+  .cards{gap:7px}
+  .card{padding:12px 8px}
+  .card-label{font-size:9px}
+  .card-value{font-size:clamp(16px,4.5vw,25px)}
+  .main-scroll{max-height:60vh}
 }
-
-.footer{
-  padding:17px 5px;
-  text-align:center;
-  font-size:11px;
-  color:#718096;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:700px){
-  .container{
-    padding:9px;
-  }
-
-  .header{
-    padding:21px 10px;
-    border-radius:13px;
-  }
-
-  .cards{
-    gap:7px;
-  }
-
-  .card{
-    padding:14px 9px;
-    border-radius:10px;
-  }
-
-  .card-value{
-    font-size:clamp(16px,4.6vw,25px);
-  }
-
-  .filters{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-
-  .panel{
-    padding:11px;
-  }
-
-  .table-panel{
-    padding:0;
-  }
-
-  .table-heading{
-    padding:12px;
-  }
-
-  .btn{
-    flex:1;
-    padding:10px 11px;
-  }
-}
-
-@media(max-width:350px){
-  .cards{
-    grid-template-columns:1fr;
-  }
-
-  .filters{
-    grid-template-columns:1fr;
-  }
-}
-
-@media print{
-  body{
-    background:#fff;
-  }
-
-  .container{
-    max-width:none;
-    padding:0;
-  }
-
-  .filters-panel,
-  .actions,
-  .status,
-  .footer{
-    display:none!important;
-  }
-
-  .table-wrap{
-    max-height:none;
-    overflow:visible;
-  }
-
-  table{
-    min-width:0;
-    font-size:9px;
-  }
-
-  thead th,
-  tfoot td{
-    position:static;
-    print-color-adjust:exact;
-    -webkit-print-color-adjust:exact;
-  }
-
-  tbody tr{
-    break-inside:avoid;
-  }
+@media(max-width:360px){
+  .filter-grid{grid-template-columns:1fr}
+  .cards{gap:5px}
+  .card{padding:10px 6px}
 }
 </style>
 </head>
@@ -479,766 +162,346 @@ tfoot td{
 <body>
 <div class="container">
 
-  <header class="header">
-    <h1>PENCAPAIAN PRODUKSI FLAT</h1>
-    <p>MONITORING PRODUKSI HARIAN</p>
-  </header>
+<header class="header">
+  <h1>PENCAPAIAN PRODUKSI FLATBED PRINT</h1>
+  <div class="subtitle">DEPARTEMEN PRINTING PT BEHAESTEX</div>
+</header>
 
-  <div id="status" class="status">
-    Menghubungkan ke database produksi...
+<div id="status" class="status">Menghubungkan ke database produksi...</div>
+
+<section class="filter-box">
+  <div class="filter-slim">
+    <div>
+      <strong>FILTER PENCAPAIAN PRODUKSI</strong>
+      <small id="filterSummary">Semua data produksi</small>
+    </div>
+    <button class="btn" id="toggleFilter" type="button">BUKA FILTER ▼</button>
   </div>
 
-  <section class="cards">
-    <div class="card">
-      <div class="card-label">Total Produksi (PCS)</div>
-      <div class="card-value" id="totalQty">0</div>
-    </div>
-
-    <div class="card">
-      <div class="card-label">Jumlah Transaksi</div>
-      <div class="card-value" id="totalTransaksi">0</div>
-    </div>
-
-    <div class="card">
-      <div class="card-label">Jumlah MC</div>
-      <div class="card-value" id="totalMC">0</div>
-    </div>
-  </section>
-
-  <section class="panel filters-panel">
-    <h2 class="panel-title">FILTER DATA PRODUKSI</h2>
-
-    <div class="filters">
+  <div class="filter-detail" id="filterDetail" hidden>
+    <div class="filter-grid">
+      <div class="field"><label for="start">TANGGAL DARI</label><input id="start" type="date"></div>
+      <div class="field"><label for="end">TANGGAL SAMPAI</label><input id="end" type="date"></div>
 
       <div class="field">
-        <label for="tanggalMulai">Tanggal Mulai</label>
-        <input type="date" id="tanggalMulai">
-      </div>
-
-      <div class="field">
-        <label for="tanggalAkhir">Tanggal Akhir</label>
-        <input type="date" id="tanggalAkhir">
-      </div>
-
-      <div class="field">
-        <label for="filterShift">Shift</label>
-        <select id="filterShift">
-          <option value="">Semua Shift</option>
+        <label for="grup">GRUP</label>
+        <select id="grup">
+          <option value="">SEMUA GRUP</option>
+          <option value="A">GRUP A</option>
+          <option value="B">GRUP B</option>
+          <option value="C">GRUP C</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="filterGrup">Grup</label>
-        <select id="filterGrup">
-          <option value="">Semua Grup</option>
+        <label for="mc">MESIN / MC</label>
+        <select id="mc">
+          <option value="">SEMUA MC</option>
+          <option>FLAT 1</option><option>FLAT 2</option>
+          <option>FLAT 3</option><option>FLAT 4</option>
+          <option>FLAT 5</option><option>FLAT 6</option><option>FLAT 7</option>
         </select>
       </div>
 
-      <div class="field">
-        <label for="filterMC">Mesin (MC)</label>
-        <select id="filterMC">
-          <option value="">Semua MC</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="filterJenis">Jenis Print</label>
-        <select id="filterJenis">
-          <option value="">Semua Jenis Print</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="filterMotif">Motif</label>
-        <input type="search" id="filterMotif"
-               placeholder="Cari motif...">
-      </div>
-
-      <div class="field">
-        <label for="filterKode">Kode Produk</label>
-        <input type="search" id="filterKode"
-               placeholder="Cari kode produk...">
-      </div>
-
+      <div class="field"><label for="motif">MOTIF</label><input id="motif" list="motifList" placeholder="Cari motif..."><datalist id="motifList"></datalist></div>
+      <div class="field"><label for="warna">WARNA GROUND / BLOK</label><input id="warna" list="warnaList" placeholder="Cari warna..."><datalist id="warnaList"></datalist></div>
+      <div class="field"><label for="kode">KODE PRODUK</label><input id="kode" list="kodeList" placeholder="Cari kode..."><datalist id="kodeList"></datalist></div>
     </div>
 
-    <div class="actions">
-      <button class="btn" id="btnFilter" type="button">
-        Tampilkan Data
-      </button>
-
-      <button class="btn secondary" id="btnReset" type="button">
-        Reset Filter
-      </button>
-
-      <button class="btn green" id="btnRefresh" type="button">
-        ↻ Perbarui Data
-      </button>
-
-      <button class="btn secondary" id="btnPrint" type="button">
-        Cetak / PDF
-      </button>
-    </div>
-  </section>
-
-  <section class="panel table-panel">
-    <div class="table-heading">
-      <h2>DETAIL DATA PRODUKSI FLAT</h2>
-      <div class="table-info" id="infoData">
-        Menyiapkan data...
-      </div>
+    <div class="filter-actions">
+      <button class="btn" id="apply" type="button">TERAPKAN FILTER</button>
+      <button class="btn reset" id="reset" type="button">RESET SEMUA</button>
+      <button class="btn green" id="refresh" type="button">↻ PERBARUI DATA</button>
     </div>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>NO</th>
-            <th>TANGGAL / TIMESTAMP</th>
-            <th>SHIFT</th>
-            <th>GRUP</th>
-            <th>KODE PRODUK</th>
-            <th>WARNA GROUND / BLOK</th>
-            <th>MOTIF</th>
-            <th>QTY (PCS)</th>
-            <th>MC</th>
-            <th>JENIS PRINT</th>
-          </tr>
-        </thead>
+    <div class="lock-note" id="lockNote">Setelah diterapkan, filter dikunci sampai direset.</div>
+  </div>
+</section>
 
-        <tbody id="tabelData">
-          <tr>
-            <td colspan="10" class="empty">
-              Mengambil data dari Apps Script...
-            </td>
-          </tr>
-        </tbody>
+<div class="period">
+  <span>PERIODE PRODUKSI</span>
+  <span id="periodText">Menunggu data...</span>
+</div>
 
-        <tfoot id="tabelFooter">
-          <tr>
-            <td colspan="7">TOTAL PRODUKSI</td>
-            <td>0</td>
-            <td colspan="2">-</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </section>
+<section class="cards">
+  <div class="card"><div class="card-label">TOTAL PENCAPAIAN</div><div class="card-value" id="allKD">0 KD</div></div>
+  <div class="card"><div class="card-label">TOTAL PRODUKSI</div><div class="card-value" id="allPCS">0 PCS</div></div>
+  <div class="card"><div class="card-label">JUMLAH TRANSAKSI</div><div class="card-value" id="allRows">0</div></div>
+</section>
 
-  <footer class="footer">
-    PENCAPAIAN PRODUKSI FLAT · MONITORING DATA PRODUKSI
-  </footer>
+<section class="section">
+  <div class="section-head"><h2>PENCAPAIAN PRODUKSI PER MESIN</h2><small>20 PCS = 1 KD</small></div>
+  <div class="table-scroll main-scroll">
+    <table class="main-table">
+      <thead>
+        <tr>
+          <th rowspan="2">MC</th>
+          <th rowspan="2">GRUP A<br>(PCS)</th>
+          <th rowspan="2">GRUP B<br>(PCS)</th>
+          <th rowspan="2">GRUP C<br>(PCS)</th>
+          <th rowspan="2">TOTAL<br>(KD)</th>
+          <th rowspan="2">TARGET<br>(KD)</th>
+          <th colspan="3">RANKING</th>
+        </tr>
+        <tr><th>A</th><th>B</th><th>C</th></tr>
+      </thead>
+      <tbody id="mainBody"><tr><td colspan="9" class="empty">Memuat data...</td></tr></tbody>
+      <tfoot id="mainFoot"></tfoot>
+    </table>
+  </div>
+</section>
 
+<section class="section">
+  <div class="section-head"><h2>RINCIAN PRODUKSI PER MOTIF</h2><small id="detailCount">0 baris</small></div>
+  <div class="table-scroll detail-scroll">
+    <table class="detail-table">
+      <thead><tr>
+        <th>MOTIF</th><th>WARNA GROUND / BLOK</th><th>KODE PRODUK</th>
+        <th>GRUP A</th><th>GRUP B</th><th>GRUP C</th><th>TOTAL PCS</th>
+      </tr></thead>
+      <tbody id="detailBody"><tr><td colspan="7" class="empty">Memuat data...</td></tr></tbody>
+      <tfoot id="detailFoot"></tfoot>
+    </table>
+  </div>
+</section>
+
+<div class="footer">PENCAPAIAN PRODUKSI FLATBED PRINT · DEPARTEMEN PRINTING PT BEHAESTEX</div>
 </div>
 
 <script>
 "use strict";
 
-/* =====================================================
-   KONFIGURASI APPS SCRIPT
-   ===================================================== */
+const API="https://script.google.com/macros/s/AKfycbx4CcS1ZpZWAcPq1OI364KvAPonsjFbbEqru_BFOjW5l9hs_ko5LGwwqc7IECdGInh2/exec";
+const STORAGE_KEY="FLATBED_FILTER_V1";
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbx4CcS1ZpZWAcPq1OI364KvAPonsjFbbEqru_BFOjW5l9hs_ko5LGwwqc7IECdGInh2/exec?action=flat";
+let dashboard=null;
+let lockedFilters=null;
+let filterLocked=false;
+let loading=false;
+let requestNumber=0;
 
-/* =====================================================
-   PENYIMPANAN DATA DI MEMORI
-   ===================================================== */
+const el=id=>document.getElementById(id);
 
-let semuaData = [];
-let dataTampil = [];
-let sedangMemuat = false;
-
-/* =====================================================
-   UTILITAS
-   ===================================================== */
-
-function normalisasiTeks(value){
-  if(value === null || value === undefined) return "";
-  return String(value).trim();
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
 }
-
-function normalisasiKunci(value){
-  return normalisasiTeks(value)
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g,"");
+function num(v){
+  return Number(v||0).toLocaleString("id-ID",{maximumFractionDigits:2});
 }
-
-function ambilField(obj, namaField){
-  if(!obj || typeof obj !== "object") return "";
-
-  const target = normalisasiKunci(namaField);
-
-  for(const key of Object.keys(obj)){
-    if(normalisasiKunci(key) === target){
-      return obj[key] ?? "";
-    }
-  }
-
-  return "";
+function setStatus(msg,type=""){
+  el("status").textContent=msg;
+  el("status").className="status"+(type?" "+type:"");
 }
-
-function ambilNilai(obj, daftarNama){
-  for(const nama of daftarNama){
-    const nilai = ambilField(obj,nama);
-
-    if(nilai !== "" && nilai !== null && nilai !== undefined){
-      return nilai;
-    }
-  }
-
-  return "";
+function getFilters(){
+  return {
+    start:el("start").value,end:el("end").value,
+    grup:el("grup").value,mc:el("mc").value,
+    motif:el("motif").value.trim(),
+    warna:el("warna").value.trim(),
+    kode:el("kode").value.trim()
+  };
 }
-
-function angka(value){
-  if(typeof value === "number"){
-    return Number.isFinite(value) ? value : 0;
-  }
-
-  let s = normalisasiTeks(value)
-    .replace(/\s/g,"");
-
-  if(!s) return 0;
-
-  /*
-   * Mendukung angka umum seperti:
-   * 12500
-   * 12.500
-   * 12,500
-   *
-   * Format desimal bertitik/koma tetap ditangani
-   * secara sederhana untuk data produksi.
-   */
-
-  if(/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)){
-    s = s.replace(/\./g,"").replace(",",".");
-  }else if(/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)){
-    s = s.replace(/,/g,"");
-  }else if(s.includes(",") && !s.includes(".")){
-    s = s.replace(",",".");
-  }else{
-    s = s.replace(/,/g,"");
-  }
-
-  const hasil = Number(s);
-  return Number.isFinite(hasil) ? hasil : 0;
-}
-
-function formatAngka(value){
-  return Number(value || 0).toLocaleString("id-ID",{
-    maximumFractionDigits:2
+function setFilters(f){
+  ["start","end","grup","mc","motif","warna","kode"].forEach(k=>{
+    el(k).value=f?.[k]||"";
   });
 }
-
-function escapeHTML(value){
-  return String(value ?? "").replace(/[&<>"']/g,function(c){
-    return {
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-    }[c];
-  });
-}
-
-function tanggalISO(value){
-  if(value === null || value === undefined || value === ""){
-    return "";
-  }
-
-  if(typeof value === "number"){
-    const d = new Date(value);
-    if(!Number.isNaN(d.getTime())){
-      return tanggalISO(d);
-    }
-  }
-
-  let s = normalisasiTeks(value);
-
-  // Tanggal ISO: YYYY-MM-DD
-  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
-
-  if(iso){
-    return iso[1]+"-"+iso[2]+"-"+iso[3];
-  }
-
-  // Tanggal Indonesia: DD/MM/YYYY atau DD-MM-YYYY
-  const lokal = s.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})/);
-
-  if(lokal){
-    return lokal[3]+"-"+
-      String(lokal[2]).padStart(2,"0")+"-"+
-      String(lokal[1]).padStart(2,"0");
-  }
-
-  const d = new Date(s);
-
-  if(!Number.isNaN(d.getTime())){
-    return [
-      d.getFullYear(),
-      String(d.getMonth()+1).padStart(2,"0"),
-      String(d.getDate()).padStart(2,"0")
-    ].join("-");
-  }
-
-  return "";
-}
-
-function formatTanggal(value){
-  const iso = tanggalISO(value);
-
-  if(!iso) return normalisasiTeks(value) || "-";
-
-  const bagian = iso.split("-");
-
-  return bagian[2]+"-"+bagian[1]+"-"+bagian[0];
-}
-
-function nilaiTanggal(row){
-  return ambilNilai(row,[
-    "Timestamp","Tanggal","Waktu","Date","Created At"
-  ]);
-}
-
-/* =====================================================
-   NORMALISASI DATA API
-   ===================================================== */
-
-function cariArray(data){
-  if(Array.isArray(data)) return data;
-
-  if(!data || typeof data !== "object"){
-    return null;
-  }
-
-  const kemungkinan = [
-    "data",
-    "rows",
-    "result",
-    "results",
-    "flat",
-    "produksi",
-    "records",
-    "values"
-  ];
-
-  for(const nama of kemungkinan){
-    const nilai = ambilField(data,nama);
-
-    if(Array.isArray(nilai)){
-      return nilai;
-    }
-  }
-
-  // Mendukung respons berbentuk {headers:[], data:[[]]}
-  const headers = ambilField(data,"headers");
-
-  if(Array.isArray(headers)){
-    for(const nama of kemungkinan){
-      const nilai = ambilField(data,nama);
-
-      if(Array.isArray(nilai) && nilai.length){
-        return nilai.map(item=>{
-          if(!Array.isArray(item)) return item;
-
-          const obj = {};
-          headers.forEach((h,i)=>{
-            obj[h] = item[i] ?? "";
-          });
-          return obj;
-        });
-      }
-    }
-  }
-
-  return null;
-}
-
-function normalisasiData(data){
-  const array = cariArray(data);
-
-  if(!array){
-    throw new Error(
-      "Format respons API tidak dikenali. " +
-      "Periksa hasil action=flat pada Apps Script."
-    );
-  }
-
-  let rows = array;
-
-  // Mendukung data dua dimensi dengan header di baris pertama.
-  if(rows.length && Array.isArray(rows[0])){
-    const headers = rows[0].map(normalisasiTeks);
-
-    const terlihatHeader = headers.some(h=>
-      ["timestamp","shift","grup","kodeproduk","qtypcs","mc"]
-        .includes(normalisasiKunci(h))
-    );
-
-    if(terlihatHeader){
-      rows = rows.slice(1).map(r=>{
-        const obj = {};
-        headers.forEach((h,i)=>{
-          obj[h] = r[i] ?? "";
-        });
-        return obj;
-      });
-    }else{
-      throw new Error(
-        "Data API berupa array tanpa nama kolom yang dikenali."
-      );
-    }
-  }
-
-  return rows
-    .filter(r=>r && typeof r === "object")
-    .map(r=>({
-      timestamp: ambilNilai(r,[
-        "Timestamp","Tanggal","Waktu","Date"
-      ]),
-      shift: ambilNilai(r,["SHIFT","Shift"]),
-      grup: ambilNilai(r,["GRUP","Grup","Group"]),
-      kode: ambilNilai(r,[
-        "KODE PRODUK","Kode Produk","Kode","Kode Produk Flat"
-      ]),
-      warna: ambilNilai(r,[
-        "WARNA GROUND / BLOK",
-        "Warna Ground / Blok",
-        "Warna Ground",
-        "Ground / Blok"
-      ]),
-      motif: ambilNilai(r,["MOTIF","Motif"]),
-      qty: angka(ambilNilai(r,[
-        "QTY (PCS)","QTY","Qty","PCS","Jumlah"
-      ])),
-      mc: ambilNilai(r,["MC","Mesin","No MC"]),
-      jenis: ambilNilai(r,[
-        "JENIS PRINT","Jenis Print","Jenis"
-      ])
-    }));
-}
-
-/* =====================================================
-   STATUS APLIKASI
-   ===================================================== */
-
-function setStatus(pesan,jenis=""){
-  const el = document.getElementById("status");
-
-  el.textContent = pesan;
-  el.className = "status"+(jenis ? " "+jenis : "");
-}
-
-/* =====================================================
-   AMBIL DATA APPS SCRIPT
-   ===================================================== */
-
-async function muatData(){
-  if(sedangMemuat) return;
-
-  sedangMemuat = true;
-
-  const tombol = document.getElementById("btnRefresh");
-  tombol.disabled = true;
-  tombol.textContent = "Memuat...";
-
-  setStatus("Mengambil data produksi dari Apps Script...");
-
+function saveFilters(){
   try{
-    const response = await fetch(API_URL,{
-      method:"GET",
-      cache:"no-store",
-      redirect:"follow"
-    });
-
-    if(!response.ok){
-      throw new Error("HTTP "+response.status);
+    localStorage.setItem(STORAGE_KEY,JSON.stringify({
+      locked:filterLocked,filters:lockedFilters
+    }));
+  }catch(e){}
+}
+function restoreFilters(){
+  try{
+    const s=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+    if(s?.locked&&s.filters){
+      filterLocked=true;lockedFilters=s.filters;setFilters(lockedFilters);
+      return true;
     }
+  }catch(e){}
+  return false;
+}
+function updateLockUI(){
+  ["start","end","grup","mc","motif","warna","kode"].forEach(k=>{
+    el(k).disabled=filterLocked;
+  });
+  el("apply").disabled=filterLocked;
+  el("toggleFilter").textContent=el("filterDetail").hidden?"BUKA FILTER ▼":"TUTUP FILTER ▲";
+  el("lockNote").textContent=filterLocked
+    ?"Filter terkunci. Tekan RESET SEMUA untuk membuka filter."
+    :"Filter terbuka. Terapkan filter untuk mengunci pilihan.";
+  const active=Object.entries(lockedFilters||{}).filter(([k,v])=>v)
+    .map(([k,v])=>k.toUpperCase()+": "+v);
+  el("filterSummary").textContent=active.length?active.join(" | "):"Semua data produksi";
+}
 
-    const json = await response.json();
+el("toggleFilter").addEventListener("click",()=>{
+  el("filterDetail").hidden=!el("filterDetail").hidden;
+  updateLockUI();
+});
+el("apply").addEventListener("click",async()=>{
+  const f=getFilters();
+  if(f.start&&f.end&&f.start>f.end){
+    setStatus("Tanggal awal tidak boleh melebihi tanggal akhir.","error");return;
+  }
+  lockedFilters=f;filterLocked=true;saveFilters();updateLockUI();
+  await loadDashboard();
+});
+el("reset").addEventListener("click",async()=>{
+  filterLocked=false;lockedFilters=null;
+  try{localStorage.removeItem(STORAGE_KEY)}catch(e){}
+  setFilters({});updateLockUI();await loadDashboard();
+});
+el("refresh").addEventListener("click",loadDashboard);
 
-    if(json && json.success === false){
-      throw new Error(
-        json.message || json.error || "Apps Script mengembalikan error."
-      );
-    }
-
-    semuaData = normalisasiData(json);
-
-    isiPilihanFilter();
-    terapkanFilter();
-
-    setStatus(
-      "Data berhasil dimuat. Total "+formatAngka(semuaData.length)+
-      " baris dari Apps Script.",
-      "ok"
-    );
-
-  }catch(error){
-    console.error("Gagal memuat data:",error);
-
-    setStatus(
-      "Gagal mengambil data. Periksa URL, izin deployment Apps Script, " +
-      "format JSON, dan action=flat. Detail: "+error.message,
-      "error"
-    );
-
-    document.getElementById("infoData").textContent =
-      "Data belum berhasil dimuat.";
-
-    if(!semuaData.length){
-      document.getElementById("tabelData").innerHTML =
-        '<tr><td colspan="10" class="empty">'+
-        'Data belum tersedia. Periksa Apps Script dan deployment.'+
-        '</td></tr>';
-    }
-
+function jsonp(params){
+  return new Promise((resolve,reject)=>{
+    const cb="flatCallback"+(++requestNumber);
+    const script=document.createElement("script");
+    const query=new URLSearchParams({...params,callback:cb,_:Date.now()});
+    let done=false;
+    const clean=()=>{
+      script.remove();
+      try{delete window[cb]}catch(e){window[cb]=undefined}
+    };
+    const timer=setTimeout(()=>{
+      if(done)return;done=true;clean();
+      reject(new Error("Timeout. Periksa Apps Script dan deployment."));
+    },30000);
+    window[cb]=data=>{
+      if(done)return;done=true;clearTimeout(timer);clean();resolve(data);
+    };
+    script.onerror=()=>{
+      if(done)return;done=true;clearTimeout(timer);clean();
+      reject(new Error("URL Apps Script tidak dapat diakses."));
+    };
+    script.src=API+"?"+query.toString();
+    document.head.appendChild(script);
+  });
+}
+function populateList(id,values){
+  el(id).innerHTML=(values||[]).map(v=>"<option value=\""+esc(v)+"\"></option>").join("");
+}
+function updateOptions(o){
+  if(!o)return;
+  populateList("motifList",o.motif);
+  populateList("warnaList",o.warna);
+  populateList("kodeList",o.kode);
+}
+async function loadDashboard(){
+  if(loading)return;
+  loading=true;el("refresh").disabled=true;
+  el("refresh").textContent="MEMUAT...";
+  setStatus("Mengambil data produksi...");
+  try{
+    const result=await jsonp(filterLocked&&lockedFilters?lockedFilters:{});
+    if(!result||result.success!==true)throw new Error(result?.message||"Respons API tidak valid.");
+    dashboard=result;updateOptions(result.options);render(result);
+    setStatus("Data berhasil diperbarui.","ok");
+  }catch(e){
+    console.error(e);setStatus("Gagal memuat data: "+e.message,"error");
   }finally{
-    sedangMemuat = false;
-    tombol.disabled = false;
-    tombol.textContent = "↻ Perbarui Data";
+    loading=false;el("refresh").disabled=false;
+    el("refresh").textContent="↻ PERBARUI DATA";
   }
 }
+function render(d){
+  const s=d.summary||{};
+  el("allKD").textContent=num(s.totalKD)+" KD";
+  el("allPCS").textContent=num(s.totalPCS)+" PCS";
+  el("allRows").textContent=num(s.transaksi);
+  el("periodText").textContent=d.period
+    ?(d.period.start===d.period.end
+      ?d.period.start
+      :d.period.start+" s.d. "+d.period.end)
+    :"Semua tanggal";
 
-/* =====================================================
-   PILIHAN FILTER OTOMATIS
-   ===================================================== */
-
-function isiSelect(id,daftar,labelAwal){
-  const select = document.getElementById(id);
-  const nilaiLama = select.value;
-
-  const unik = [...new Set(
-    daftar
-      .map(v=>normalisasiTeks(v))
-      .filter(v=>v!=="")
-  )].sort((a,b)=>a.localeCompare(b,"id",{
-    numeric:true,
-    sensitivity:"base"
-  }));
-
-  select.innerHTML = "";
-
-  const awal = document.createElement("option");
-  awal.value = "";
-  awal.textContent = labelAwal;
-  select.appendChild(awal);
-
-  unik.forEach(v=>{
-    const option = document.createElement("option");
-    option.value = v;
-    option.textContent = v;
-    select.appendChild(option);
-  });
-
-  if(unik.includes(nilaiLama)){
-    select.value = nilaiLama;
-  }
+  renderMain(d.data||[]);
+  renderDetail(d.detail||[]);
 }
-
-function isiPilihanFilter(){
-  isiSelect(
-    "filterShift",
-    semuaData.map(d=>d.shift),
-    "Semua Shift"
+function renderMain(items){
+  const filtered=items.filter(x=>
+    x.aPCS||x.bPCS||x.cPCS||x.totalPCS
   );
+  const body=el("mainBody");
+  const foot=el("mainFoot");
 
-  isiSelect(
-    "filterGrup",
-    semuaData.map(d=>d.grup),
-    "Semua Grup"
-  );
-
-  isiSelect(
-    "filterMC",
-    semuaData.map(d=>d.mc),
-    "Semua MC"
-  );
-
-  isiSelect(
-    "filterJenis",
-    semuaData.map(d=>d.jenis),
-    "Semua Jenis Print"
-  );
-}
-
-/* =====================================================
-   FILTER DATA
-   ===================================================== */
-
-function terapkanFilter(){
-  const mulai = document.getElementById("tanggalMulai").value;
-  const akhir = document.getElementById("tanggalAkhir").value;
-  const shift = document.getElementById("filterShift").value;
-  const grup = document.getElementById("filterGrup").value;
-  const mc = document.getElementById("filterMC").value;
-  const jenis = document.getElementById("filterJenis").value;
-  const motif = document.getElementById("filterMotif").value
-    .trim().toLowerCase();
-  const kode = document.getElementById("filterKode").value
-    .trim().toLowerCase();
-
-  dataTampil = semuaData.filter(d=>{
-    const tgl = tanggalISO(d.timestamp);
-
-    if(mulai && (!tgl || tgl < mulai)) return false;
-    if(akhir && (!tgl || tgl > akhir)) return false;
-
-    if(shift && normalisasiTeks(d.shift)!==shift) return false;
-    if(grup && normalisasiTeks(d.grup)!==grup) return false;
-    if(mc && normalisasiTeks(d.mc)!==mc) return false;
-    if(jenis && normalisasiTeks(d.jenis)!==jenis) return false;
-
-    if(motif && !normalisasiTeks(d.motif)
-      .toLowerCase().includes(motif)) return false;
-
-    if(kode && !normalisasiTeks(d.kode)
-      .toLowerCase().includes(kode)) return false;
-
-    return true;
-  });
-
-  renderTabel();
-  renderRingkasan();
-}
-
-/* =====================================================
-   RENDER TABEL
-   ===================================================== */
-
-function renderTabel(){
-  const tbody = document.getElementById("tabelData");
-  const footer = document.getElementById("tabelFooter");
-
-  if(!dataTampil.length){
-    tbody.innerHTML =
-      '<tr><td colspan="10" class="empty">'+
-      'Tidak ada data yang sesuai dengan filter.'+
-      '</td></tr>';
-
-    footer.innerHTML =
-      '<tr><td colspan="7">TOTAL PRODUKSI</td>'+
-      '<td>0</td><td colspan="2">-</td></tr>';
-
-    document.getElementById("infoData").textContent =
-      "0 data ditampilkan";
-
-    return;
-  }
-
-  let total = 0;
-
-  tbody.innerHTML = dataTampil.map((d,i)=>{
-    total += d.qty;
-
-    return `
+  if(!filtered.length){
+    body.innerHTML='<tr><td colspan="9" class="empty">Tidak ada data untuk filter ini.</td></tr>';
+  }else{
+    body.innerHTML=filtered.map(x=>`
       <tr>
-        <td>${i+1}</td>
-        <td>${escapeHTML(formatTanggal(d.timestamp))}</td>
-        <td>${escapeHTML(d.shift || "-")}</td>
-        <td>${escapeHTML(d.grup || "-")}</td>
-        <td class="text-left">${escapeHTML(d.kode || "-")}</td>
-        <td class="text-left">${escapeHTML(d.warna || "-")}</td>
-        <td class="text-left">${escapeHTML(d.motif || "-")}</td>
-        <td class="qty">${formatAngka(d.qty)}</td>
-        <td>${escapeHTML(d.mc || "-")}</td>
-        <td>${escapeHTML(d.jenis || "-")}</td>
-      </tr>
-    `;
-  }).join("");
+        <td class="mc">${esc(x.mc)}</td>
+        <td class="number">${num(x.aPCS)} <span>PCS</span></td>
+        <td class="number">${num(x.bPCS)} <span>PCS</span></td>
+        <td class="number">${num(x.cPCS)} <span>PCS</span></td>
+        <td class="number achievement">${num(x.totalKD)} <span>KD</span></td>
+        <td class="number target">${num(x.targetKD)} <span>KD</span></td>
+        <td class="rank">${esc(x.rankingA??"-")}</td>
+        <td class="rank">${esc(x.rankingB??"-")}</td>
+        <td class="rank">${esc(x.rankingC??"-")}</td>
+      </tr>`).join("");
+  }
 
-  footer.innerHTML = `
-    <tr>
-      <td colspan="7">TOTAL PRODUKSI</td>
-      <td>${formatAngka(total)}</td>
-      <td colspan="2">${formatAngka(dataTampil.length)} TRANSAKSI</td>
-    </tr>
-  `;
+  const total=filtered.reduce((a,x)=>{
+    a.a+=Number(x.aPCS||0);a.b+=Number(x.bPCS||0);
+    a.c+=Number(x.cPCS||0);a.pcs+=Number(x.totalPCS||0);
+    a.kd+=Number(x.totalKD||0);a.target+=Number(x.targetKD||0);
+    return a;
+  },{a:0,b:0,c:0,pcs:0,kd:0,target:0});
 
-  document.getElementById("infoData").textContent =
-    formatAngka(dataTampil.length)+" data ditampilkan";
+  foot.innerHTML=`<tr>
+    <td>TOTAL</td>
+    <td class="number">${num(total.a)} PCS</td>
+    <td class="number">${num(total.b)} PCS</td>
+    <td class="number">${num(total.c)} PCS</td>
+    <td class="number">${num(total.kd)} KD</td>
+    <td class="number">${num(total.target)} KD</td>
+    <td>-</td><td>-</td><td>-</td>
+  </tr>`;
+}
+function renderDetail(items){
+  const body=el("detailBody"),foot=el("detailFoot");
+  el("detailCount").textContent=num(items.length)+" jenis kombinasi";
+
+  if(!items.length){
+    body.innerHTML='<tr><td colspan="7" class="empty">Tidak ada rincian produksi.</td></tr>';
+  }else{
+    body.innerHTML=items.map(x=>`
+      <tr>
+        <td class="left">${esc(x.motif)}</td>
+        <td class="left">${esc(x.warna)}</td>
+        <td class="left">${esc(x.kode)}</td>
+        <td class="number">${num(x.aPCS)}</td>
+        <td class="number">${num(x.bPCS)}</td>
+        <td class="number">${num(x.cPCS)}</td>
+        <td class="number"><strong>${num(x.totalPCS)}</strong></td>
+      </tr>`).join("");
+  }
+
+  const t=items.reduce((a,x)=>{
+    a.a+=Number(x.aPCS||0);a.b+=Number(x.bPCS||0);
+    a.c+=Number(x.cPCS||0);a.total+=Number(x.totalPCS||0);
+    return a;
+  },{a:0,b:0,c:0,total:0});
+
+  foot.innerHTML=`<tr>
+    <td colspan="3">TOTAL</td>
+    <td class="number">${num(t.a)}</td>
+    <td class="number">${num(t.b)}</td>
+    <td class="number">${num(t.c)}</td>
+    <td class="number">${num(t.total)} PCS</td>
+  </tr>`;
 }
 
-/* =====================================================
-   KARTU RINGKASAN
-   ===================================================== */
-
-function renderRingkasan(){
-  const total = dataTampil.reduce((sum,d)=>sum+d.qty,0);
-
-  const mesin = new Set(
-    dataTampil
-      .map(d=>normalisasiTeks(d.mc))
-      .filter(Boolean)
-  );
-
-  document.getElementById("totalQty").textContent =
-    formatAngka(total);
-
-  document.getElementById("totalTransaksi").textContent =
-    formatAngka(dataTampil.length);
-
-  document.getElementById("totalMC").textContent =
-    formatAngka(mesin.size);
-}
-
-/* =====================================================
-   RESET FILTER
-   ===================================================== */
-
-function resetFilter(){
-  document.getElementById("tanggalMulai").value = "";
-  document.getElementById("tanggalAkhir").value = "";
-  document.getElementById("filterShift").value = "";
-  document.getElementById("filterGrup").value = "";
-  document.getElementById("filterMC").value = "";
-  document.getElementById("filterJenis").value = "";
-  document.getElementById("filterMotif").value = "";
-  document.getElementById("filterKode").value = "";
-
-  terapkanFilter();
-}
-
-/* =====================================================
-   EVENT
-   ===================================================== */
-
-document.getElementById("btnFilter")
-  .addEventListener("click",terapkanFilter);
-
-document.getElementById("btnReset")
-  .addEventListener("click",resetFilter);
-
-document.getElementById("btnRefresh")
-  .addEventListener("click",muatData);
-
-document.getElementById("btnPrint")
-  .addEventListener("click",()=>window.print());
-
-[
-  "tanggalMulai",
-  "tanggalAkhir",
-  "filterShift",
-  "filterGrup",
-  "filterMC",
-  "filterJenis"
-].forEach(id=>{
-  document.getElementById(id)
-    .addEventListener("change",terapkanFilter);
-});
-
-["filterMotif","filterKode"].forEach(id=>{
-  document.getElementById(id)
-    .addEventListener("input",terapkanFilter);
-});
-
-/* =====================================================
-   JALANKAN APLIKASI
-   ===================================================== */
-
-muatData();
-
+/* Mulai aplikasi */
+restoreFilters();
+updateLockUI();
+loadDashboard();
 </script>
 </body>
 </html>
