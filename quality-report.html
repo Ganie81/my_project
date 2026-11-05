@@ -1,1 +1,1157 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07182e">
+<title>QUALITY REPORT | PT BEHAESTEX</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+  --navy:#07182e;
+  --navy2:#102b4b;
+  --gold:#d5ad55;
+  --gold2:#f3d78d;
+  --white:#f7f9fc;
+  --muted:#aab8c9;
+  --panel:#112b49;
+  --border:rgba(213,173,85,.25);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--navy);
+  color:var(--white);
+  font-family:Arial,Helvetica,sans-serif;
+  overflow:hidden;
+}
+
+header{
+  height:62px;
+  padding:0 25px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#061326;
+  border-bottom:1px solid var(--border);
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
+}
+
+.brand{
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  color:var(--gold2);
+}
+
+.brand small{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:2px;
+  margin-top:4px;
+}
+
+.status{
+  font-size:11px;
+  color:#65e6a0;
+}
+
+#presentation{
+  position:absolute;
+  top:62px;
+  bottom:65px;
+  left:0;
+  right:0;
+  overflow:hidden;
+}
+
+.slide{
+  display:none;
+  width:100%;
+  height:100%;
+  padding:35px 5%;
+  overflow-y:auto;
+  animation:fade .4s ease;
+}
+
+.slide.active{display:block}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.slide-head{
+  border-left:4px solid var(--gold);
+  padding-left:17px;
+  margin-bottom:25px;
+}
+
+.slide-head h2{
+  margin:0;
+  font-size:clamp(22px,3vw,34px);
+  color:var(--gold2);
+  letter-spacing:1px;
+}
+
+.slide-head p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.cover{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:
+    radial-gradient(ellipse at center,rgba(213,173,85,.13),transparent 60%);
+}
+
+.cover .line{
+  width:100px;
+  height:3px;
+  background:var(--gold);
+  margin:20px;
+}
+
+.cover h1{
+  color:var(--gold2);
+  font-size:clamp(35px,7vw,75px);
+  line-height:1.1;
+  margin:10px;
+  letter-spacing:3px;
+}
+
+.cover h2{
+  font-size:clamp(15px,2vw,22px);
+  font-weight:400;
+  letter-spacing:3px;
+}
+
+.cover p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:2;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.metric{
+  background:linear-gradient(145deg,#173655,#0c2038);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:20px;
+  min-height:110px;
+}
+
+.metric span{
+  color:var(--muted);
+  font-size:11px;
+  display:block;
+}
+
+.metric strong{
+  display:block;
+  color:var(--gold2);
+  font-size:clamp(22px,3vw,34px);
+  margin-top:12px;
+}
+
+.metric small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:20px;
+  min-width:0;
+}
+
+.panel h3{
+  color:var(--gold2);
+  font-size:14px;
+  margin:0 0 18px;
+}
+
+.chart-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:17px;
+}
+
+.chart-box{
+  height:300px;
+  position:relative;
+}
+
+.chart-box.large{height:350px}
+
+.table-wrap{
+  width:100%;
+  overflow:auto;
+  max-height:55vh;
+  border-radius:10px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+  min-width:650px;
+}
+
+th{
+  background:#1d3c5c;
+  color:var(--gold2);
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+th,td{
+  padding:12px 13px;
+  text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+td.num{text-align:right}
+tbody tr:hover{background:rgba(213,173,85,.08)}
+
+.rank{
+  color:var(--gold2);
+  font-weight:bold;
+}
+
+.empty{
+  text-align:center;
+  padding:40px;
+  color:var(--muted);
+}
+
+.insight{
+  background:rgba(213,173,85,.08);
+  border-left:3px solid var(--gold);
+  padding:17px;
+  border-radius:5px;
+  margin-top:15px;
+  font-size:13px;
+  line-height:1.8;
+  color:#e4eaf2;
+}
+
+footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:65px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:#061326;
+  border-top:1px solid var(--border);
+  z-index:20;
+}
+
+.controls{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+button{
+  background:#173655;
+  border:1px solid var(--border);
+  color:var(--gold2);
+  padding:10px 16px;
+  border-radius:7px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#284d70;
+}
+
+button:disabled{
+  opacity:.3;
+  cursor:not-allowed;
+}
+
+.page-info{
+  font-size:11px;
+  color:var(--muted);
+}
+
+#loading{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:#07182e;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:15px;
+}
+
+.spinner{
+  width:42px;
+  height:42px;
+  border:4px solid #29415a;
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+#loading p{color:var(--gold2);font-size:13px}
+
+.error{
+  color:#ff8989;
+  max-width:500px;
+  text-align:center;
+  line-height:1.8;
+  padding:20px;
+}
+
+@media(max-width:800px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .chart-grid{grid-template-columns:1fr}
+  .slide{padding:25px 16px}
+  .chart-box{height:260px}
+  header{padding:0 13px}
+  footer{padding:0 10px}
+  button{padding:9px 11px;font-size:11px}
+  .brand{font-size:12px}
+}
+
+@media(max-width:420px){
+  .cards{gap:8px}
+  .metric{padding:13px}
+  .metric strong{font-size:23px}
+  .status{font-size:9px}
+  .page-info{font-size:9px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    PT BEHAESTEX
+    <small>DEPARTEMEN PRINTING</small>
+  </div>
+  <div class="status" id="connection">● MENGHUBUNGKAN...</div>
+</header>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <p>MEMUAT QUALITY REPORT...</p>
+</div>
+
+<main id="presentation">
+
+<!-- SLIDE 1 -->
+<section class="slide active" id="slide1">
+  <div class="cover">
+    <div class="line"></div>
+    <p>PT BEHAESTEX · DEPARTEMEN PRINTING</p>
+    <h1>QUALITY<br>REPORT</h1>
+    <h2>LAPORAN KUALITAS PRODUKSI</h2>
+    <div class="line"></div>
+    <p id="coverPeriod">PERIODE DATA</p>
+    <p id="coverTotal">Memuat data...</p>
+  </div>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide" id="slide2">
+  <div class="slide-head">
+    <h2>EXECUTIVE SUMMARY</h2>
+    <p>Ringkasan keseluruhan data kualitas produksi</p>
+  </div>
+
+  <div class="cards">
+    <div class="metric">
+      <span>TOTAL DATA</span>
+      <strong id="totalData">0</strong>
+      <small>Record produksi</small>
+    </div>
+    <div class="metric">
+      <span>TOTAL DEFECT</span>
+      <strong id="totalDefect">0</strong>
+      <small>Akumulasi jumlah defect</small>
+    </div>
+    <div class="metric">
+      <span>JUMLAH JENIS DEFECT</span>
+      <strong id="jenisDefect">0</strong>
+      <small>Jenis berbeda</small>
+    </div>
+    <div class="metric">
+      <span>JUMLAH MESIN</span>
+      <strong id="jumlahMesin">0</strong>
+      <small>Mesin terdata</small>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>RINGKASAN LAPORAN</h3>
+    <div id="summaryText" class="insight">Menunggu data...</div>
+  </div>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide" id="slide3">
+  <div class="slide-head">
+    <h2>TREND KUALITAS BULANAN</h2>
+    <p>Perkembangan jumlah defect berdasarkan bulan</p>
+  </div>
+  <div class="panel">
+    <h3>TREND DEFECT PER BULAN</h3>
+    <div class="chart-box large">
+      <canvas id="monthlyChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide" id="slide4">
+  <div class="slide-head">
+    <h2>ANALISIS JENIS DEFECT</h2>
+    <p>Identifikasi jenis defect yang paling banyak terjadi</p>
+  </div>
+  <div class="chart-grid">
+    <div class="panel">
+      <h3>KOMPOSISI DEFECT</h3>
+      <div class="chart-box">
+        <canvas id="defectPie"></canvas>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>TOP 10 JENIS DEFECT</h3>
+      <div class="chart-box">
+        <canvas id="defectBar"></canvas>
+      </div>
+    </div>
+  </div>
+  <div id="defectInsight" class="insight"></div>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide" id="slide5">
+  <div class="slide-head">
+    <h2>ANALISIS MESIN</h2>
+    <p>Distribusi defect berdasarkan mesin produksi</p>
+  </div>
+  <div class="panel">
+    <h3>TOP 10 MESIN BERDASARKAN JUMLAH DEFECT</h3>
+    <div class="chart-box large">
+      <canvas id="machineChart"></canvas>
+    </div>
+  </div>
+  <div id="machineInsight" class="insight"></div>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide" id="slide6">
+  <div class="slide-head">
+    <h2>ANALISIS MOTIF</h2>
+    <p>Identifikasi motif dengan jumlah defect tertinggi</p>
+  </div>
+  <div class="panel">
+    <h3>TOP 10 MOTIF</h3>
+    <div class="chart-box large">
+      <canvas id="motifChart"></canvas>
+    </div>
+  </div>
+  <div id="motifInsight" class="insight"></div>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide" id="slide7">
+  <div class="slide-head">
+    <h2>ANALISIS PRODUK</h2>
+    <p>Distribusi defect berdasarkan kode produk</p>
+  </div>
+  <div class="panel">
+    <h3>TOP 10 KODE PRODUK</h3>
+    <div class="chart-box large">
+      <canvas id="productChart"></canvas>
+    </div>
+  </div>
+  <div id="productInsight" class="insight"></div>
+</section>
+
+<!-- SLIDE 8 -->
+<section class="slide" id="slide8">
+  <div class="slide-head">
+    <h2>ANALISIS GRUP</h2>
+    <p>Perbandingan jumlah defect antargrup</p>
+  </div>
+  <div class="panel">
+    <h3>DEFECT BERDASARKAN GRUP</h3>
+    <div class="chart-box large">
+      <canvas id="groupChart"></canvas>
+    </div>
+  </div>
+  <div id="groupInsight" class="insight"></div>
+</section>
+
+<!-- SLIDE 9 -->
+<section class="slide" id="slide9">
+  <div class="slide-head">
+    <h2>ANALISIS OPERATOR</h2>
+    <p>Distribusi data defect berdasarkan operator</p>
+  </div>
+  <div class="panel">
+    <h3>TOP 10 OPERATOR BERDASARKAN JUMLAH DEFECT</h3>
+    <div class="chart-box large">
+      <canvas id="operatorChart"></canvas>
+    </div>
+  </div>
+  <div id="operatorInsight" class="insight"></div>
+</section>
+
+<!-- SLIDE 10 -->
+<section class="slide" id="slide10">
+  <div class="slide-head">
+    <h2>DETAIL DATA QUALITY</h2>
+    <p>Data aktual yang diterima dari Spreadsheet QLTY</p>
+  </div>
+
+  <div class="cards">
+    <div class="metric">
+      <span>TOTAL RECORD</span>
+      <strong id="detailTotal">0</strong>
+    </div>
+    <div class="metric">
+      <span>UPDATE TERAKHIR</span>
+      <strong style="font-size:17px" id="lastUpdate">-</strong>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>NO</th>
+            <th>TANGGAL</th>
+            <th>ROLL</th>
+            <th>KODE PRODUK</th>
+            <th>JUMLAH</th>
+            <th>DEFECT</th>
+            <th>MESIN</th>
+            <th>MOTIF</th>
+            <th>BLOK</th>
+            <th>GRUP</th>
+            <th>OPERATOR</th>
+          </tr>
+        </thead>
+        <tbody id="detailTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="page-info" id="pageInfo">SLIDE 1 / 10</div>
+
+  <div class="controls">
+    <button onclick="previousSlide()">◀</button>
+    <button onclick="toggleAuto()" id="autoBtn">▶ AUTO</button>
+    <button onclick="refreshData()">↻</button>
+    <button onclick="nextSlide()">▶</button>
+  </div>
+</footer>
+
+<script>
+/* =========================================
+   KONFIGURASI
+========================================= */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbzaSdxh2gzhzSgkm4_p9RInl_Cij3HZzLFg3IAA485Meb6e5kkPZmMXJ-rrf1IwOD26/exec";
+
+const REFRESH_INTERVAL = 5 * 60 * 1000;
+const SLIDE_COUNT = 10;
+
+let currentSlide = 1;
+let autoPlay = false;
+let autoTimer = null;
+let refreshTimer = null;
+let records = [];
+let charts = {};
+
+/* =========================================
+   UTILITAS
+========================================= */
+
+const $ = id => document.getElementById(id);
+
+const numberFormat = n =>
+  Number(n || 0).toLocaleString("id-ID");
+
+function clean(value){
+  return String(value ?? "").trim() || "-";
+}
+
+function dateValue(value){
+  if(value instanceof Date) return value;
+
+  if(typeof value === "number"){
+    return new Date(value);
+  }
+
+  const s = String(value || "").trim();
+
+  // Format tanggal Indonesia: DD/MM/YYYY
+  const m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
+
+  if(m){
+    return new Date(+m[3], +m[2]-1, +m[1]);
+  }
+
+  const d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function dateText(value){
+  const d = dateValue(value);
+
+  return d
+    ? d.toLocaleDateString("id-ID",{
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+      })
+    : clean(value);
+}
+
+function monthText(value){
+  const d = dateValue(value);
+
+  return d
+    ? d.toLocaleDateString("id-ID",{
+        month:"long",
+        year:"numeric"
+      })
+    : clean(value);
+}
+
+function sum(rows,key){
+  return rows.reduce((total,r)=>
+    total + (Number(r[key]) || 0),0);
+}
+
+function aggregate(key){
+  const result = {};
+
+  records.forEach(r=>{
+    const name = clean(r[key]);
+
+    if(name === "-") return;
+
+    result[name] = (result[name] || 0) +
+      (Number(r.jumlah) || 0);
+  });
+
+  return Object.entries(result)
+    .map(([name,value])=>({name,value}))
+    .sort((a,b)=>b.value-a.value);
+}
+
+function topItems(key,limit=10){
+  return aggregate(key).slice(0,limit);
+}
+
+function destroyChart(id){
+  if(charts[id]){
+    charts[id].destroy();
+    delete charts[id];
+  }
+}
+
+/* =========================================
+   GRAFIK
+========================================= */
+
+const goldColors = [
+  "#d5ad55","#4e91c9","#56b68a","#bd7fcd",
+  "#df805d","#76a9a8","#e5c66b","#8199c4",
+  "#bb8c73","#8fc5a7"
+];
+
+function makeBar(id,items,horizontal=false){
+  destroyChart(id);
+
+  charts[id] = new Chart($(id),{
+    type:"bar",
+    data:{
+      labels:items.map(x=>x.name),
+      datasets:[{
+        data:items.map(x=>x.value),
+        backgroundColor:goldColors,
+        borderRadius:5,
+        borderSkipped:false
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      indexAxis:horizontal?"y":"x",
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            label:ctx=>" "+numberFormat(ctx.raw)
+          }
+        }
+      },
+      scales:{
+        x:{
+          ticks:{color:"#c5d1df"},
+          grid:{color:"rgba(255,255,255,.07)"}
+        },
+        y:{
+          ticks:{color:"#c5d1df"},
+          grid:{color:"rgba(255,255,255,.07)"}
+        }
+      }
+    }
+  });
+}
+
+function makePie(id,items){
+  destroyChart(id);
+
+  charts[id] = new Chart($(id),{
+    type:"doughnut",
+    data:{
+      labels:items.map(x=>x.name),
+      datasets:[{
+        data:items.map(x=>x.value),
+        backgroundColor:goldColors,
+        borderColor:"#112b49",
+        borderWidth:3
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          position:"bottom",
+          labels:{
+            color:"#e2e9f2",
+            padding:12,
+            font:{size:10}
+          }
+        }
+      }
+    }
+  });
+}
+
+function monthlyData(){
+  const result={};
+
+  records.forEach(r=>{
+    const d=dateValue(r.tanggal);
+    if(!d) return;
+
+    const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+
+    result[key]=(result[key]||0)+(Number(r.jumlah)||0);
+  });
+
+  return Object.entries(result)
+    .sort((a,b)=>a[0].localeCompare(b[0]))
+    .map(([key,value])=>{
+      const [year,month]=key.split("-");
+      return {
+        name:new Date(+year,+month-1,1)
+          .toLocaleDateString("id-ID",{month:"short",year:"numeric"}),
+        value
+      };
+    });
+}
+
+/* =========================================
+   ANALISIS DATA
+========================================= */
+
+function renderSummary(){
+  const total=sum(records,"jumlah");
+  const defects=aggregate("defect");
+  const machines=aggregate("mesin");
+
+  $("totalData").textContent=numberFormat(records.length);
+  $("totalDefect").textContent=numberFormat(total);
+  $("jenisDefect").textContent=defects.length;
+  $("jumlahMesin").textContent=machines.length;
+
+  $("coverTotal").textContent=
+    numberFormat(records.length)+" RECORD DATA QUALITY";
+
+  const dates=records
+    .map(r=>dateValue(r.tanggal))
+    .filter(Boolean)
+    .sort((a,b)=>a-b);
+
+  if(dates.length){
+    $("coverPeriod").textContent=
+      dates[0].toLocaleDateString("id-ID",{month:"long",year:"numeric"})
+      +" — "+
+      dates[dates.length-1].toLocaleDateString("id-ID",{month:"long",year:"numeric"});
+  }
+
+  $("summaryText").innerHTML=
+    "Laporan ini memuat <b>"+numberFormat(records.length)+
+    " record</b> dengan total akumulasi jumlah defect sebesar <b>"+
+    numberFormat(total)+"</b>. Terdapat <b>"+defects.length+
+    " jenis defect</b> dan <b>"+machines.length+
+    " mesin</b> yang tercatat dalam database. "+
+    (defects.length
+      ?"Jenis defect tertinggi adalah <b>"+defects[0].name+
+       "</b> dengan jumlah "+numberFormat(defects[0].value)+"."
+      :"Belum terdapat data jenis defect.");
+
+  $("detailTotal").textContent=numberFormat(records.length);
+}
+
+function renderMonthly(){
+  makeBar("monthlyChart",monthlyData());
+}
+
+function renderDefect(){
+  const items=topItems("defect",10);
+
+  makePie("defectPie",items);
+  makeBar("defectBar",items,true);
+
+  $("defectInsight").textContent=items.length
+    ?"Jenis defect tertinggi adalah "+items[0].name+
+      " dengan jumlah "+numberFormat(items[0].value)+"."
+    :"Belum tersedia data defect.";
+}
+
+function renderMachine(){
+  const items=topItems("mesin",10);
+  makeBar("machineChart",items,true);
+
+  $("machineInsight").textContent=items.length
+    ?"Mesin dengan akumulasi defect tertinggi adalah "+
+      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+    :"Belum tersedia data mesin.";
+}
+
+function renderMotif(){
+  const items=topItems("motif",10);
+  makeBar("motifChart",items,true);
+
+  $("motifInsight").textContent=items.length
+    ?"Motif dengan jumlah defect tertinggi adalah "+
+      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+    :"Belum tersedia data motif.";
+}
+
+function renderProduct(){
+  const items=topItems("produk",10);
+  makeBar("productChart",items,true);
+
+  $("productInsight").textContent=items.length
+    ?"Kode produk dengan jumlah defect tertinggi adalah "+
+      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+    :"Belum tersedia data produk.";
+}
+
+function renderGroup(){
+  const items=topItems("grup",20);
+  makeBar("groupChart",items,true);
+
+  $("groupInsight").textContent=items.length
+    ?"Grup dengan akumulasi defect tertinggi adalah "+
+      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+    :"Belum tersedia data grup.";
+}
+
+function renderOperator(){
+  const items=topItems("operator",10);
+  makeBar("operatorChart",items,true);
+
+  $("operatorInsight").textContent=items.length
+    ?"Operator dengan jumlah defect tertinggi pada data adalah "+
+      items[0].name+" sebanyak "+numberFormat(items[0].value)+". "+
+      "Angka ini merupakan distribusi data, bukan penilaian kinerja individu."
+    :"Belum tersedia data operator.";
+}
+
+/* =========================================
+   TABEL DETAIL
+========================================= */
+
+function renderTable(){
+  const tbody=$("detailTable");
+
+  tbody.innerHTML="";
+
+  // Urutan data terbaru ditampilkan lebih dahulu.
+  const sorted=[...records].sort((a,b)=>{
+    const da=dateValue(a.tanggal);
+    const db=dateValue(b.tanggal);
+
+    if(!da || !db) return 0;
+    return db-da;
+  });
+
+  sorted.forEach((r,i)=>{
+    const tr=document.createElement("tr");
+
+    const values=[
+      i+1,
+      dateText(r.tanggal),
+      clean(r.roll),
+      clean(r.produk),
+      numberFormat(r.jumlah),
+      clean(r.defect),
+      clean(r.mesin),
+      clean(r.motif),
+      clean(r.blok),
+      clean(r.grup),
+      clean(r.operator)
+    ];
+
+    values.forEach((value,index)=>{
+      const td=document.createElement("td");
+      td.textContent=value;
+
+      if(index===4) td.className="num";
+
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  if(!records.length){
+    tbody.innerHTML=
+      '<tr><td colspan="11" class="empty">Belum ada data</td></tr>';
+  }
+}
+
+/* =========================================
+   RENDER SEMUA
+========================================= */
+
+function renderAll(){
+  renderSummary();
+  renderMonthly();
+  renderDefect();
+  renderMachine();
+  renderMotif();
+  renderProduct();
+  renderGroup();
+  renderOperator();
+  renderTable();
+}
+
+/* =========================================
+   AMBIL DATA APPS SCRIPT
+========================================= */
+
+async function refreshData(){
+  $("connection").textContent="● MEMPERBARUI DATA...";
+  $("connection").style.color="#f3d78d";
+
+  try{
+    const response=await fetch(API_URL,{
+      method:"GET",
+      cache:"no-store"
+    });
+
+    if(!response.ok){
+      throw new Error("HTTP "+response.status);
+    }
+
+    const result=await response.json();
+
+    if(result.status!=="success"){
+      throw new Error(result.message || "API mengembalikan error");
+    }
+
+    if(!Array.isArray(result.data)){
+      throw new Error("Format data API tidak sesuai");
+    }
+
+    records=result.data.map(r=>({
+      tanggal:r.tanggal,
+      bulan:r.bulan,
+      roll:r.roll,
+      produk:r.produk,
+      jumlah:Number(r.jumlah)||0,
+      defect:r.defect,
+      mesin:r.mesin,
+      motif:r.motif,
+      blok:r.blok,
+      grup:r.grup,
+      operator:r.operator
+    }));
+
+    renderAll();
+
+    $("lastUpdate").textContent=
+      new Date().toLocaleTimeString("id-ID",{
+        hour:"2-digit",
+        minute:"2-digit"
+      });
+
+    $("connection").textContent=
+      "● TERHUBUNG · "+numberFormat(records.length)+" DATA";
+
+    $("connection").style.color="#65e6a0";
+
+  }catch(error){
+    console.error(error);
+
+    $("connection").textContent="● GAGAL MEMUAT DATA";
+    $("connection").style.color="#ff8989";
+
+    if(!records.length){
+      $("loading").innerHTML=
+        '<div class="error"><h3>GAGAL MENGAMBIL DATA</h3>'+
+        '<p>'+error.message+'</p>'+
+        '<button onclick="refreshData()">COBA LAGI</button>'+
+        '<p>Periksa URL Apps Script, izin akses web app, dan koneksi internet.</p></div>';
+      return;
+    }
+  }
+
+  $("loading").style.display="none";
+}
+
+/* =========================================
+   NAVIGASI SLIDE
+========================================= */
+
+function showSlide(number){
+  currentSlide=Math.max(1,Math.min(SLIDE_COUNT,number));
+
+  document.querySelectorAll(".slide").forEach(slide=>{
+    slide.classList.remove("active");
+  });
+
+  $("slide"+currentSlide).classList.add("active");
+
+  $("pageInfo").textContent=
+    "SLIDE "+currentSlide+" / "+SLIDE_COUNT;
+
+  document.querySelectorAll(".slide.active").forEach(slide=>{
+    slide.scrollTop=0;
+  });
+}
+
+function nextSlide(){
+  showSlide(currentSlide===SLIDE_COUNT?1:currentSlide+1);
+}
+
+function previousSlide(){
+  showSlide(currentSlide===1?SLIDE_COUNT:currentSlide-1);
+}
+
+/* =========================================
+   AUTOPLAY
+========================================= */
+
+function toggleAuto(){
+  autoPlay=!autoPlay;
+
+  if(autoPlay){
+    $("autoBtn").textContent="Ⅱ PAUSE";
+
+    autoTimer=setInterval(()=>{
+      nextSlide();
+    },12000);
+
+  }else{
+    $("autoBtn").textContent="▶ AUTO";
+    clearInterval(autoTimer);
+  }
+}
+
+/* =========================================
+   KEYBOARD
+========================================= */
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight") nextSlide();
+  if(e.key==="ArrowLeft") previousSlide();
+
+  if(e.key===" "){
+    e.preventDefault();
+    toggleAuto();
+  }
+});
+
+/* =========================================
+   SWIPE MOBILE
+========================================= */
+
+let touchStart=0;
+
+document.addEventListener("touchstart",e=>{
+  touchStart=e.changedTouches[0].screenX;
+},{passive:true});
+
+document.addEventListener("touchend",e=>{
+  const distance=e.changedTouches[0].screenX-touchStart;
+
+  if(Math.abs(distance)>70){
+    if(distance<0) nextSlide();
+    else previousSlide();
+  }
+},{passive:true});
+
+/* =========================================
+   JALANKAN APLIKASI
+========================================= */
+
+refreshData();
+
+refreshTimer=setInterval(()=>{
+  refreshData();
+},REFRESH_INTERVAL);
+
+</script>
+
+</body>
+</html>
+
