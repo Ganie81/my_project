@@ -9,26 +9,16 @@
 
 <style>
 :root{
-  --bg:#071426;
-  --panel:#0d2038;
-  --panel2:#122b49;
-  --line:#203b5b;
-  --blue:#36a2ff;
-  --cyan:#53d4e8;
-  --green:#36d399;
-  --yellow:#f7c65b;
-  --red:#ff667d;
-  --pink:#f472b6;
-  --text:#edf5ff;
-  --muted:#91a9c6;
+  --bg:#071426;--panel:#0d2038;--panel2:#122b49;
+  --line:#203b5b;--blue:#36a2ff;--cyan:#53d4e8;
+  --green:#36d399;--yellow:#f7c65b;--red:#ff667d;
+  --pink:#f472b6;--text:#edf5ff;--muted:#91a9c6;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  min-height:100vh;
+  margin:0;min-height:100vh;
   background:radial-gradient(circle at 80% 0%,#14345a 0,#071426 45%,#050e1b 100%);
-  color:var(--text);
-  font-family:Inter,system-ui,Arial,sans-serif;
+  color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;
 }
 button,input,select{font:inherit}
 button{cursor:pointer}
@@ -42,10 +32,7 @@ button{cursor:pointer}
   width:78px;height:78px;object-fit:contain;
   filter:drop-shadow(2px 3px 5px #0008)
 }
-.eyebrow{
-  color:var(--cyan);font-size:10px;font-weight:800;
-  letter-spacing:2px
-}
+.eyebrow{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:2px}
 .brand h1{font-size:clamp(18px,3vw,27px);margin:4px 0}
 .brand p{font-size:11px;color:var(--muted);margin:0}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -63,10 +50,7 @@ button{cursor:pointer}
   display:flex;align-items:center;gap:8px;
   color:var(--muted);font-size:11px;margin:0 0 16px
 }
-.dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--yellow);box-shadow:0 0 10px currentColor
-}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px currentColor}
 .dot.online{background:var(--green)}
 .dot.error{background:var(--red)}
 .layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:17px}
@@ -75,27 +59,19 @@ button{cursor:pointer}
   border-radius:17px;padding:13px;height:max-content;
   position:sticky;top:12px
 }
-.side-label{
-  color:#6885a6;font-size:9px;font-weight:800;
-  letter-spacing:2px;padding:10px
-}
+.side-label{color:#6885a6;font-size:9px;font-weight:800;letter-spacing:2px;padding:10px}
 .nav{
-  display:flex;align-items:center;gap:10px;
-  width:100%;text-align:left;background:transparent;
-  border:1px solid transparent;color:#a9bdd5;
-  padding:13px 11px;border-radius:11px;
+  display:flex;align-items:center;gap:10px;width:100%;
+  text-align:left;background:transparent;border:1px solid transparent;
+  color:#a9bdd5;padding:13px 11px;border-radius:11px;
   margin:3px 0;font-size:11px;font-weight:800
 }
 .nav .num{color:#6f91b7;font-size:10px}
-.nav.active{
-  background:linear-gradient(100deg,#123d68,#102b49);
-  border-color:#24517a;color:#fff
-}
+.nav.active{background:linear-gradient(100deg,#123d68,#102b49);border-color:#24517a;color:#fff}
 .nav.active .num{color:var(--cyan)}
 .side-foot{
   border-top:1px solid var(--line);margin-top:13px;
-  padding:13px 9px 3px;color:#7893b1;
-  font-size:9px;line-height:1.7
+  padding:13px 9px 3px;color:#7893b1;font-size:9px;line-height:1.7
 }
 .content{min-width:0}
 .page-head{
@@ -109,9 +85,7 @@ button{cursor:pointer}
   background:var(--panel);border:1px solid var(--line);
   border-radius:12px;padding:9px
 }
-.filter-panel label{
-  color:var(--muted);font-size:9px;font-weight:800
-}
+.filter-panel label{color:var(--muted);font-size:9px;font-weight:800}
 .filter-panel input,.filter-panel select{
   background:#142d49;color:white;border:1px solid #315171;
   border-radius:8px;padding:8px 9px;min-width:125px;
@@ -120,8 +94,7 @@ button{cursor:pointer}
 .card{
   background:linear-gradient(145deg,#102641,#0a1b30);
   border:1px solid var(--line);border-radius:16px;
-  padding:16px;min-width:0;
-  box-shadow:0 10px 28px #0002
+  padding:16px;min-width:0;box-shadow:0 10px 28px #0002
 }
 .card-title{
   display:flex;justify-content:space-between;
@@ -130,29 +103,18 @@ button{cursor:pointer}
 .card-title h3{font-size:13px;margin:0}
 .card-title span{font-size:9px;color:var(--muted)}
 .grid-two{display:grid;grid-template-columns:1.15fr .85fr;gap:13px}
-.table-wrap{
-  overflow:auto;max-height:590px;
-  border:1px solid var(--line);border-radius:11px
-}
+.table-wrap{overflow:auto;max-height:590px;border:1px solid var(--line);border-radius:11px}
 table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:10px}
-th{
-  position:sticky;top:0;background:#173452;
-  color:#cce4ff;text-align:left;padding:12px 10px;
-  z-index:2
-}
+th{position:sticky;top:0;background:#173452;color:#cce4ff;text-align:left;padding:12px 10px;z-index:2}
 td{padding:11px 10px;border-top:1px solid #1b3450;color:#d6e4f5}
 tbody tr:hover td{background:#122b49}
 td.num,th.num{text-align:right}
 .empty{text-align:center;padding:35px;color:var(--muted)}
 .motif-name{font-weight:850;color:#fff}
-.percent{
-  display:inline-flex;align-items:center;gap:8px;
-  font-weight:900
-}
+.percent{display:inline-flex;align-items:center;gap:8px;font-weight:900}
 .lamp{
-  display:inline-block;width:12px;height:12px;
-  border-radius:50%;flex:0 0 12px;
-  box-shadow:0 0 7px currentColor,0 0 15px currentColor
+  display:inline-block;width:12px;height:12px;border-radius:50%;
+  flex:0 0 12px;box-shadow:0 0 7px currentColor,0 0 15px currentColor
 }
 .lamp.red{background:var(--red);color:var(--red)}
 .lamp.yellow{background:var(--yellow);color:var(--yellow)}
@@ -161,39 +123,63 @@ td.num,th.num{text-align:right}
 .lamp.pink{background:var(--pink);color:var(--pink)}
 .status-text{font-size:9px;font-weight:800}
 .bar-list{display:grid;gap:13px}
-.bar-row{
-  display:grid;grid-template-columns:minmax(90px,150px) 1fr 65px;
-  gap:9px;align-items:center;font-size:10px
-}
-.bar-label{overflow:hidden;text-overflow:ellipsis;color:#c5d7ea}
 .bar-track{height:10px;background:#1a3552;border-radius:20px;overflow:hidden}
 .bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#1688e6,#52d7e8)}
-.bar-value{text-align:right;color:var(--muted);font-weight:800}
 .legend{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 0}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--muted)}
-.summary-line{
-  display:flex;gap:20px;flex-wrap:wrap;
-  padding:12px 2px;color:var(--muted);font-size:10px
-}
+.summary-line{display:flex;gap:20px;flex-wrap:wrap;padding:12px 2px;color:var(--muted);font-size:10px}
 .summary-line strong{color:var(--text);font-size:13px}
 .rank-number{
   display:inline-grid;place-items:center;width:24px;height:24px;
-  border-radius:8px;background:#183b5e;color:var(--cyan);
-  font-weight:900
+  border-radius:8px;background:#183b5e;color:var(--cyan);font-weight:900
 }
 .rank-number.first{background:#614c19;color:#ffe18a}
 .message{
-  display:none;padding:12px 14px;margin:0 0 13px;
-  border-radius:10px;background:#332b18;
-  border:1px solid #5d4b22;color:#f5d68c;
+  display:none;padding:12px 14px;margin:0 0 13px;border-radius:10px;
+  background:#332b18;border:1px solid #5d4b22;color:#f5d68c;
   font-size:11px;line-height:1.5
 }
 .message.show{display:block}
-.footer{
-  display:flex;justify-content:space-between;gap:10px;
-  color:#6885a6;font-size:9px;margin-top:18px
-}
+.footer{display:flex;justify-content:space-between;gap:10px;color:#6885a6;font-size:9px;margin-top:18px}
 .page.hidden{display:none}
+
+/* PENCARIAN MOTIF */
+.motif-search-wrap{position:relative;min-width:220px}
+.motif-search-wrap input{
+  width:100%;background:#142d49;color:white;
+  border:1px solid #315171;border-radius:8px;
+  padding:10px 12px;outline:none;font-size:11px
+}
+.motif-search-wrap input:focus{
+  border-color:var(--cyan);box-shadow:0 0 0 2px #53d4e822
+}
+.motif-search-wrap input::placeholder{color:#91a9c6}
+.search-hint{font-size:9px;color:var(--muted);margin-top:6px}
+.motif-results{
+  display:none;position:absolute;top:calc(100% + 5px);
+  left:0;right:0;max-height:260px;overflow:auto;
+  z-index:20;background:#102b49;border:1px solid #315171;
+  border-radius:10px;box-shadow:0 12px 25px #0008
+}
+.motif-results.show{display:block}
+.motif-option{
+  padding:11px 12px;font-size:11px;cursor:pointer;
+  border-bottom:1px solid #203b5b;color:#eaf4ff
+}
+.motif-option:last-child{border-bottom:0}
+.motif-option:hover,.motif-option.selected{background:#17466e;color:#53d4e8}
+.motif-no-result{padding:13px;color:var(--muted);font-size:10px}
+
+/* FILTER RANKING */
+.rank-filter{margin-bottom:14px}
+.rank-filter-title{
+  color:var(--cyan);font-size:10px;font-weight:900;
+  letter-spacing:1px;margin:0 0 9px
+}
+.rank-filter .filter-panel{width:fit-content}
+.rank-filter .filter-panel input{min-width:145px}
+.rank-period{font-size:10px;color:var(--muted);margin-top:8px}
+
 @media(max-width:900px){
   .layout{grid-template-columns:1fr}
   .sidebar{position:static;display:flex;overflow-x:auto;gap:4px;padding:8px}
@@ -212,8 +198,10 @@ td.num,th.num{text-align:right}
   .filter-panel input,.filter-panel select{flex:1;min-width:100px}
   .page-head{align-items:flex-start}
   .card{padding:12px}
-  .bar-row{grid-template-columns:85px 1fr 52px}
   .footer{flex-direction:column}
+  .motif-search-wrap{width:100%;min-width:0}
+  .rank-filter .filter-panel{width:100%}
+  .rank-filter .filter-panel input{flex:1;min-width:100px}
 }
 @media print{
   body{background:#fff;color:#111}
@@ -242,7 +230,6 @@ td.num,th.num{text-align:right}
       <p>Executive Production and Delivery Monitoring</p>
     </div>
   </div>
-
   <div class="actions">
     <button class="btn" id="refreshBtn">↻ SINKRONISASI</button>
     <button class="btn" id="fullBtn">⛶ PRESENTASI</button>
@@ -259,232 +246,209 @@ td.num,th.num{text-align:right}
 <div class="message" id="message"></div>
 
 <div class="layout">
+<aside class="sidebar">
+  <div class="side-label">MONITORING MENU</div>
+  <button class="nav active" data-page="motif"><span class="num">01</span> ◫ PRT vs DELIVERY</button>
+  <button class="nav" data-page="warna"><span class="num">02</span> ◈ DETAIL PER WARNA</button>
+  <button class="nav" data-page="petugas"><span class="num">03</span> ♙ RANKING PETUGAS</button>
+  <div class="side-foot">
+    PRODUCTION & DELIVERY CONTROL<br>
+    Database: SERIAN<br>
+    Source: Google Spreadsheet
+  </div>
+</aside>
 
-  <aside class="sidebar">
-    <div class="side-label">MONITORING MENU</div>
+<main class="content">
 
-    <button class="nav active" data-page="motif">
-      <span class="num">01</span> ◫ PRT vs DELIVERY
-    </button>
-
-    <button class="nav" data-page="warna">
-      <span class="num">02</span> ◈ DETAIL PER WARNA
-    </button>
-
-    <button class="nav" data-page="petugas">
-      <span class="num">03</span> ♙ RANKING PETUGAS
-    </button>
-
-    <div class="side-foot">
-      PRODUCTION & DELIVERY CONTROL<br>
-      Database: SERIAN<br>
-      Source: Google Spreadsheet
+<!-- HALAMAN 1 -->
+<section class="page" id="page-motif">
+  <div class="page-head">
+    <div>
+      <h2>PRT vs DELIVERY BY MOTIF</h2>
+      <p>Perbandingan jumlah produksi dan pengiriman berdasarkan motif.</p>
     </div>
-  </aside>
+    <div class="filter-panel">
+      <label>DARI</label>
+      <input type="date" id="startDate">
+      <label>SAMPAI</label>
+      <input type="date" id="endDate">
+      <button class="btn primary" id="applyFilter">TERAPKAN</button>
+    </div>
+  </div>
 
-  <main class="content">
+  <div class="summary-line" id="motifSummary">
+    <span>PCS PRT: <strong>—</strong></span>
+    <span>PCS DELIVERY: <strong>—</strong></span>
+    <span>PENCAPAIAN: <strong>—</strong></span>
+  </div>
 
-    <!-- HALAMAN 1 -->
-    <section class="page" id="page-motif">
-      <div class="page-head">
-        <div>
-          <h2>PRT vs DELIVERY BY MOTIF</h2>
-          <p>Perbandingan jumlah produksi dan pengiriman berdasarkan motif.</p>
-        </div>
-
-        <div class="filter-panel">
-          <label>DARI</label>
-          <input type="date" id="startDate">
-          <label>SAMPAI</label>
-          <input type="date" id="endDate">
-          <button class="btn primary" id="applyFilter">TERAPKAN</button>
-        </div>
+  <div class="grid-two">
+    <div class="card">
+      <div class="card-title">
+        <h3>PERBANDINGAN PRT DAN DELIVERY</h3>
+        <span>PCS per MOTIF</span>
       </div>
-
-      <div class="summary-line" id="motifSummary">
-        <span>PCS PRT: <strong>—</strong></span>
-        <span>PCS DELIVERY: <strong>—</strong></span>
-        <span>PENCAPAIAN: <strong>—</strong></span>
+      <div class="bar-list" id="motifBars"><div class="empty">Menunggu data...</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">
+        <h3>STATUS DELIVERY</h3>
+        <span>Indikator pencapaian</span>
       </div>
-
-      <div class="grid-two">
-        <div class="card">
-          <div class="card-title">
-            <h3>PERBANDINGAN PRT DAN DELIVERY</h3>
-            <span>PCS per MOTIF</span>
-          </div>
-          <div class="bar-list" id="motifBars">
-            <div class="empty">Menunggu data...</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">
-            <h3>STATUS DELIVERY</h3>
-            <span>Indikator pencapaian</span>
-          </div>
-          <div class="legend">
-            <div class="legend-item"><i class="lamp red"></i> Di bawah 50%</div>
-            <div class="legend-item"><i class="lamp yellow"></i> 50–79%</div>
-            <div class="legend-item"><i class="lamp blue"></i> 80–99%</div>
-            <div class="legend-item"><i class="lamp green"></i> 100–110%</div>
-            <div class="legend-item"><i class="lamp pink"></i> Di atas 110%</div>
-          </div>
-          <div id="statusDistribution" class="bar-list" style="margin-top:18px"></div>
-        </div>
+      <div class="legend">
+        <div class="legend-item"><i class="lamp red"></i> Di bawah 50%</div>
+        <div class="legend-item"><i class="lamp yellow"></i> 50–79%</div>
+        <div class="legend-item"><i class="lamp blue"></i> 80–99%</div>
+        <div class="legend-item"><i class="lamp green"></i> 100–110%</div>
+        <div class="legend-item"><i class="lamp pink"></i> Di atas 110%</div>
       </div>
+      <div id="statusDistribution" class="bar-list" style="margin-top:18px"></div>
+    </div>
+  </div>
 
-      <div class="card" style="margin-top:13px">
-        <div class="card-title">
-          <h3>DETAIL PRT vs DELIVERY PER MOTIF</h3>
-          <span id="motifCount">0 MOTIF</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>NO</th>
-                <th>MOTIF</th>
-                <th class="num">PRT (PCS)</th>
-                <th class="num">DELIVERY (PCS)</th>
-                <th class="num">GAP (PCS)</th>
-                <th>PENCAPAIAN</th>
-                <th>STATUS</th>
-              </tr>
-            </thead>
-            <tbody id="motifTable">
-              <tr><td colspan="7" class="empty">Menunggu data...</td></tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="card" style="margin-top:13px">
+    <div class="card-title">
+      <h3>DETAIL PRT vs DELIVERY PER MOTIF</h3>
+      <span id="motifCount">0 MOTIF</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>NO</th><th>MOTIF</th>
+          <th class="num">PRT (PCS)</th>
+          <th class="num">DELIVERY (PCS)</th>
+          <th class="num">GAP (PCS)</th>
+          <th>PENCAPAIAN</th><th>STATUS</th>
+        </tr></thead>
+        <tbody id="motifTable"><tr><td colspan="7" class="empty">Menunggu data...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- HALAMAN 2 -->
+<section class="page hidden" id="page-warna">
+  <div class="page-head">
+    <div>
+      <h2>DETAIL MOTIF PER WARNA</h2>
+      <p>Analisis produksi dan pengiriman untuk setiap warna.</p>
+    </div>
+
+    <div class="filter-panel" style="align-items:flex-start">
+      <div class="motif-search-wrap">
+        <input type="text" id="motifSearch"
+          placeholder="⌕ Ketik nama motif untuk mencari..."
+          autocomplete="off">
+        <div class="motif-results" id="motifResults"></div>
+        <div class="search-hint" id="motifSearchHint">Ketik nama motif, lalu pilih hasil pencarian.</div>
       </div>
-    </section>
+      <button class="btn primary" id="searchMotif">TAMPILKAN</button>
+    </div>
+  </div>
 
-    <!-- HALAMAN 2 -->
-    <section class="page hidden" id="page-warna">
-      <div class="page-head">
-        <div>
-          <h2>DETAIL MOTIF PER WARNA</h2>
-          <p>Analisis produksi dan pengiriman untuk setiap warna.</p>
-        </div>
+  <div class="summary-line" id="warnaSummary">
+    <span>MOTIF: <strong>—</strong></span>
+    <span>PCS PRT: <strong>—</strong></span>
+    <span>PCS DELIVERY: <strong>—</strong></span>
+  </div>
 
-        <div class="filter-panel">
-          <label>PILIH MOTIF</label>
-          <select id="motifSelect">
-            <option value="">Memuat motif...</option>
-          </select>
-          <button class="btn primary" id="searchMotif">TAMPILKAN</button>
-        </div>
+  <div class="card">
+    <div class="card-title">
+      <h3>PERBANDINGAN PCS PER WARNA</h3>
+      <span id="warnaCount">0 WARNA</span>
+    </div>
+    <div class="bar-list" id="warnaBars"><div class="empty">Pilih motif terlebih dahulu.</div></div>
+  </div>
+
+  <div class="card" style="margin-top:13px">
+    <div class="card-title">
+      <h3>DETAIL PRT vs DELIVERY PER WARNA</h3>
+      <span>Warna pada motif terpilih</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>NO</th><th>WARNA</th>
+          <th class="num">PRT (PCS)</th>
+          <th class="num">DELIVERY (PCS)</th>
+          <th class="num">GAP (PCS)</th>
+          <th>PENCAPAIAN</th><th>STATUS</th>
+        </tr></thead>
+        <tbody id="warnaTable"><tr><td colspan="7" class="empty">Pilih motif terlebih dahulu.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- HALAMAN 3 -->
+<section class="page hidden" id="page-petugas">
+  <div class="page-head">
+    <div>
+      <h2>DELIVERY PERFORMANCE RANKING</h2>
+      <p>Peringkat petugas berdasarkan total PCS pengiriman.</p>
+    </div>
+  </div>
+
+  <div class="rank-filter">
+    <div class="rank-filter-title">FILTER PERIODE RANKING PETUGAS</div>
+    <div class="filter-panel">
+      <label>DARI</label>
+      <input type="date" id="rankStart">
+      <label>SAMPAI</label>
+      <input type="date" id="rankEnd">
+      <button class="btn primary" id="applyRankFilter">TAMPILKAN RANKING</button>
+      <button class="btn" id="resetRankFilter">RESET</button>
+    </div>
+    <div class="rank-period" id="rankPeriod">Periode ranking: seluruh data</div>
+  </div>
+
+  <div class="summary-line" id="petugasSummary">
+    <span>TOTAL DELIVERY: <strong>—</strong></span>
+    <span>JUMLAH PETUGAS: <strong>—</strong></span>
+  </div>
+
+  <div class="grid-two">
+    <div class="card">
+      <div class="card-title">
+        <h3>TOP DELIVERY PERFORMANCE</h3>
+        <span>Ranking PCS tertinggi</span>
       </div>
-
-      <div class="summary-line" id="warnaSummary">
-        <span>MOTIF: <strong>—</strong></span>
-        <span>PCS PRT: <strong>—</strong></span>
-        <span>PCS DELIVERY: <strong>—</strong></span>
+      <div class="bar-list" id="petugasBars"><div class="empty">Menunggu data...</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">
+        <h3>TOP 3 PETUGAS</h3>
+        <span>Pengiriman tertinggi</span>
       </div>
+      <div id="topThree" class="bar-list"><div class="empty">Menunggu data...</div></div>
+    </div>
+  </div>
 
-      <div class="card">
-        <div class="card-title">
-          <h3>PERBANDINGAN PCS PER WARNA</h3>
-          <span id="warnaCount">0 WARNA</span>
-        </div>
-        <div class="bar-list" id="warnaBars">
-          <div class="empty">Pilih motif terlebih dahulu.</div>
-        </div>
-      </div>
+  <div class="card" style="margin-top:13px">
+    <div class="card-title">
+      <h3>RANKING SELURUH PETUGAS</h3>
+      <span id="petugasCount">0 PETUGAS</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>RANK</th><th>PETUGAS</th>
+          <th class="num">TOTAL DELIVERY (PCS)</th>
+          <th class="num">JUMLAH TRANSAKSI</th>
+          <th class="num">KONTRIBUSI</th>
+        </tr></thead>
+        <tbody id="petugasTable"><tr><td colspan="5" class="empty">Menunggu data...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
-      <div class="card" style="margin-top:13px">
-        <div class="card-title">
-          <h3>DETAIL PRT vs DELIVERY PER WARNA</h3>
-          <span>Warna pada motif terpilih</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>NO</th>
-                <th>WARNA</th>
-                <th class="num">PRT (PCS)</th>
-                <th class="num">DELIVERY (PCS)</th>
-                <th class="num">GAP (PCS)</th>
-                <th>PENCAPAIAN</th>
-                <th>STATUS</th>
-              </tr>
-            </thead>
-            <tbody id="warnaTable">
-              <tr><td colspan="7" class="empty">Pilih motif terlebih dahulu.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+<footer class="footer">
+  <span>PT BEHAESTEX · DEPARTEMEN PRINTING</span>
+  <span id="footerInfo">DATABASE SERIAN</span>
+</footer>
 
-    <!-- HALAMAN 3 -->
-    <section class="page hidden" id="page-petugas">
-      <div class="page-head">
-        <div>
-          <h2>DELIVERY PERFORMANCE RANKING</h2>
-          <p>Peringkat petugas berdasarkan total PCS pengiriman.</p>
-        </div>
-      </div>
-
-      <div class="summary-line" id="petugasSummary">
-        <span>TOTAL DELIVERY: <strong>—</strong></span>
-        <span>JUMLAH PETUGAS: <strong>—</strong></span>
-      </div>
-
-      <div class="grid-two">
-        <div class="card">
-          <div class="card-title">
-            <h3>TOP DELIVERY PERFORMANCE</h3>
-            <span>Ranking PCS tertinggi</span>
-          </div>
-          <div class="bar-list" id="petugasBars">
-            <div class="empty">Menunggu data...</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">
-            <h3>TOP 3 PETUGAS</h3>
-            <span>Pengiriman tertinggi</span>
-          </div>
-          <div id="topThree" class="bar-list">
-            <div class="empty">Menunggu data...</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:13px">
-        <div class="card-title">
-          <h3>RANKING SELURUH PETUGAS</h3>
-          <span id="petugasCount">0 PETUGAS</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>RANK</th>
-                <th>PETUGAS</th>
-                <th class="num">TOTAL DELIVERY (PCS)</th>
-                <th class="num">JUMLAH TRANSAKSI</th>
-                <th class="num">KONTRIBUSI</th>
-              </tr>
-            </thead>
-            <tbody id="petugasTable">
-              <tr><td colspan="5" class="empty">Menunggu data...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <span>PT BEHAESTEX · DEPARTEMEN PRINTING</span>
-      <span id="footerInfo">DATABASE SERIAN</span>
-    </footer>
-
-  </main>
+</main>
 </div>
 </div>
 
@@ -500,25 +464,21 @@ const API_URL =
 let dashboardData = null;
 let activePage = 'motif';
 let selectedMotif = '';
+let motifOptions = [];
+let loading = false;
 
 const $ = id => document.getElementById(id);
-
 const fmt = n => Number(n || 0).toLocaleString('id-ID');
 
 function esc(value){
-  return String(value ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;',
-    '<':'&lt;',
-    '>':'&gt;',
-    '"':'&quot;',
-    "'":'&#39;'
+  return String(value ?? '').replace(/[&<>"']/g,c=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[c]));
 }
 
-function numberValue(obj, keys){
+function numberValue(obj,keys){
   for(const key of keys){
-    if(obj && obj[key] !== undefined && obj[key] !== null &&
-       obj[key] !== ''){
+    if(obj && obj[key] !== undefined && obj[key] !== null && obj[key] !== ''){
       const n = Number(obj[key]);
       if(Number.isFinite(n)) return n;
     }
@@ -526,7 +486,7 @@ function numberValue(obj, keys){
   return 0;
 }
 
-function textValue(obj, keys, fallback='-'){
+function textValue(obj,keys,fallback='-'){
   for(const key of keys){
     if(obj && obj[key] !== undefined && obj[key] !== null &&
        String(obj[key]).trim() !== ''){
@@ -540,42 +500,34 @@ function textValue(obj, keys, fallback='-'){
    STATUS PENCAPAIAN
 ========================================= */
 function getStatus(percent){
-  if(percent < 50)
-    return {name:'RENDAH',cls:'red'};
-  if(percent < 80)
-    return {name:'PERLU PERHATIAN',cls:'yellow'};
-  if(percent < 100)
-    return {name:'MENDEKATI',cls:'blue'};
-  if(percent <= 110)
-    return {name:'TERCAPAI',cls:'green'};
+  if(percent < 50) return {name:'RENDAH',cls:'red'};
+  if(percent < 80) return {name:'PERLU PERHATIAN',cls:'yellow'};
+  if(percent < 100) return {name:'MENDEKATI',cls:'blue'};
+  if(percent <= 110) return {name:'TERCAPAI',cls:'green'};
   return {name:'DI ATAS TARGET',cls:'pink'};
 }
 
 function lamp(percent){
-  const s = getStatus(percent);
-  return `<span class="percent">
-    <i class="lamp ${s.cls}"></i>
-    ${fmtPercent(percent)}
-  </span>`;
+  const s=getStatus(percent);
+  return `<span class="percent"><i class="lamp ${s.cls}"></i>${fmtPercent(percent)}</span>`;
 }
 
 function fmtPercent(n){
-  return Number(n || 0).toLocaleString('id-ID',{
-    minimumFractionDigits:1,
-    maximumFractionDigits:1
+  return Number(n||0).toLocaleString('id-ID',{
+    minimumFractionDigits:1,maximumFractionDigits:1
   })+'%';
 }
 
 /* =========================================
    STATUS KONEKSI
 ========================================= */
-function setStatus(mode, message){
-  $('statusDot').className = 'dot '+mode;
-  $('statusText').textContent = message;
+function setStatus(mode,message){
+  $('statusDot').className='dot '+mode;
+  $('statusText').textContent=message;
 }
 
 function showMessage(message){
-  $('message').textContent = message;
+  $('message').textContent=message;
   $('message').classList.add('show');
 }
 
@@ -587,52 +539,37 @@ function hideMessage(){
    NORMALISASI DATA API
 ========================================= */
 function unwrapResponse(json){
-  if(json && json.data && json.data.summary){
-    return json.data;
-  }
-  if(json && json.result && json.result.summary){
-    return json.result;
-  }
-  if(json && json.summary){
-    return json;
-  }
+  if(json && json.data && json.data.summary) return json.data;
+  if(json && json.result && json.result.summary) return json.result;
+  if(json && json.summary) return json;
   return null;
 }
 
 function getMotif(row){
   return textValue(row,['motif','MOTIF','namaMotif']);
 }
-
 function getWarna(row){
   return textValue(row,['warna','WARNA','color']);
 }
-
 function getPrt(row){
   return numberValue(row,['prt','prtPcs','pcsPrt','totalPrt','PRT']);
 }
-
 function getKirim(row){
   return numberValue(row,['kirim','kirimPcs','pcsKirim','delivery','totalKirim','KIRIM']);
 }
-
 function getPercent(row){
-  const direct = numberValue(row,['percent','persentase','percentage','achievement']);
+  const direct=numberValue(row,['percent','persentase','percentage','achievement']);
   if(direct) return direct;
-
-  const prt = getPrt(row);
-  const kirim = getKirim(row);
-  if(prt === 0) return kirim > 0 ? 999 : 0;
-  return kirim / prt * 100;
+  const prt=getPrt(row),kirim=getKirim(row);
+  if(prt===0) return kirim>0?999:0;
+  return kirim/prt*100;
 }
-
 function getOfficer(row){
   return textValue(row,['petugas','PETUGAS','nama','name']);
 }
-
 function getOfficerQty(row){
   return numberValue(row,['qty','total','totalKirim','kirim','pcs','qtyPcs','QTYPCS']);
 }
-
 function getTransactions(row){
   return numberValue(row,['transaksi','transactions','jumlahTransaksi','count']);
 }
@@ -641,70 +578,74 @@ function getTransactions(row){
    API REQUEST
 ========================================= */
 async function loadData(){
+  if(loading) return;
+
   hideMessage();
-  setStatus('', 'Mengambil data dari SERIAN...');
+  setStatus('','Mengambil data dari SERIAN...');
 
-  const start = $('startDate').value;
-  const end = $('endDate').value;
+  const start=$('startDate').value;
+  const end=$('endDate').value;
+  const rankStart=$('rankStart').value;
+  const rankEnd=$('rankEnd').value;
 
-  if(start && end && start > end){
-    showMessage('Tanggal awal tidak boleh lebih besar dari tanggal akhir.');
+  if(start && end && start>end){
+    showMessage('Tanggal awal PRT vs Delivery tidak boleh lebih besar dari tanggal akhir.');
     setStatus('error','Filter tanggal tidak valid');
     return;
   }
 
-  const params = new URLSearchParams({
+  if(rankStart && rankEnd && rankStart>rankEnd){
+    showMessage('Tanggal awal ranking tidak boleh lebih besar dari tanggal akhir.');
+    setStatus('error','Filter ranking tidak valid');
+    return;
+  }
+
+  const params=new URLSearchParams({
     action:'getData',
     start:start,
     end:end,
-    motif:selectedMotif || ''
+    motif:selectedMotif||'',
+    rankingStart:rankStart,
+    rankingEnd:rankEnd
   });
 
-  const url = API_URL+'?'+params.toString()+'&_='+Date.now();
+  const url=API_URL+'?'+params.toString()+'&_='+Date.now();
+
+  loading=true;
 
   try{
-    const response = await fetch(url,{
-      method:'GET',
-      cache:'no-store',
-      redirect:'follow'
+    const response=await fetch(url,{
+      method:'GET',cache:'no-store',redirect:'follow'
     });
 
-    if(!response.ok){
-      throw new Error('HTTP '+response.status);
+    if(!response.ok) throw new Error('HTTP '+response.status);
+
+    const json=await response.json();
+
+    if(json.success===false || json.status==='error'){
+      throw new Error(json.message||'API mengembalikan pesan error.');
     }
 
-    const json = await response.json();
-
-    if(json.success === false || json.status === 'error'){
-      throw new Error(json.message || 'API mengembalikan pesan error.');
-    }
-
-    const data = unwrapResponse(json);
+    const data=unwrapResponse(json);
 
     if(!data){
       throw new Error('Format jawaban API tidak sesuai. Periksa action getData pada Code.gs.');
     }
 
-    dashboardData = data;
-
+    dashboardData=data;
     renderAll();
 
     setStatus('online','TERHUBUNG · DATA BERHASIL DIPERBARUI');
-
-    $('updateTime').textContent =
-      '· '+(data.generatedAt || new Date().toLocaleString('id-ID'));
-
-    $('footerInfo').textContent =
-      'SERIAN · UPDATE '+new Date().toLocaleString('id-ID');
+    $('updateTime').textContent='· '+(data.generatedAt||new Date().toLocaleString('id-ID'));
+    $('footerInfo').textContent='SERIAN · UPDATE '+new Date().toLocaleString('id-ID');
 
   }catch(error){
     console.error(error);
     setStatus('error','GAGAL MENGAMBIL DATA');
-
-    showMessage(
-      'Sinkronisasi gagal: '+error.message+
-      '. Jika muncul pesan CORS, kirimkan pesan error ini kepada saya agar koneksi Apps Script kita sesuaikan.'
-    );
+    showMessage('Sinkronisasi gagal: '+error.message+
+      '. Periksa koneksi Apps Script dan format jawaban API.');
+  }finally{
+    loading=false;
   }
 }
 
@@ -712,23 +653,24 @@ async function loadData(){
    DATA SUMMARY
 ========================================= */
 function renderSummary(){
-  const s = dashboardData.summary || {};
+  const s=dashboardData.summary||{};
+  const prt=numberValue(s,['totalPrt','prt','prtPcs','totalPRT']);
+  const kirim=numberValue(s,['totalKirim','kirim','kirimPcs','totalDelivery']);
+  const percent=numberValue(s,['percent','persentase','achievement']);
+  const p=percent||(prt?kirim/prt*100:0);
 
-  const prt = numberValue(s,['totalPrt','prt','prtPcs','totalPRT']);
-  const kirim = numberValue(s,['totalKirim','kirim','kirimPcs','totalDelivery']);
-  const percent = numberValue(s,['percent','persentase','achievement']);
-
-  const p = percent || (prt ? kirim/prt*100 : 0);
-
-  $('motifSummary').innerHTML = `
+  $('motifSummary').innerHTML=`
     <span>PCS PRT: <strong>${fmt(prt)}</strong></span>
     <span>PCS DELIVERY: <strong>${fmt(kirim)}</strong></span>
     <span>PENCAPAIAN: <strong>${fmtPercent(p)}</strong></span>
   `;
 
-  $('petugasSummary').innerHTML = `
-    <span>TOTAL DELIVERY: <strong>${fmt(kirim)}</strong></span>
-    <span>JUMLAH PETUGAS: <strong>${fmt(numberValue(s,['officerCount','jumlahPetugas']))}</strong></span>
+  const ranking=dashboardData.ranking||[];
+  const totalRanking=ranking.reduce((n,r)=>n+getOfficerQty(r),0);
+
+  $('petugasSummary').innerHTML=`
+    <span>TOTAL DELIVERY: <strong>${fmt(totalRanking||kirim)}</strong></span>
+    <span>JUMLAH PETUGAS: <strong>${fmt(ranking.length||numberValue(s,['officerCount','jumlahPetugas']))}</strong></span>
   `;
 }
 
@@ -736,145 +678,147 @@ function renderSummary(){
    HALAMAN 1 - PERBANDINGAN MOTIF
 ========================================= */
 function renderMotif(){
-  const rows = dashboardData.motifComparison || [];
-
-  $('motifCount').textContent = fmt(rows.length)+' MOTIF';
+  const rows=dashboardData.motifComparison||[];
+  $('motifCount').textContent=fmt(rows.length)+' MOTIF';
 
   if(!rows.length){
-    $('motifTable').innerHTML =
-      '<tr><td colspan="7" class="empty">Tidak ada data motif pada periode ini.</td></tr>';
-    $('motifBars').innerHTML =
-      '<div class="empty">Tidak ada data.</div>';
-    $('statusDistribution').innerHTML =
-      '<div class="empty">Tidak ada data.</div>';
+    $('motifTable').innerHTML='<tr><td colspan="7" class="empty">Tidak ada data motif pada periode ini.</td></tr>';
+    $('motifBars').innerHTML='<div class="empty">Tidak ada data.</div>';
+    $('statusDistribution').innerHTML='<div class="empty">Tidak ada data.</div>';
     return;
   }
 
-  const sorted = [...rows].sort((a,b)=>getPrt(b)-getPrt(a));
+  const sorted=[...rows].sort((a,b)=>getPrt(b)-getPrt(a));
 
-  $('motifTable').innerHTML = sorted.map((r,i)=>{
-    const prt = getPrt(r);
-    const kirim = getKirim(r);
-    const gap = prt-kirim;
-    const pct = getPercent(r);
-    const st = getStatus(pct);
-
+  $('motifTable').innerHTML=sorted.map((r,i)=>{
+    const prt=getPrt(r),kirim=getKirim(r),pct=getPercent(r),st=getStatus(pct);
     return `<tr>
       <td>${i+1}</td>
       <td class="motif-name">${esc(getMotif(r))}</td>
       <td class="num">${fmt(prt)}</td>
       <td class="num">${fmt(kirim)}</td>
-      <td class="num">${fmt(gap)}</td>
+      <td class="num">${fmt(prt-kirim)}</td>
       <td>${lamp(pct)}</td>
       <td><span class="status-text">${st.name}</span></td>
     </tr>`;
   }).join('');
 
-  const max = Math.max(1,...sorted.map(r=>Math.max(getPrt(r),getKirim(r))));
+  const max=Math.max(1,...sorted.map(r=>Math.max(getPrt(r),getKirim(r))));
 
-  $('motifBars').innerHTML = sorted.slice(0,12).map(r=>{
-    const prt = getPrt(r);
-    const kirim = getKirim(r);
-
+  $('motifBars').innerHTML=sorted.slice(0,12).map(r=>{
+    const prt=getPrt(r),kirim=getKirim(r);
     return `<div>
       <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:5px;font-size:10px">
         <strong>${esc(getMotif(r))}</strong>
         <span style="color:var(--muted)">${fmt(kirim)} / ${fmt(prt)} PCS</span>
       </div>
-      <div class="bar-track">
-        <div class="bar-fill" style="width:${Math.min(100,kirim/max*100)}%"></div>
-      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,kirim/max*100)}%"></div></div>
     </div>`;
   }).join('');
 
-  const counts = {red:0,yellow:0,blue:0,green:0,pink:0};
-  sorted.forEach(r=>{
-    counts[getStatus(getPercent(r)).cls]++;
-  });
+  const counts={red:0,yellow:0,blue:0,green:0,pink:0};
+  sorted.forEach(r=>counts[getStatus(getPercent(r)).cls]++);
 
-  const labels = {
-    red:'Di bawah 50%',
-    yellow:'50–79%',
-    blue:'80–99%',
-    green:'100–110%',
-    pink:'Di atas 110%'
+  const labels={
+    red:'Di bawah 50%',yellow:'50–79%',blue:'80–99%',
+    green:'100–110%',pink:'Di atas 110%'
   };
 
-  $('statusDistribution').innerHTML = Object.entries(counts).map(([cls,n])=>{
-    return `<div style="display:flex;justify-content:space-between;align-items:center;font-size:10px">
+  $('statusDistribution').innerHTML=Object.entries(counts).map(([cls,n])=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:10px">
       <span style="display:flex;align-items:center;gap:8px">
         <i class="lamp ${cls}"></i>${labels[cls]}
       </span>
       <strong>${n} MOTIF</strong>
-    </div>`;
-  }).join('');
+    </div>
+  `).join('');
 }
 
 /* =========================================
-   HALAMAN 2 - DETAIL WARNA
+   HALAMAN 2 - PENCARIAN MOTIF
 ========================================= */
 function fillMotifOptions(){
-  const options = dashboardData.options?.motifs || [];
-  const select = $('motifSelect');
-  const current = selectedMotif;
+  const options=dashboardData.options?.motifs||[];
+  const names=options.map(item=>{
+    return typeof item==='string'?item:getMotif(item);
+  }).filter(name=>name && name!=='-');
 
-  select.innerHTML = '<option value="">-- PILIH MOTIF --</option>';
+  // Jika options tidak tersedia, gunakan data motif comparison.
+  if(!names.length){
+    (dashboardData.motifComparison||[]).forEach(row=>{
+      const name=getMotif(row);
+      if(name && name!=='-') names.push(name);
+    });
+  }
 
-  options.forEach(item=>{
-    const name = typeof item === 'string' ? item : getMotif(item);
-    if(name && name !== '-'){
-      const opt = document.createElement('option');
-      opt.value = name;
-      opt.textContent = name;
-      select.appendChild(opt);
-    }
-  });
+  motifOptions=[...new Set(names)].sort((a,b)=>a.localeCompare(b,'id'));
 
-  if(current) select.value = current;
+  $('motifSearchHint').textContent=motifOptions.length
+    ? motifOptions.length+' pilihan motif tersedia.'
+    : 'Data pilihan motif belum tersedia.';
+  
+  $('motifSearch').value=selectedMotif;
+}
+
+function renderMotifSearch(query=''){
+  const box=$('motifResults');
+  const q=query.trim().toLowerCase();
+
+  const matches=motifOptions.filter(name=>
+    name.toLowerCase().includes(q)
+  ).slice(0,100);
+
+  if(!matches.length){
+    box.innerHTML='<div class="motif-no-result">Motif tidak ditemukan.</div>';
+  }else{
+    box.innerHTML=matches.map(name=>`
+      <div class="motif-option ${name===selectedMotif?'selected':''}"
+           data-motif="${esc(name)}">${esc(name)}</div>
+    `).join('');
+  }
+
+  box.classList.add('show');
+}
+
+function selectMotif(name){
+  selectedMotif=name;
+  $('motifSearch').value=name;
+  $('motifResults').classList.remove('show');
+  $('motifSearchHint').textContent='Motif dipilih: '+name;
 }
 
 function renderWarna(){
-  const rows = dashboardData.colorComparison || [];
+  const rows=dashboardData.colorComparison||[];
 
   if(!selectedMotif){
-    $('warnaTable').innerHTML =
-      '<tr><td colspan="7" class="empty">Silakan pilih motif terlebih dahulu.</td></tr>';
-    $('warnaBars').innerHTML =
-      '<div class="empty">Pilih motif untuk melihat detail warna.</div>';
-    $('warnaSummary').innerHTML =
-      '<span>MOTIF: <strong>—</strong></span>';
-    $('warnaCount').textContent = '0 WARNA';
+    $('warnaTable').innerHTML='<tr><td colspan="7" class="empty">Silakan cari dan pilih motif terlebih dahulu.</td></tr>';
+    $('warnaBars').innerHTML='<div class="empty">Pilih motif untuk melihat detail warna.</div>';
+    $('warnaSummary').innerHTML='<span>MOTIF: <strong>—</strong></span>';
+    $('warnaCount').textContent='0 WARNA';
     return;
   }
 
-  const sorted = [...rows].sort((a,b)=>getPrt(b)-getPrt(a));
+  const sorted=[...rows].sort((a,b)=>getPrt(b)-getPrt(a));
+  $('warnaCount').textContent=fmt(sorted.length)+' WARNA';
 
-  $('warnaCount').textContent = fmt(sorted.length)+' WARNA';
+  const totalPrt=sorted.reduce((n,r)=>n+getPrt(r),0);
+  const totalKirim=sorted.reduce((n,r)=>n+getKirim(r),0);
 
-  const totalPrt = sorted.reduce((n,r)=>n+getPrt(r),0);
-  const totalKirim = sorted.reduce((n,r)=>n+getKirim(r),0);
-
-  $('warnaSummary').innerHTML = `
+  $('warnaSummary').innerHTML=`
     <span>MOTIF: <strong>${esc(selectedMotif)}</strong></span>
     <span>PCS PRT: <strong>${fmt(totalPrt)}</strong></span>
     <span>PCS DELIVERY: <strong>${fmt(totalKirim)}</strong></span>
-    <span>PENCAPAIAN: <strong>${fmtPercent(totalPrt ? totalKirim/totalPrt*100 : 0)}</strong></span>
+    <span>PENCAPAIAN: <strong>${fmtPercent(totalPrt?totalKirim/totalPrt*100:0)}</strong></span>
   `;
 
   if(!sorted.length){
-    $('warnaTable').innerHTML =
-      '<tr><td colspan="7" class="empty">Tidak ditemukan data warna untuk motif ini.</td></tr>';
-    $('warnaBars').innerHTML =
-      '<div class="empty">Tidak ada data warna.</div>';
+    $('warnaTable').innerHTML='<tr><td colspan="7" class="empty">Tidak ditemukan data warna untuk motif ini.</td></tr>';
+    $('warnaBars').innerHTML='<div class="empty">Tidak ada data warna.</div>';
     return;
   }
 
-  $('warnaTable').innerHTML = sorted.map((r,i)=>{
-    const prt = getPrt(r);
-    const kirim = getKirim(r);
-    const pct = getPercent(r);
-    const st = getStatus(pct);
-
+  $('warnaTable').innerHTML=sorted.map((r,i)=>{
+    const prt=getPrt(r),kirim=getKirim(r),pct=getPercent(r),st=getStatus(pct);
     return `<tr>
       <td>${i+1}</td>
       <td class="motif-name">${esc(getWarna(r))}</td>
@@ -886,20 +830,16 @@ function renderWarna(){
     </tr>`;
   }).join('');
 
-  const max = Math.max(1,...sorted.map(r=>Math.max(getPrt(r),getKirim(r))));
+  const max=Math.max(1,...sorted.map(r=>Math.max(getPrt(r),getKirim(r))));
 
-  $('warnaBars').innerHTML = sorted.map(r=>{
-    const prt = getPrt(r);
-    const kirim = getKirim(r);
-
+  $('warnaBars').innerHTML=sorted.map(r=>{
+    const prt=getPrt(r),kirim=getKirim(r);
     return `<div>
       <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:5px;font-size:10px">
         <strong>${esc(getWarna(r))}</strong>
         <span style="color:var(--muted)">${fmt(kirim)} / ${fmt(prt)} PCS</span>
       </div>
-      <div class="bar-track">
-        <div class="bar-fill" style="width:${Math.min(100,kirim/max*100)}%"></div>
-      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,kirim/max*100)}%"></div></div>
     </div>`;
   }).join('');
 }
@@ -908,28 +848,34 @@ function renderWarna(){
    HALAMAN 3 - RANKING PETUGAS
 ========================================= */
 function renderPetugas(){
-  const rows = dashboardData.ranking || [];
+  const rows=dashboardData.ranking||[];
+  $('petugasCount').textContent=fmt(rows.length)+' PETUGAS';
 
-  $('petugasCount').textContent = fmt(rows.length)+' PETUGAS';
+  const rs=$('rankStart').value;
+  const re=$('rankEnd').value;
+
+  $('rankPeriod').textContent=
+    'Periode ranking: '+(rs||'Awal data')+' sampai '+(re||'Data terbaru');
 
   if(!rows.length){
-    $('petugasTable').innerHTML =
-      '<tr><td colspan="5" class="empty">Belum ada data pengiriman.</td></tr>';
-    $('petugasBars').innerHTML =
-      '<div class="empty">Belum ada data.</div>';
-    $('topThree').innerHTML =
-      '<div class="empty">Belum ada data.</div>';
+    $('petugasTable').innerHTML='<tr><td colspan="5" class="empty">Belum ada data pengiriman.</td></tr>';
+    $('petugasBars').innerHTML='<div class="empty">Belum ada data.</div>';
+    $('topThree').innerHTML='<div class="empty">Belum ada data.</div>';
     return;
   }
 
-  const sorted = [...rows].sort((a,b)=>getOfficerQty(b)-getOfficerQty(a));
-  const total = sorted.reduce((n,r)=>n+getOfficerQty(r),0);
-  const max = Math.max(1,...sorted.map(getOfficerQty));
+  const sorted=[...rows].sort((a,b)=>getOfficerQty(b)-getOfficerQty(a));
+  const total=sorted.reduce((n,r)=>n+getOfficerQty(r),0);
+  const max=Math.max(1,...sorted.map(getOfficerQty));
 
-  $('petugasTable').innerHTML = sorted.map((r,i)=>{
-    const qty = getOfficerQty(r);
-    const contribution = total ? qty/total*100 : 0;
+  $('petugasSummary').innerHTML=`
+    <span>TOTAL DELIVERY: <strong>${fmt(total)}</strong></span>
+    <span>JUMLAH PETUGAS: <strong>${fmt(sorted.length)}</strong></span>
+  `;
 
+  $('petugasTable').innerHTML=sorted.map((r,i)=>{
+    const qty=getOfficerQty(r);
+    const contribution=total?qty/total*100:0;
     return `<tr>
       <td><span class="rank-number ${i===0?'first':''}">${i+1}</span></td>
       <td class="motif-name">${esc(getOfficer(r))}</td>
@@ -939,22 +885,19 @@ function renderPetugas(){
     </tr>`;
   }).join('');
 
-  $('petugasBars').innerHTML = sorted.slice(0,10).map((r,i)=>{
-    const qty = getOfficerQty(r);
-
+  $('petugasBars').innerHTML=sorted.slice(0,10).map((r,i)=>{
+    const qty=getOfficerQty(r);
     return `<div>
       <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:5px;font-size:10px">
         <strong>${i+1}. ${esc(getOfficer(r))}</strong>
         <span style="color:var(--muted)">${fmt(qty)} PCS</span>
       </div>
-      <div class="bar-track">
-        <div class="bar-fill" style="width:${qty/max*100}%"></div>
-      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${qty/max*100}%"></div></div>
     </div>`;
   }).join('');
 
-  $('topThree').innerHTML = sorted.slice(0,3).map((r,i)=>{
-    const medals = ['🥇','🥈','🥉'];
+  $('topThree').innerHTML=sorted.slice(0,3).map((r,i)=>{
+    const medals=['🥇','🥈','🥉'];
     return `<div style="display:flex;align-items:center;justify-content:space-between;padding:13px;background:#122b49;border-radius:10px">
       <div style="display:flex;align-items:center;gap:10px">
         <span style="font-size:22px">${medals[i]}</span>
@@ -980,14 +923,14 @@ function renderAll(){
    NAVIGASI HALAMAN
 ========================================= */
 function showPage(page){
-  activePage = page;
+  activePage=page;
 
   document.querySelectorAll('.page').forEach(el=>{
-    el.classList.toggle('hidden',el.id !== 'page-'+page);
+    el.classList.toggle('hidden',el.id!=='page-'+page);
   });
 
   document.querySelectorAll('.nav').forEach(el=>{
-    el.classList.toggle('active',el.dataset.page === page);
+    el.classList.toggle('active',el.dataset.page===page);
   });
 
   window.scrollTo({top:0,behavior:'smooth'});
@@ -998,19 +941,66 @@ document.querySelectorAll('.nav').forEach(btn=>{
 });
 
 /* =========================================
-   EVENT FILTER DAN TOMBOL
+   EVENT PENCARIAN MOTIF
 ========================================= */
-$('applyFilter').addEventListener('click',loadData);
+$('motifSearch').addEventListener('input',()=>{
+  const query=$('motifSearch').value;
+  selectedMotif='';
+  renderMotifSearch(query);
+});
 
-$('refreshBtn').addEventListener('click',loadData);
+$('motifSearch').addEventListener('focus',()=>{
+  renderMotifSearch($('motifSearch').value);
+});
+
+$('motifResults').addEventListener('click',event=>{
+  const option=event.target.closest('.motif-option');
+  if(!option) return;
+  selectMotif(option.dataset.motif);
+});
+
+document.addEventListener('click',event=>{
+  if(!event.target.closest('.motif-search-wrap')){
+    $('motifResults').classList.remove('show');
+  }
+});
 
 $('searchMotif').addEventListener('click',()=>{
-  selectedMotif = $('motifSelect').value;
+  const typed=$('motifSearch').value.trim();
+
+  if(!selectedMotif && typed){
+    const exact=motifOptions.find(name=>name.toLowerCase()===typed.toLowerCase());
+    if(exact){
+      selectMotif(exact);
+    }else{
+      showMessage('Silakan pilih motif dari hasil pencarian terlebih dahulu.');
+      return;
+    }
+  }
+
+  if(!selectedMotif){
+    showMessage('Silakan ketik dan pilih motif terlebih dahulu.');
+    return;
+  }
+
   loadData();
 });
 
-$('motifSelect').addEventListener('change',()=>{
-  selectedMotif = $('motifSelect').value;
+/* =========================================
+   EVENT FILTER
+========================================= */
+$('applyFilter').addEventListener('click',loadData);
+$('refreshBtn').addEventListener('click',loadData);
+
+/* FILTER RANKING TERPISAH */
+$('applyRankFilter').addEventListener('click',()=>{
+  loadData();
+});
+
+$('resetRankFilter').addEventListener('click',()=>{
+  $('rankStart').value='';
+  $('rankEnd').value='';
+  loadData();
 });
 
 $('printBtn').addEventListener('click',()=>window.print());
