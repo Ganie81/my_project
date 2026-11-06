@@ -24,8 +24,7 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  min-height:100vh;
+  margin:0;min-height:100vh;
   background:radial-gradient(circle at 80% 0%,#14345a 0,#071426 45%,#050e1b 100%);
   color:var(--text);
   font-family:Inter,system-ui,Arial,sans-serif;
@@ -117,6 +116,15 @@ button{cursor:pointer}
   border-radius:8px;padding:8px 9px;min-width:125px;
   outline:none;color-scheme:dark
 }
+.motif-search{
+  background:#142d49;color:white;border:1px solid #315171;
+  border-radius:8px;padding:9px 11px;min-width:210px;
+  outline:none
+}
+.motif-search:focus,.filter-panel input:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 2px #53d4e822
+}
 .card{
   background:linear-gradient(145deg,#102641,#0a1b30);
   border:1px solid var(--line);border-radius:16px;
@@ -167,7 +175,10 @@ td.num,th.num{text-align:right}
 }
 .bar-label{overflow:hidden;text-overflow:ellipsis;color:#c5d7ea}
 .bar-track{height:10px;background:#1a3552;border-radius:20px;overflow:hidden}
-.bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#1688e6,#52d7e8)}
+.bar-fill{
+  height:100%;border-radius:20px;
+  background:linear-gradient(90deg,#1688e6,#52d7e8)
+}
 .bar-value{text-align:right;color:var(--muted);font-weight:800}
 .legend{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 0}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--muted)}
@@ -210,6 +221,7 @@ td.num,th.num{text-align:right}
   .actions .btn{flex:1}
   .filter-panel{width:100%}
   .filter-panel input,.filter-panel select{flex:1;min-width:100px}
+  .motif-search{flex:1;min-width:100%;width:100%}
   .page-head{align-items:flex-start}
   .card{padding:12px}
   .bar-row{grid-template-columns:85px 1fr 52px}
@@ -365,14 +377,20 @@ td.num,th.num{text-align:right}
       <div class="page-head">
         <div>
           <h2>DETAIL MOTIF PER WARNA</h2>
-          <p>Analisis produksi dan pengiriman untuk setiap warna.</p>
+          <p>Ketik nama motif untuk mencari dan melihat detail setiap warna.</p>
         </div>
 
         <div class="filter-panel">
-          <label>PILIH MOTIF</label>
-          <select id="motifSelect">
-            <option value="">Memuat motif...</option>
-          </select>
+          <label>CARI MOTIF</label>
+          <input
+            type="text"
+            id="motifSearch"
+            class="motif-search"
+            list="motifOptionsList"
+            placeholder="Ketik nama motif..."
+            autocomplete="off"
+          >
+          <datalist id="motifOptionsList"></datalist>
           <button class="btn primary" id="searchMotif">TAMPILKAN</button>
         </div>
       </div>
@@ -425,6 +443,18 @@ td.num,th.num{text-align:right}
         <div>
           <h2>DELIVERY PERFORMANCE RANKING</h2>
           <p>Peringkat petugas berdasarkan total PCS pengiriman.</p>
+        </div>
+
+        <div class="filter-panel">
+          <label>DARI</label>
+          <input type="date" id="rankStartDate">
+
+          <label>SAMPAI</label>
+          <input type="date" id="rankEndDate">
+
+          <button class="btn primary" id="rankFilterBtn">
+            TAMPILKAN
+          </button>
         </div>
       </div>
 
@@ -491,19 +521,22 @@ td.num,th.num{text-align:right}
 <script>
 'use strict';
 
-/* =========================================
+/* =========================================================
    KONFIGURASI API
-========================================= */
+========================================================= */
+
 const API_URL =
 'https://script.google.com/macros/s/AKfycbxKeRZhT9bjgFRgo-A0xtsWXirMFymhkQ9IdEKxGzXj-E3JpwNFQhdHHjWK3fcFOMVclw/exec';
 
 let dashboardData = null;
 let activePage = 'motif';
 let selectedMotif = '';
+let requestNumber = 0;
 
 const $ = id => document.getElementById(id);
 
-const fmt = n => Number(n || 0).toLocaleString('id-ID');
+const fmt = n =>
+  Number(n || 0).toLocaleString('id-ID');
 
 function esc(value){
   return String(value ?? '').replace(/[&<>"']/g, c => ({
@@ -517,8 +550,8 @@ function esc(value){
 
 function numberValue(obj, keys){
   for(const key of keys){
-    if(obj && obj[key] !== undefined && obj[key] !== null &&
-       obj[key] !== ''){
+    if(obj && obj[key] !== undefined &&
+       obj[key] !== null && obj[key] !== ''){
       const n = Number(obj[key]);
       if(Number.isFinite(n)) return n;
     }
@@ -528,7 +561,8 @@ function numberValue(obj, keys){
 
 function textValue(obj, keys, fallback='-'){
   for(const key of keys){
-    if(obj && obj[key] !== undefined && obj[key] !== null &&
+    if(obj && obj[key] !== undefined &&
+       obj[key] !== null &&
        String(obj[key]).trim() !== ''){
       return String(obj[key]);
     }
@@ -536,9 +570,10 @@ function textValue(obj, keys, fallback='-'){
   return fallback;
 }
 
-/* =========================================
+/* =========================================================
    STATUS PENCAPAIAN
-========================================= */
+========================================================= */
+
 function getStatus(percent){
   if(percent < 50)
     return {name:'RENDAH',cls:'red'};
@@ -566,9 +601,10 @@ function fmtPercent(n){
   })+'%';
 }
 
-/* =========================================
+/* =========================================================
    STATUS KONEKSI
-========================================= */
+========================================================= */
+
 function setStatus(mode, message){
   $('statusDot').className = 'dot '+mode;
   $('statusText').textContent = message;
@@ -583,9 +619,10 @@ function hideMessage(){
   $('message').classList.remove('show');
 }
 
-/* =========================================
+/* =========================================================
    NORMALISASI DATA API
-========================================= */
+========================================================= */
+
 function unwrapResponse(json){
   if(json && json.data && json.data.summary){
     return json.data;
@@ -616,12 +653,17 @@ function getKirim(row){
 }
 
 function getPercent(row){
-  const direct = numberValue(row,['percent','persentase','percentage','achievement']);
+  const direct = numberValue(row,[
+    'percent','persentase','percentage','achievement'
+  ]);
+
   if(direct) return direct;
 
   const prt = getPrt(row);
   const kirim = getKirim(row);
+
   if(prt === 0) return kirim > 0 ? 999 : 0;
+
   return kirim / prt * 100;
 }
 
@@ -630,26 +672,43 @@ function getOfficer(row){
 }
 
 function getOfficerQty(row){
-  return numberValue(row,['qty','total','totalKirim','kirim','pcs','qtyPcs','QTYPCS']);
+  return numberValue(row,[
+    'qty','total','totalKirim','kirim',
+    'pcs','qtyPcs','QTYPCS'
+  ]);
 }
 
 function getTransactions(row){
-  return numberValue(row,['transaksi','transactions','jumlahTransaksi','count']);
+  return numberValue(row,[
+    'transaksi','transactions','jumlahTransaksi','count'
+  ]);
 }
 
-/* =========================================
+/* =========================================================
    API REQUEST
-========================================= */
+========================================================= */
+
 async function loadData(){
+  const thisRequest = ++requestNumber;
+
   hideMessage();
   setStatus('', 'Mengambil data dari SERIAN...');
 
   const start = $('startDate').value;
   const end = $('endDate').value;
 
+  const rankStart = $('rankStartDate').value;
+  const rankEnd = $('rankEndDate').value;
+
   if(start && end && start > end){
-    showMessage('Tanggal awal tidak boleh lebih besar dari tanggal akhir.');
+    showMessage('Tanggal awal PRT vs Delivery tidak boleh lebih besar dari tanggal akhir.');
     setStatus('error','Filter tanggal tidak valid');
+    return;
+  }
+
+  if(rankStart && rankEnd && rankStart > rankEnd){
+    showMessage('Tanggal awal ranking tidak boleh lebih besar dari tanggal akhir.');
+    setStatus('error','Filter ranking tidak valid');
     return;
   }
 
@@ -657,6 +716,8 @@ async function loadData(){
     action:'getData',
     start:start,
     end:end,
+    rankStart:rankStart,
+    rankEnd:rankEnd,
     motif:selectedMotif || ''
   });
 
@@ -675,6 +736,8 @@ async function loadData(){
 
     const json = await response.json();
 
+    if(thisRequest !== requestNumber) return;
+
     if(json.success === false || json.status === 'error'){
       throw new Error(json.message || 'API mengembalikan pesan error.');
     }
@@ -682,7 +745,7 @@ async function loadData(){
     const data = unwrapResponse(json);
 
     if(!data){
-      throw new Error('Format jawaban API tidak sesuai. Periksa action getData pada Code.gs.');
+      throw new Error('Format jawaban API tidak sesuai. Periksa Code.gs.');
     }
 
     dashboardData = data;
@@ -698,25 +761,44 @@ async function loadData(){
       'SERIAN · UPDATE '+new Date().toLocaleString('id-ID');
 
   }catch(error){
+    if(thisRequest !== requestNumber) return;
+
     console.error(error);
     setStatus('error','GAGAL MENGAMBIL DATA');
 
     showMessage(
       'Sinkronisasi gagal: '+error.message+
-      '. Jika muncul pesan CORS, kirimkan pesan error ini kepada saya agar koneksi Apps Script kita sesuaikan.'
+      '. Periksa koneksi Apps Script dan deployment.'
     );
   }
 }
 
-/* =========================================
+/* =========================================================
    DATA SUMMARY
-========================================= */
+========================================================= */
+
 function renderSummary(){
   const s = dashboardData.summary || {};
 
-  const prt = numberValue(s,['totalPrt','prt','prtPcs','totalPRT']);
-  const kirim = numberValue(s,['totalKirim','kirim','kirimPcs','totalDelivery']);
-  const percent = numberValue(s,['percent','persentase','achievement']);
+  const prt = numberValue(s,[
+    'totalPrt','prt','prtPcs','totalPRT'
+  ]);
+
+  const kirim = numberValue(s,[
+    'totalKirim','kirim','kirimPcs','totalDelivery'
+  ]);
+
+  const percent = numberValue(s,[
+    'percent','persentase','achievement'
+  ]);
+
+  const rankingTotal = numberValue(s,[
+    'totalRankingKirim'
+  ]);
+
+  const petugasCount = numberValue(s,[
+    'totalPetugas','officerCount','jumlahPetugas'
+  ]);
 
   const p = percent || (prt ? kirim/prt*100 : 0);
 
@@ -727,14 +809,15 @@ function renderSummary(){
   `;
 
   $('petugasSummary').innerHTML = `
-    <span>TOTAL DELIVERY: <strong>${fmt(kirim)}</strong></span>
-    <span>JUMLAH PETUGAS: <strong>${fmt(numberValue(s,['officerCount','jumlahPetugas']))}</strong></span>
+    <span>TOTAL DELIVERY: <strong>${fmt(rankingTotal)}</strong></span>
+    <span>JUMLAH PETUGAS: <strong>${fmt(petugasCount)}</strong></span>
   `;
 }
 
-/* =========================================
+/* =========================================================
    HALAMAN 1 - PERBANDINGAN MOTIF
-========================================= */
+========================================================= */
+
 function renderMotif(){
   const rows = dashboardData.motifComparison || [];
 
@@ -743,14 +826,19 @@ function renderMotif(){
   if(!rows.length){
     $('motifTable').innerHTML =
       '<tr><td colspan="7" class="empty">Tidak ada data motif pada periode ini.</td></tr>';
+
     $('motifBars').innerHTML =
       '<div class="empty">Tidak ada data.</div>';
+
     $('statusDistribution').innerHTML =
       '<div class="empty">Tidak ada data.</div>';
+
     return;
   }
 
-  const sorted = [...rows].sort((a,b)=>getPrt(b)-getPrt(a));
+  const sorted = [...rows].sort(
+    (a,b)=>getPrt(b)-getPrt(a)
+  );
 
   $('motifTable').innerHTML = sorted.map((r,i)=>{
     const prt = getPrt(r);
@@ -770,7 +858,10 @@ function renderMotif(){
     </tr>`;
   }).join('');
 
-  const max = Math.max(1,...sorted.map(r=>Math.max(getPrt(r),getKirim(r))));
+  const max = Math.max(
+    1,
+    ...sorted.map(r=>Math.max(getPrt(r),getKirim(r)))
+  );
 
   $('motifBars').innerHTML = sorted.slice(0,12).map(r=>{
     const prt = getPrt(r);
@@ -787,7 +878,10 @@ function renderMotif(){
     </div>`;
   }).join('');
 
-  const counts = {red:0,yellow:0,blue:0,green:0,pink:0};
+  const counts = {
+    red:0,yellow:0,blue:0,green:0,pink:0
+  };
+
   sorted.forEach(r=>{
     counts[getStatus(getPercent(r)).cls]++;
   });
@@ -800,37 +894,42 @@ function renderMotif(){
     pink:'Di atas 110%'
   };
 
-  $('statusDistribution').innerHTML = Object.entries(counts).map(([cls,n])=>{
-    return `<div style="display:flex;justify-content:space-between;align-items:center;font-size:10px">
-      <span style="display:flex;align-items:center;gap:8px">
-        <i class="lamp ${cls}"></i>${labels[cls]}
-      </span>
-      <strong>${n} MOTIF</strong>
-    </div>`;
-  }).join('');
+  $('statusDistribution').innerHTML =
+    Object.entries(counts).map(([cls,n])=>{
+      return `<div style="display:flex;justify-content:space-between;align-items:center;font-size:10px">
+        <span style="display:flex;align-items:center;gap:8px">
+          <i class="lamp ${cls}"></i>${labels[cls]}
+        </span>
+        <strong>${n} MOTIF</strong>
+      </div>`;
+    }).join('');
 }
 
-/* =========================================
-   HALAMAN 2 - DETAIL WARNA
-========================================= */
+/* =========================================================
+   HALAMAN 2 - AUTOCOMPLETE MOTIF
+========================================================= */
+
 function fillMotifOptions(){
   const options = dashboardData.options?.motifs || [];
-  const select = $('motifSelect');
-  const current = selectedMotif;
 
-  select.innerHTML = '<option value="">-- PILIH MOTIF --</option>';
+  const list = $('motifOptionsList');
+  const input = $('motifSearch');
+
+  list.innerHTML = '';
 
   options.forEach(item=>{
-    const name = typeof item === 'string' ? item : getMotif(item);
+    const name = typeof item === 'string'
+      ? item
+      : getMotif(item);
+
     if(name && name !== '-'){
       const opt = document.createElement('option');
       opt.value = name;
-      opt.textContent = name;
-      select.appendChild(opt);
+      list.appendChild(opt);
     }
   });
 
-  if(current) select.value = current;
+  input.value = selectedMotif;
 }
 
 function renderWarna(){
@@ -838,21 +937,32 @@ function renderWarna(){
 
   if(!selectedMotif){
     $('warnaTable').innerHTML =
-      '<tr><td colspan="7" class="empty">Silakan pilih motif terlebih dahulu.</td></tr>';
+      '<tr><td colspan="7" class="empty">Silakan ketik dan pilih motif terlebih dahulu.</td></tr>';
+
     $('warnaBars').innerHTML =
-      '<div class="empty">Pilih motif untuk melihat detail warna.</div>';
+      '<div class="empty">Ketik nama motif untuk melihat detail warna.</div>';
+
     $('warnaSummary').innerHTML =
       '<span>MOTIF: <strong>—</strong></span>';
+
     $('warnaCount').textContent = '0 WARNA';
+
     return;
   }
 
-  const sorted = [...rows].sort((a,b)=>getPrt(b)-getPrt(a));
+  const sorted = [...rows].sort(
+    (a,b)=>getPrt(b)-getPrt(a)
+  );
 
   $('warnaCount').textContent = fmt(sorted.length)+' WARNA';
 
-  const totalPrt = sorted.reduce((n,r)=>n+getPrt(r),0);
-  const totalKirim = sorted.reduce((n,r)=>n+getKirim(r),0);
+  const totalPrt = sorted.reduce(
+    (n,r)=>n+getPrt(r),0
+  );
+
+  const totalKirim = sorted.reduce(
+    (n,r)=>n+getKirim(r),0
+  );
 
   $('warnaSummary').innerHTML = `
     <span>MOTIF: <strong>${esc(selectedMotif)}</strong></span>
@@ -863,9 +973,11 @@ function renderWarna(){
 
   if(!sorted.length){
     $('warnaTable').innerHTML =
-      '<tr><td colspan="7" class="empty">Tidak ditemukan data warna untuk motif ini.</td></tr>';
+      '<tr><td colspan="7" class="empty">Tidak ditemukan data warna untuk motif ini pada periode PRT vs Delivery yang dipilih.</td></tr>';
+
     $('warnaBars').innerHTML =
       '<div class="empty">Tidak ada data warna.</div>';
+
     return;
   }
 
@@ -886,7 +998,10 @@ function renderWarna(){
     </tr>`;
   }).join('');
 
-  const max = Math.max(1,...sorted.map(r=>Math.max(getPrt(r),getKirim(r))));
+  const max = Math.max(
+    1,
+    ...sorted.map(r=>Math.max(getPrt(r),getKirim(r)))
+  );
 
   $('warnaBars').innerHTML = sorted.map(r=>{
     const prt = getPrt(r);
@@ -904,9 +1019,10 @@ function renderWarna(){
   }).join('');
 }
 
-/* =========================================
+/* =========================================================
    HALAMAN 3 - RANKING PETUGAS
-========================================= */
+========================================================= */
+
 function renderPetugas(){
   const rows = dashboardData.ranking || [];
 
@@ -914,17 +1030,29 @@ function renderPetugas(){
 
   if(!rows.length){
     $('petugasTable').innerHTML =
-      '<tr><td colspan="5" class="empty">Belum ada data pengiriman.</td></tr>';
+      '<tr><td colspan="5" class="empty">Belum ada data pengiriman pada periode ranking ini.</td></tr>';
+
     $('petugasBars').innerHTML =
       '<div class="empty">Belum ada data.</div>';
+
     $('topThree').innerHTML =
       '<div class="empty">Belum ada data.</div>';
+
     return;
   }
 
-  const sorted = [...rows].sort((a,b)=>getOfficerQty(b)-getOfficerQty(a));
-  const total = sorted.reduce((n,r)=>n+getOfficerQty(r),0);
-  const max = Math.max(1,...sorted.map(getOfficerQty));
+  const sorted = [...rows].sort(
+    (a,b)=>getOfficerQty(b)-getOfficerQty(a)
+  );
+
+  const total = sorted.reduce(
+    (n,r)=>n+getOfficerQty(r),0
+  );
+
+  const max = Math.max(
+    1,
+    ...sorted.map(getOfficerQty)
+  );
 
   $('petugasTable').innerHTML = sorted.map((r,i)=>{
     const qty = getOfficerQty(r);
@@ -955,6 +1083,7 @@ function renderPetugas(){
 
   $('topThree').innerHTML = sorted.slice(0,3).map((r,i)=>{
     const medals = ['🥇','🥈','🥉'];
+
     return `<div style="display:flex;align-items:center;justify-content:space-between;padding:13px;background:#122b49;border-radius:10px">
       <div style="display:flex;align-items:center;gap:10px">
         <span style="font-size:22px">${medals[i]}</span>
@@ -965,9 +1094,10 @@ function renderPetugas(){
   }).join('');
 }
 
-/* =========================================
+/* =========================================================
    RENDER SEMUA HALAMAN
-========================================= */
+========================================================= */
+
 function renderAll(){
   renderSummary();
   fillMotifOptions();
@@ -976,45 +1106,76 @@ function renderAll(){
   renderPetugas();
 }
 
-/* =========================================
-   NAVIGASI HALAMAN
-========================================= */
+/* =========================================================
+   NAVIGASI
+========================================================= */
+
 function showPage(page){
   activePage = page;
 
   document.querySelectorAll('.page').forEach(el=>{
-    el.classList.toggle('hidden',el.id !== 'page-'+page);
+    el.classList.toggle(
+      'hidden',
+      el.id !== 'page-'+page
+    );
   });
 
   document.querySelectorAll('.nav').forEach(el=>{
-    el.classList.toggle('active',el.dataset.page === page);
+    el.classList.toggle(
+      'active',
+      el.dataset.page === page
+    );
   });
 
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
 }
 
 document.querySelectorAll('.nav').forEach(btn=>{
-  btn.addEventListener('click',()=>showPage(btn.dataset.page));
+  btn.addEventListener('click',()=>{
+    showPage(btn.dataset.page);
+  });
 });
 
-/* =========================================
-   EVENT FILTER DAN TOMBOL
-========================================= */
+/* =========================================================
+   EVENT FILTER
+========================================================= */
+
+// Filter PRT vs Delivery
 $('applyFilter').addEventListener('click',loadData);
 
+// Filter ranking petugas secara terpisah
+$('rankFilterBtn').addEventListener('click',loadData);
+
+// Sinkronisasi
 $('refreshBtn').addEventListener('click',loadData);
 
+// Pencarian motif
 $('searchMotif').addEventListener('click',()=>{
-  selectedMotif = $('motifSelect').value;
+  selectedMotif = $('motifSearch').value.trim();
   loadData();
 });
 
-$('motifSelect').addEventListener('change',()=>{
-  selectedMotif = $('motifSelect').value;
+$('motifSearch').addEventListener('keydown',event=>{
+  if(event.key === 'Enter'){
+    event.preventDefault();
+    selectedMotif = $('motifSearch').value.trim();
+    loadData();
+  }
 });
 
-$('printBtn').addEventListener('click',()=>window.print());
+$('motifSearch').addEventListener('change',()=>{
+  selectedMotif = $('motifSearch').value.trim();
+});
 
+// Cetak
+$('printBtn').addEventListener('click',()=>{
+  window.print();
+});
+
+// Presentasi
 $('fullBtn').addEventListener('click',()=>{
   if(!document.fullscreenElement){
     document.documentElement.requestFullscreen?.();
@@ -1023,9 +1184,10 @@ $('fullBtn').addEventListener('click',()=>{
   }
 });
 
-/* =========================================
+/* =========================================================
    MULAI APLIKASI
-========================================= */
+========================================================= */
+
 loadData();
 </script>
 </body>
