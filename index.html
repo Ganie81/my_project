@@ -54,9 +54,81 @@ button,select{font:inherit}button{cursor:pointer}.app{max-width:1500px;margin:au
 <script>
 'use strict';
 const API_URL='https://script.google.com/macros/s/AKfycbzaSdxh2gzhzSgkm4_p9RInl_Cij3HZzLFg3IAA485Meb6e5kkPZmMXJ-rrf1IwOD26/exec';
-const CACHE_KEY='QLTY_EXECUTIVE_DATA_V1';
-const PAGE_NAMES={overview:'Quality Overview',trend:'Defect Trend',machine:'Machine Analysis',product:'Product Analysis',defect:'Defect Breakdown',data:'Data Summary'};
+
+/* PENYIMPANAN CACHE: INDEXEDDB */
+const DB_NAME='QLTY_EXECUTIVE_DATABASE';
+const DB_STORE='REPORT_DATA';
+const DB_VERSION=1;
+
+function openQLTYDB(){
+  return new Promise((resolve,reject)=>{
+    if(!('indexedDB' in window)){
+      reject(new Error('Browser tidak mendukung IndexedDB.'));
+      return;
+    }
+    const request=indexedDB.open(DB_NAME,DB_VERSION);
+    request.onupgradeneeded=()=>{
+      const db=request.result;
+      if(!db.objectStoreNames.contains(DB_STORE)){
+        db.createObjectStore(DB_STORE);
+      }
+    };
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error||new Error('Gagal membuka database.'));
+    request.onblocked=()=>reject(new Error('Database sedang digunakan tab lain. Tutup tab dashboard lain lalu coba lagi.'));
+  });
+}
+
+async function saveQLTYCache(payload){
+  const db=await openQLTYDB();
+  return new Promise((resolve,reject)=>{
+    let settled=false;
+    const finish=(fn,value)=>{
+      if(settled)return;
+      settled=true;
+      db.close();
+      fn(value);
+    };
+    let tx;
+    try{
+      tx=db.transaction(DB_STORE,'readwrite');
+      tx.objectStore(DB_STORE).put(payload,'latest');
+    }catch(err){
+      finish(reject,err);
+      return;
+    }
+    tx.oncomplete=()=>finish(resolve,true);
+    tx.onerror=()=>finish(reject,tx.error||new Error('Gagal menyimpan cache.'));
+    tx.onabort=()=>finish(reject,tx.error||new Error('Penyimpanan cache dibatalkan.'));
+  });
+}
+
+async function loadQLTYCache(){
+  const db=await openQLTYDB();
+  return new Promise((resolve,reject)=>{
+    let settled=false;
+    const finish=(fn,value)=>{
+      if(settled)return;
+      settled=true;
+      db.close();
+      fn(value);
+    };
+    let tx,request;
+    try{
+      tx=db.transaction(DB_STORE,'readonly');
+      request=tx.objectStore(DB_STORE).get('latest');
+    }catch(err){
+      finish(reject,err);
+      return;
+    }
+    request.onsuccess=()=>finish(resolve,request.result||null);
+    request.onerror=()=>finish(reject,request.error||new Error('Gagal membaca cache.'));
+    tx.onabort=()=>finish(reject,tx.error||new Error('Pembacaan cache dibatalkan.'));
+  });
+}
+
 let allData=[],meta={},activePage='overview',monthByPage={},currentMonth='';
+const PAGE_NAMES={overview:'Quality Overview',trend:'Defect Trend',machine:'Machine Analysis',product:'Product Analysis',defect:'Defect Breakdown',data:'Data Summary'};
 const fmt=n=>Number(n||0).toLocaleString('id-ID');
 const safe=s=>String(s??'').trim()||'TIDAK DIISI';
 const monthLabel=m=>{if(!m)return 'Semua Periode';const [y,mo]=m.split('-').map(Number);return new Date(y,mo-1,1).toLocaleDateString('id-ID',{month:'long',year:'numeric'});};
@@ -83,8 +155,71 @@ function renderDefect(){const r=filtered('defect');renderKpis('kpi-defect',r);dr
 function renderData(){const r=filtered('data').slice().sort((a,b)=>b.tanggal.localeCompare(a.tanggal));renderKpis('kpi-data',r);document.getElementById('row-count').textContent=fmt(r.length)+' record';document.getElementById('data-table').innerHTML=r.length?r.slice(0,1000).map(x=>`<tr><td>${escapeHtml(x.tanggal)}</td><td>${escapeHtml(safe(x.roll))}</td><td>${escapeHtml(safe(x.produk))}</td><td><span class="pill">${escapeHtml(safe(x.defect))}</span></td><td>${escapeHtml(safe(x.mesin))}</td><td>${fmt(x.jumlah)}</td><td>${escapeHtml(safe(x.grup))}</td><td>${escapeHtml(safe(x.operator))}</td></tr>`).join(''):'<tr><td colspan="8" class="empty">Tidak ada data.</td></tr>';}
 function renderAll(){renderOverview();renderTrend();renderMachine();renderProduct();renderDefect();renderData();document.getElementById('footerInfo').textContent=`${fmt(allData.length)} record · Update: ${meta.waktuUpdate||'belum tersedia'}`;}
 function showPage(page){activePage=page;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!=='page-'+page));document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.page===page));const p=filtered(page);document.getElementById('printSubtitle').textContent=PAGE_NAMES[page]+' · '+monthLabel(monthByPage[page])+' · '+fmt(p.length)+' record';window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>{if(page==='overview')drawDonut('chart-overview',groupSum(filtered('overview'),'defect'));if(page==='trend')drawLine('chart-trend',filtered('trend'));if(page==='machine')drawDonut('chart-machine',groupSum(filtered('machine'),'mesin'));},60);}
-async function syncData(){const notice=document.getElementById('apiNotice');notice.classList.add('hidden');setStatus('offline','Menghubungkan ke Spreadsheet...');try{const url=API_URL+(API_URL.includes('?')?'&':'?')+'t='+Date.now();const response=await fetch(url,{method:'GET',cache:'no-store',redirect:'follow'});if(!response.ok)throw new Error('HTTP '+response.status);const json=await response.json();if(json.status!=='success'||!Array.isArray(json.data))throw new Error(json.message||'Format data API tidak sesuai.');allData=normalizeRows(json.data);meta=json;localStorage.setItem(CACHE_KEY,JSON.stringify({data:allData,meta:meta,savedAt:new Date().toISOString()}));fillFilters();renderAll();setStatus('online','Terhubung · Data berhasil diperbarui');document.getElementById('updateTime').textContent='· '+(meta.waktuUpdate||'');}
-catch(err){console.error(err);const saved=localStorage.getItem(CACHE_KEY);if(saved){try{const cache=JSON.parse(saved);allData=normalizeRows(cache.data);meta=cache.meta||{};fillFilters();renderAll();setStatus('offline','Mode offline · Menggunakan data terakhir tersimpan');document.getElementById('updateTime').textContent='· '+(cache.savedAt?new Date(cache.savedAt).toLocaleString('id-ID'):'');}catch(e){setStatus('offline','Data cache tidak dapat dibaca');}}else{setStatus('offline','Belum ada data tersimpan');}notice.textContent='Sinkronisasi gagal: '+err.message+'. Jika ini terjadi terus-menerus, kemungkinan akses lintas domain (CORS) pada ContentService perlu penyesuaian. Data tersimpan tetap dapat digunakan offline setelah sinkronisasi pertama berhasil.';notice.classList.remove('hidden');}}
+
+/* SINKRONISASI GOOGLE SPREADSHEET + CACHE INDEXEDDB */
+async function syncData(){
+  const notice=document.getElementById('apiNotice');
+  notice.classList.add('hidden');
+  setStatus('offline','Menghubungkan ke Spreadsheet...');
+
+  try{
+    const url=API_URL+(API_URL.includes('?')?'&':'?')+'t='+Date.now();
+    const response=await fetch(url,{
+      method:'GET',
+      cache:'no-store',
+      redirect:'follow'
+    });
+    if(!response.ok)throw new Error('HTTP '+response.status);
+
+    const json=await response.json();
+    if(json.status!=='success'||!Array.isArray(json.data)){
+      throw new Error(json.message||'Format data API tidak sesuai.');
+    }
+
+    const newData=normalizeRows(json.data);
+
+    // Cache disimpan sebelum data dianggap berhasil tersimpan.
+    await saveQLTYCache({
+      data:newData,
+      meta:json,
+      savedAt:new Date().toISOString()
+    });
+
+    allData=newData;
+    meta=json;
+    fillFilters();
+    renderAll();
+
+    setStatus('online','Terhubung · Data berhasil diperbarui');
+    document.getElementById('updateTime').textContent='· '+(meta.waktuUpdate||'');
+
+  }catch(err){
+    console.error(err);
+    try{
+      const cache=await loadQLTYCache();
+      if(cache){
+        allData=normalizeRows(cache.data);
+        meta=cache.meta||{};
+        fillFilters();
+        renderAll();
+        setStatus('offline','Mode offline · Menggunakan data terakhir tersimpan');
+        document.getElementById('updateTime').textContent='· '+(
+          cache.savedAt?new Date(cache.savedAt).toLocaleString('id-ID'):''
+        );
+      }else{
+        setStatus('offline','Belum ada data tersimpan');
+      }
+    }catch(cacheError){
+      console.error('IndexedDB:',cacheError);
+      setStatus('offline','Database lokal tidak dapat dibaca');
+    }
+
+    notice.textContent='Sinkronisasi gagal: '+err.message+
+      '. Dashboard mencoba menggunakan data terakhir dari IndexedDB. Pastikan koneksi internet aktif untuk sinkronisasi pertama.';
+    notice.classList.remove('hidden');
+  }
+}
+
 document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 document.querySelectorAll('[data-filter]').forEach(el=>el.addEventListener('change',()=>{monthByPage[el.dataset.filter]=el.value;renderAll();showPage(activePage);}));
 document.getElementById('refreshBtn').addEventListener('click',syncData);
@@ -92,8 +227,30 @@ document.getElementById('pdfBtn').addEventListener('click',()=>{document.getElem
 document.getElementById('fullBtn').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();});
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown'){const keys=Object.keys(PAGE_NAMES),i=keys.indexOf(activePage);showPage(keys[Math.min(keys.length-1,i+1)]);}if(e.key==='ArrowLeft'||e.key==='PageUp'){const keys=Object.keys(PAGE_NAMES),i=keys.indexOf(activePage);showPage(keys[Math.max(0,i-1)]);}if(e.key==='Escape'&&document.fullscreenElement)document.exitFullscreen?.();});
 window.addEventListener('resize',()=>{if(!allData.length)return;setTimeout(()=>{if(activePage==='overview')drawDonut('chart-overview',groupSum(filtered('overview'),'defect'));if(activePage==='trend')drawLine('chart-trend',filtered('trend'));if(activePage==='machine')drawDonut('chart-machine',groupSum(filtered('machine'),'mesin'));},100);});
-(function loadCacheFirst(){try{const saved=localStorage.getItem(CACHE_KEY);if(saved){const c=JSON.parse(saved);allData=normalizeRows(c.data);meta=c.meta||{};fillFilters();renderAll();setStatus('offline','Data terakhir tersedia · Memeriksa pembaruan...');}}catch(e){console.warn(e);}syncData();})();
-if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('Service worker:',e)));}
+
+/* LOAD CACHE INDEXEDDB DULU, KEMUDIAN SINKRONISASI */
+(async function loadCacheFirst(){
+  try{
+    const cache=await loadQLTYCache();
+    if(cache){
+      allData=normalizeRows(cache.data);
+      meta=cache.meta||{};
+      fillFilters();
+      renderAll();
+      setStatus('offline','Data terakhir tersedia · Memeriksa pembaruan...');
+      document.getElementById('updateTime').textContent='· '+(
+        cache.savedAt?new Date(cache.savedAt).toLocaleString('id-ID'):''
+      );
+    }
+  }catch(err){
+    console.warn('Cache IndexedDB:',err);
+  }
+  syncData();
+})();
+
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('Service worker:',e)));
+}
 </script>
 </body>
 </html>
