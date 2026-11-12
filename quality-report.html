@@ -8,17 +8,18 @@
 <title>QUALITY REPORT | PT BEHAESTEX</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
 <style>
-:root {
+:root{
   --navy:#07182e;
   --navy2:#102b4b;
   --gold:#d5ad55;
   --gold2:#f3d78d;
   --white:#f7f9fc;
-  --muted:#aab8c9;
+  --muted:#bdcada;
   --panel:#112b49;
-  --border:rgba(213,173,85,.25);
+  --border:rgba(213,173,85,.3);
 }
 
 *{box-sizing:border-box}
@@ -29,14 +30,17 @@ body{
   color:var(--white);
   font-family:Arial,Helvetica,sans-serif;
   overflow:hidden;
+  font-size:14px;
+  font-weight:600;
 }
 
 header{
-  height:62px;
-  padding:0 25px;
+  min-height:68px;
+  padding:8px 25px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:12px;
   background:#061326;
   border-bottom:1px solid var(--border);
   position:fixed;
@@ -47,29 +51,64 @@ header{
 }
 
 .brand{
-  font-size:15px;
+  font-size:16px;
   font-weight:900;
   letter-spacing:1.5px;
   color:var(--gold2);
+  white-space:nowrap;
 }
 
 .brand small{
   display:block;
-  font-size:9px;
+  font-size:11px;
   color:var(--muted);
-  letter-spacing:2px;
+  letter-spacing:1.5px;
   margin-top:4px;
+  font-weight:800;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.filter-box{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--gold2);
+  font-size:12px;
+  font-weight:800;
+}
+
+select{
+  background:#173655;
+  color:#fff;
+  border:1px solid var(--gold);
+  border-radius:7px;
+  padding:9px 10px;
+  font-size:13px;
+  font-weight:800;
+  max-width:165px;
+}
+
+select option{
+  background:#102b4b;
+  color:#fff;
 }
 
 .status{
-  font-size:11px;
+  font-size:12px;
   color:#65e6a0;
+  white-space:nowrap;
+  font-weight:800;
 }
 
 #presentation{
   position:absolute;
-  top:62px;
-  bottom:65px;
+  top:68px;
+  bottom:68px;
   left:0;
   right:0;
   overflow:hidden;
@@ -79,73 +118,76 @@ header{
   display:none;
   width:100%;
   height:100%;
-  padding:35px 5%;
+  padding:30px 5%;
   overflow-y:auto;
-  animation:fade .4s ease;
+  animation:fade .3s ease;
 }
 
 .slide.active{display:block}
 
 @keyframes fade{
-  from{opacity:0;transform:translateY(10px)}
+  from{opacity:0;transform:translateY(8px)}
   to{opacity:1;transform:translateY(0)}
 }
 
 .slide-head{
-  border-left:4px solid var(--gold);
-  padding-left:17px;
-  margin-bottom:25px;
+  border-left:5px solid var(--gold);
+  padding-left:16px;
+  margin-bottom:22px;
 }
 
 .slide-head h2{
   margin:0;
-  font-size:clamp(22px,3vw,34px);
+  font-size:clamp(23px,3vw,35px);
   color:var(--gold2);
-  letter-spacing:1px;
+  letter-spacing:.7px;
+  font-weight:900;
 }
 
 .slide-head p{
   margin:8px 0 0;
   color:var(--muted);
-  font-size:12px;
+  font-size:14px;
+  font-weight:700;
 }
 
 .cover{
-  height:100%;
+  min-height:100%;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
-  background:
-    radial-gradient(ellipse at center,rgba(213,173,85,.13),transparent 60%);
+  background:radial-gradient(ellipse at center,rgba(213,173,85,.15),transparent 60%);
 }
 
 .cover .line{
-  width:100px;
-  height:3px;
+  width:110px;
+  height:4px;
   background:var(--gold);
   margin:20px;
 }
 
 .cover h1{
   color:var(--gold2);
-  font-size:clamp(35px,7vw,75px);
+  font-size:clamp(38px,7vw,78px);
   line-height:1.1;
   margin:10px;
   letter-spacing:3px;
+  font-weight:900;
 }
 
 .cover h2{
-  font-size:clamp(15px,2vw,22px);
-  font-weight:400;
-  letter-spacing:3px;
+  font-size:clamp(16px,2vw,23px);
+  font-weight:800;
+  letter-spacing:2px;
 }
 
 .cover p{
   color:var(--muted);
-  font-size:13px;
-  line-height:2;
+  font-size:15px;
+  line-height:1.8;
+  font-weight:800;
 }
 
 .cards{
@@ -160,25 +202,28 @@ header{
   border:1px solid var(--border);
   border-radius:13px;
   padding:20px;
-  min-height:110px;
+  min-height:115px;
 }
 
 .metric span{
   color:var(--muted);
-  font-size:11px;
+  font-size:13px;
   display:block;
+  font-weight:800;
 }
 
 .metric strong{
   display:block;
   color:var(--gold2);
-  font-size:clamp(22px,3vw,34px);
+  font-size:clamp(24px,3vw,36px);
   margin-top:12px;
+  font-weight:900;
 }
 
 .metric small{
   color:var(--muted);
-  font-size:10px;
+  font-size:12px;
+  font-weight:700;
 }
 
 .panel{
@@ -187,18 +232,21 @@ header{
   border-radius:13px;
   padding:20px;
   min-width:0;
+  margin-bottom:17px;
 }
 
 .panel h3{
   color:var(--gold2);
-  font-size:14px;
+  font-size:16px;
   margin:0 0 18px;
+  font-weight:900;
 }
 
 .chart-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:17px;
+  align-items:stretch;
 }
 
 .chart-box{
@@ -206,7 +254,8 @@ header{
   position:relative;
 }
 
-.chart-box.large{height:350px}
+.chart-box.large{height:360px}
+.chart-box.tall{height:410px}
 
 .table-wrap{
   width:100%;
@@ -218,7 +267,7 @@ header{
 table{
   width:100%;
   border-collapse:collapse;
-  font-size:12px;
+  font-size:13px;
   min-width:650px;
 }
 
@@ -228,37 +277,53 @@ th{
   position:sticky;
   top:0;
   z-index:2;
+  font-weight:900;
 }
 
 th,td{
-  padding:12px 13px;
+  padding:13px 14px;
   text-align:left;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  font-weight:700;
 }
 
 td.num{text-align:right}
-tbody tr:hover{background:rgba(213,173,85,.08)}
+tbody tr:hover{background:rgba(213,173,85,.09)}
 
 .rank{
   color:var(--gold2);
-  font-weight:bold;
+  font-weight:900;
+}
+
+.percent{
+  color:#f3d78d;
+  font-weight:900;
+  white-space:nowrap;
 }
 
 .empty{
   text-align:center;
-  padding:40px;
+  padding:35px;
   color:var(--muted);
 }
 
 .insight{
-  background:rgba(213,173,85,.08);
-  border-left:3px solid var(--gold);
+  background:rgba(213,173,85,.09);
+  border-left:4px solid var(--gold);
   padding:17px;
   border-radius:5px;
   margin-top:15px;
-  font-size:13px;
-  line-height:1.8;
-  color:#e4eaf2;
+  font-size:14px;
+  line-height:1.9;
+  color:#eaf0f7;
+  font-weight:700;
+}
+
+.section-label{
+  color:var(--gold2);
+  font-size:15px;
+  font-weight:900;
+  margin:18px 0 12px;
 }
 
 footer{
@@ -266,7 +331,7 @@ footer{
   bottom:0;
   left:0;
   right:0;
-  height:65px;
+  min-height:68px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -286,24 +351,20 @@ button{
   background:#173655;
   border:1px solid var(--border);
   color:var(--gold2);
-  padding:10px 16px;
+  padding:11px 16px;
   border-radius:7px;
-  font-weight:bold;
+  font-weight:900;
+  font-size:13px;
   cursor:pointer;
 }
 
-button:hover{
-  background:#284d70;
-}
-
-button:disabled{
-  opacity:.3;
-  cursor:not-allowed;
-}
+button:hover{background:#284d70}
+button:disabled{opacity:.3;cursor:not-allowed}
 
 .page-info{
-  font-size:11px;
+  font-size:13px;
   color:var(--muted);
+  font-weight:900;
 }
 
 #loading{
@@ -319,8 +380,8 @@ button:disabled{
 }
 
 .spinner{
-  width:42px;
-  height:42px;
+  width:44px;
+  height:44px;
   border:4px solid #29415a;
   border-top-color:var(--gold);
   border-radius:50%;
@@ -329,7 +390,11 @@ button:disabled{
 
 @keyframes spin{to{transform:rotate(360deg)}}
 
-#loading p{color:var(--gold2);font-size:13px}
+#loading p{
+  color:var(--gold2);
+  font-size:15px;
+  font-weight:900;
+}
 
 .error{
   color:#ff8989;
@@ -339,23 +404,49 @@ button:disabled{
   padding:20px;
 }
 
+.filter-note{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
 @media(max-width:800px){
   .cards{grid-template-columns:repeat(2,1fr)}
   .chart-grid{grid-template-columns:1fr}
-  .slide{padding:25px 16px}
-  .chart-box{height:260px}
-  header{padding:0 13px}
-  footer{padding:0 10px}
-  button{padding:9px 11px;font-size:11px}
-  .brand{font-size:12px}
+  .slide{padding:22px 13px}
+  .chart-box{height:285px}
+  .chart-box.large{height:330px}
+  .chart-box.tall{height:370px}
+  header{padding:8px 12px;min-height:75px}
+  #presentation{top:75px;bottom:65px}
+  footer{padding:0 9px;min-height:65px}
+  button{padding:10px 11px;font-size:12px}
+  .brand{font-size:13px}
+  .brand small{font-size:9px}
+  .status{font-size:10px}
+  .filter-box{font-size:11px;gap:4px}
+  select{font-size:11px;padding:8px 5px;max-width:125px}
+  .panel{padding:15px}
+  .slide-head h2{font-size:23px}
+  .slide-head p{font-size:13px}
 }
 
 @media(max-width:420px){
   .cards{gap:8px}
-  .metric{padding:13px}
+  .metric{padding:13px;min-height:105px}
   .metric strong{font-size:23px}
+  .metric span{font-size:11px}
+  .metric small{font-size:11px}
   .status{font-size:9px}
-  .page-info{font-size:9px}
+  .page-info{font-size:10px}
+  .controls{gap:5px}
+  button{padding:9px 9px;font-size:11px}
+  .filter-box span{display:none}
+  select{max-width:115px}
+  .panel h3{font-size:14px}
+  table{font-size:12px}
+  th,td{padding:11px 10px}
 }
 </style>
 </head>
@@ -367,7 +458,16 @@ button:disabled{
     PT BEHAESTEX
     <small>DEPARTEMEN PRINTING</small>
   </div>
-  <div class="status" id="connection">● MENGHUBUNGKAN...</div>
+
+  <div class="header-right">
+    <div class="filter-box">
+      <span>PERIODE</span>
+      <select id="monthFilter" onchange="changeMonthFilter()">
+        <option value="ALL">SEMUA BULAN</option>
+      </select>
+    </div>
+    <div class="status" id="connection">● MENGHUBUNGKAN...</div>
+  </div>
 </header>
 
 <div id="loading">
@@ -396,6 +496,8 @@ button:disabled{
     <h2>EXECUTIVE SUMMARY</h2>
     <p>Ringkasan keseluruhan data kualitas produksi</p>
   </div>
+
+  <div class="filter-note" id="summaryPeriod">Periode: Semua Bulan</div>
 
   <div class="cards">
     <div class="metric">
@@ -429,26 +531,28 @@ button:disabled{
 <!-- SLIDE 3 -->
 <section class="slide" id="slide3">
   <div class="slide-head">
-    <h2>TREND KUALITAS BULANAN</h2>
-    <p>Perkembangan jumlah defect berdasarkan bulan</p>
+    <h2>TREND DEFECT</h2>
+    <p>Perkembangan jumlah defect harian pada periode terpilih</p>
   </div>
   <div class="panel">
-    <h3>TREND DEFECT PER BULAN</h3>
+    <h3>TREND DEFECT HARIAN · TITIK KOORDINAT</h3>
     <div class="chart-box large">
       <canvas id="monthlyChart"></canvas>
     </div>
+    <div class="insight" id="trendInsight"></div>
   </div>
 </section>
 
 <!-- SLIDE 4 -->
 <section class="slide" id="slide4">
   <div class="slide-head">
-    <h2>ANALISIS JENIS DEFECT</h2>
-    <p>Identifikasi jenis defect yang paling banyak terjadi</p>
+    <h2>DEFECT BREAKDOWN</h2>
+    <p>Komposisi jenis defect dan kontribusi setiap grup</p>
   </div>
+
   <div class="chart-grid">
     <div class="panel">
-      <h3>KOMPOSISI DEFECT</h3>
+      <h3>KOMPOSISI 5 JENIS DEFECT TERBESAR</h3>
       <div class="chart-box">
         <canvas id="defectPie"></canvas>
       </div>
@@ -460,21 +564,57 @@ button:disabled{
       </div>
     </div>
   </div>
-  <div id="defectInsight" class="insight"></div>
+
+  <div class="panel">
+    <h3>KONTRIBUSI DEFECT BERDASARKAN GRUP</h3>
+    <div class="chart-box large">
+      <canvas id="groupChart"></canvas>
+    </div>
+    <div id="defectInsight" class="insight"></div>
+  </div>
+
+  <div class="panel">
+    <h3>KOMPOSISI 5 JENIS DEFECT TERBESAR BERDASARKAN MESIN</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>MESIN</th>
+            <th>RANK</th>
+            <th>JENIS DEFECT</th>
+            <th>JUMLAH</th>
+            <th>% DARI MESIN</th>
+            <th>% DARI TOTAL</th>
+          </tr>
+        </thead>
+        <tbody id="defectMachineTable"></tbody>
+      </table>
+    </div>
+  </div>
 </section>
 
 <!-- SLIDE 5 -->
 <section class="slide" id="slide5">
   <div class="slide-head">
-    <h2>ANALISIS MESIN</h2>
-    <p>Distribusi defect berdasarkan mesin produksi</p>
+    <h2>MC ANALYST</h2>
+    <p>Ranking mesin dan kontribusi defect berdasarkan mesin produksi</p>
   </div>
-  <div class="panel">
-    <h3>TOP 10 MESIN BERDASARKAN JUMLAH DEFECT</h3>
-    <div class="chart-box large">
-      <canvas id="machineChart"></canvas>
+
+  <div class="chart-grid">
+    <div class="panel">
+      <h3>RANKING MC BERDASARKAN DEFECT (%)</h3>
+      <div class="chart-box tall">
+        <canvas id="machineChart"></canvas>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>PIE DIAGRAM KONTRIBUSI MC</h3>
+      <div class="chart-box tall">
+        <canvas id="machinePie"></canvas>
+      </div>
     </div>
   </div>
+
   <div id="machineInsight" class="insight"></div>
 </section>
 
@@ -485,7 +625,7 @@ button:disabled{
     <p>Identifikasi motif dengan jumlah defect tertinggi</p>
   </div>
   <div class="panel">
-    <h3>TOP 10 MOTIF</h3>
+    <h3>TOP 10 MOTIF · JUMLAH DAN PERSENTASE</h3>
     <div class="chart-box large">
       <canvas id="motifChart"></canvas>
     </div>
@@ -500,7 +640,7 @@ button:disabled{
     <p>Distribusi defect berdasarkan kode produk</p>
   </div>
   <div class="panel">
-    <h3>TOP 10 KODE PRODUK</h3>
+    <h3>TOP 10 KODE PRODUK · KONTRIBUSI DEFECT (%)</h3>
     <div class="chart-box large">
       <canvas id="productChart"></canvas>
     </div>
@@ -512,12 +652,12 @@ button:disabled{
 <section class="slide" id="slide8">
   <div class="slide-head">
     <h2>ANALISIS GRUP</h2>
-    <p>Perbandingan jumlah defect antargrup</p>
+    <p>Perbandingan jumlah defect dan persentase kontribusi antargrup</p>
   </div>
   <div class="panel">
     <h3>DEFECT BERDASARKAN GRUP</h3>
     <div class="chart-box large">
-      <canvas id="groupChart"></canvas>
+      <canvas id="groupChartFull"></canvas>
     </div>
   </div>
   <div id="groupInsight" class="insight"></div>
@@ -552,7 +692,7 @@ button:disabled{
     </div>
     <div class="metric">
       <span>UPDATE TERAKHIR</span>
-      <strong style="font-size:17px" id="lastUpdate">-</strong>
+      <strong style="font-size:18px" id="lastUpdate">-</strong>
     </div>
   </div>
 
@@ -584,7 +724,6 @@ button:disabled{
 
 <footer>
   <div class="page-info" id="pageInfo">SLIDE 1 / 10</div>
-
   <div class="controls">
     <button onclick="previousSlide()">◀</button>
     <button onclick="toggleAuto()" id="autoBtn">▶ AUTO</button>
@@ -603,13 +742,16 @@ const API_URL =
 
 const REFRESH_INTERVAL = 60 * 1000;
 const SLIDE_COUNT = 10;
+const MONTH_STORAGE_KEY = "QLTY_GLOBAL_MONTH_FILTER_V1";
 
 let currentSlide = 1;
 let autoPlay = false;
 let autoTimer = null;
 let refreshTimer = null;
+let allRecords = [];
 let records = [];
 let charts = {};
+let selectedMonth = localStorage.getItem(MONTH_STORAGE_KEY) || "ALL";
 
 /* =========================================
    UTILITAS
@@ -624,64 +766,104 @@ function clean(value){
   return String(value ?? "").trim() || "-";
 }
 
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
+
 function dateValue(value){
   if(value instanceof Date) return value;
 
   if(typeof value === "number"){
-    return new Date(value);
+    const d = new Date(value);
+    return isNaN(d.getTime()) ? null : d;
   }
 
   const s = String(value || "").trim();
+  if(!s) return null;
 
-  // Format tanggal Indonesia: DD/MM/YYYY
-  const m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
-
+  // Format YYYY-MM-DD
+  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
   if(m){
-    return new Date(+m[3], +m[2]-1, +m[1]);
+    const d = new Date(+m[1],+m[2]-1,+m[3]);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  // Format DD/MM/YYYY atau DD-MM-YYYY
+  m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
+  if(m){
+    const d = new Date(+m[3],+m[2]-1,+m[1]);
+    return isNaN(d.getTime()) ? null : d;
   }
 
   const d = new Date(s);
   return isNaN(d.getTime()) ? null : d;
 }
 
+function monthKey(value){
+  const d = dateValue(value);
+  if(!d) return "";
+
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+}
+
 function dateText(value){
   const d = dateValue(value);
-
-  return d
-    ? d.toLocaleDateString("id-ID",{
-        day:"2-digit",
-        month:"short",
-        year:"numeric"
-      })
-    : clean(value);
+  return d ? d.toLocaleDateString("id-ID",{
+    day:"2-digit",month:"short",year:"numeric"
+  }) : clean(value);
 }
 
 function monthText(value){
   const d = dateValue(value);
+  return d ? d.toLocaleDateString("id-ID",{
+    month:"long",year:"numeric"
+  }) : clean(value);
+}
 
-  return d
-    ? d.toLocaleDateString("id-ID",{
-        month:"long",
-        year:"numeric"
-      })
-    : clean(value);
+function selectedPeriodText(){
+  if(selectedMonth==="ALL") return "SEMUA BULAN";
+
+  const parts=selectedMonth.split("-");
+  return new Date(+parts[0],+parts[1]-1,1)
+    .toLocaleDateString("id-ID",{month:"long",year:"numeric"})
+    .toUpperCase();
 }
 
 function sum(rows,key){
   return rows.reduce((total,r)=>
-    total + (Number(r[key]) || 0),0);
+    total+(Number(r[key])||0),0);
 }
 
-function aggregate(key){
-  const result = {};
+function totalDefect(){
+  return sum(records,"jumlah");
+}
 
-  records.forEach(r=>{
-    const name = clean(r[key]);
+function percent(value,total){
+  if(!total) return 0;
+  return value/total*100;
+}
 
-    if(name === "-") return;
+function percentText(value,total){
+  return percent(value,total).toLocaleString("id-ID",{
+    minimumFractionDigits:1,
+    maximumFractionDigits:1
+  })+"%";
+}
 
-    result[name] = (result[name] || 0) +
-      (Number(r.jumlah) || 0);
+function aggregate(key,source=records){
+  const result={};
+
+  source.forEach(r=>{
+    const name=clean(r[key]);
+    if(name==="-") return;
+
+    result[name]=(result[name]||0)+(Number(r.jumlah)||0);
   });
 
   return Object.entries(result)
@@ -700,66 +882,182 @@ function destroyChart(id){
   }
 }
 
+function chartPercent(items){
+  const total=totalDefect();
+  return items.map(x=>percent(x.value,total));
+}
+
 /* =========================================
-   GRAFIK
+   FILTER BULAN GLOBAL
 ========================================= */
 
-const goldColors = [
+function buildMonthOptions(){
+  const select=$("monthFilter");
+  const oldValue=selectedMonth;
+
+  const months=[...new Set(
+    allRecords.map(r=>monthKey(r.tanggal)).filter(Boolean)
+  )].sort().reverse();
+
+  select.innerHTML='<option value="ALL">SEMUA BULAN</option>';
+
+  months.forEach(key=>{
+    const parts=key.split("-");
+    const label=new Date(+parts[0],+parts[1]-1,1)
+      .toLocaleDateString("id-ID",{month:"long",year:"numeric"});
+
+    const option=document.createElement("option");
+    option.value=key;
+    option.textContent=label;
+    select.appendChild(option);
+  });
+
+  const exists=months.includes(oldValue);
+  selectedMonth=oldValue==="ALL" || exists ? oldValue : "ALL";
+
+  select.value=selectedMonth;
+  localStorage.setItem(MONTH_STORAGE_KEY,selectedMonth);
+}
+
+function changeMonthFilter(){
+  selectedMonth=$("monthFilter").value || "ALL";
+  localStorage.setItem(MONTH_STORAGE_KEY,selectedMonth);
+
+  applyMonthFilter();
+  renderAll();
+  showSlide(currentSlide);
+}
+
+function applyMonthFilter(){
+  records=allRecords.filter(r=>{
+    if(selectedMonth==="ALL") return true;
+    return monthKey(r.tanggal)===selectedMonth;
+  });
+}
+
+/* =========================================
+   KONFIGURASI GRAFIK
+========================================= */
+
+const goldColors=[
   "#d5ad55","#4e91c9","#56b68a","#bd7fcd",
   "#df805d","#76a9a8","#e5c66b","#8199c4",
   "#bb8c73","#8fc5a7"
 ];
 
+if(window.ChartDataLabels){
+  Chart.register(ChartDataLabels);
+}
+
+Chart.defaults.color="#e2e9f2";
+Chart.defaults.font.family="Arial";
+Chart.defaults.font.size=13;
+Chart.defaults.font.weight="bold";
+
+function commonScales(){
+  return {
+    x:{
+      ticks:{
+        color:"#e2e9f2",
+        font:{size:12,weight:"bold"}
+      },
+      grid:{color:"rgba(255,255,255,.13)"}
+    },
+    y:{
+      beginAtZero:true,
+      ticks:{
+        color:"#e2e9f2",
+        font:{size:12,weight:"bold"}
+      },
+      grid:{color:"rgba(255,255,255,.13)"}
+    }
+  };
+}
+
+/* =========================================
+   GRAFIK BAR DENGAN PERSENTASE
+========================================= */
+
 function makeBar(id,items,horizontal=false){
   destroyChart(id);
 
-  charts[id] = new Chart($(id),{
+  const total=totalDefect();
+  const percentages=items.map(x=>percent(x.value,total));
+
+  charts[id]=new Chart($(id),{
     type:"bar",
     data:{
       labels:items.map(x=>x.name),
       datasets:[{
+        label:"Jumlah defect",
         data:items.map(x=>x.value),
-        backgroundColor:goldColors,
+        percentages:percentages,
+        backgroundColor:items.map((x,i)=>goldColors[i%goldColors.length]),
         borderRadius:5,
         borderSkipped:false
       }]
     },
     options:{
+      indexAxis:horizontal?"y":"x",
       responsive:true,
       maintainAspectRatio:false,
-      indexAxis:horizontal?"y":"x",
+      layout:{padding:{right:horizontal?55:10,top:15}},
       plugins:{
         legend:{display:false},
         tooltip:{
           callbacks:{
-            label:ctx=>" "+numberFormat(ctx.raw)
+            label:ctx=>{
+              const p=percentages[ctx.dataIndex]||0;
+              return " "+numberFormat(ctx.raw)+" ("+
+                p.toLocaleString("id-ID",{maximumFractionDigits:1})+"%)";
+            }
+          }
+        },
+        datalabels:{
+          color:"#ffffff",
+          anchor:horizontal?"end":"end",
+          align:horizontal?"right":"top",
+          offset:4,
+          clamp:true,
+          font:{size:12,weight:"bold"},
+          formatter:(value,ctx)=>{
+            const p=percentages[ctx.dataIndex]||0;
+            return numberFormat(value)+" · "+
+              p.toLocaleString("id-ID",{maximumFractionDigits:1})+"%";
           }
         }
       },
-      scales:{
+      scales:horizontal?{
         x:{
-          ticks:{color:"#c5d1df"},
-          grid:{color:"rgba(255,255,255,.07)"}
+          beginAtZero:true,
+          ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
+          grid:{color:"rgba(255,255,255,.13)"}
         },
         y:{
-          ticks:{color:"#c5d1df"},
-          grid:{color:"rgba(255,255,255,.07)"}
+          ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
+          grid:{color:"rgba(255,255,255,.13)"}
         }
-      }
+      }:commonScales()
     }
   });
 }
 
+/* =========================================
+   GRAFIK PIE / DOUGHNUT
+========================================= */
+
 function makePie(id,items){
   destroyChart(id);
 
-  charts[id] = new Chart($(id),{
+  const total=totalDefect();
+
+  charts[id]=new Chart($(id),{
     type:"doughnut",
     data:{
       labels:items.map(x=>x.name),
       datasets:[{
         data:items.map(x=>x.value),
-        backgroundColor:goldColors,
+        backgroundColor:items.map((x,i)=>goldColors[i%goldColors.length]),
         borderColor:"#112b49",
         borderWidth:3
       }]
@@ -772,45 +1070,160 @@ function makePie(id,items){
           position:"bottom",
           labels:{
             color:"#e2e9f2",
-            padding:12,
-            font:{size:10}
+            padding:13,
+            font:{size:12,weight:"bold"},
+            generateLabels(chart){
+              const data=chart.data;
+              return data.labels.map((label,i)=>{
+                const value=data.datasets[0].data[i]||0;
+                return {
+                  text:label+" · "+percentText(value,total),
+                  fillStyle:data.datasets[0].backgroundColor[i],
+                  strokeStyle:data.datasets[0].backgroundColor[i],
+                  hidden:false,
+                  index:i
+                };
+              });
+            }
           }
+        },
+        tooltip:{
+          callbacks:{
+            label:ctx=>" "+ctx.label+": "+numberFormat(ctx.raw)+
+              " ("+percentText(ctx.raw,total)+")"
+          }
+        },
+        datalabels:{
+          color:"#ffffff",
+          font:{size:13,weight:"bold"},
+          formatter:value=>percentText(value,total),
+          display:ctx=>ctx.dataset.data[ctx.dataIndex]>0
         }
       }
     }
   });
 }
 
-function monthlyData(){
+/* =========================================
+   TREND DEFECT HARIAN
+========================================= */
+
+function dailyData(){
   const result={};
 
   records.forEach(r=>{
     const d=dateValue(r.tanggal);
     if(!d) return;
 
-    const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+    const key=d.getFullYear()+"-"+
+      String(d.getMonth()+1).padStart(2,"0")+"-"+
+      String(d.getDate()).padStart(2,"0");
 
     result[key]=(result[key]||0)+(Number(r.jumlah)||0);
   });
 
   return Object.entries(result)
     .sort((a,b)=>a[0].localeCompare(b[0]))
-    .map(([key,value])=>{
-      const [year,month]=key.split("-");
-      return {
-        name:new Date(+year,+month-1,1)
-          .toLocaleDateString("id-ID",{month:"short",year:"numeric"}),
-        value
-      };
-    });
+    .map(([key,value])=>({
+      name:key.slice(8,10),
+      fullDate:key,
+      value
+    }));
+}
+
+function renderTrend(){
+  destroyChart("monthlyChart");
+
+  const items=dailyData();
+
+  charts.monthlyChart=new Chart($("monthlyChart"),{
+    type:"line",
+    data:{
+      labels:items.map(x=>x.name),
+      datasets:[{
+        label:"Jumlah defect",
+        data:items.map(x=>x.value),
+        borderColor:"#f3d78d",
+        backgroundColor:"rgba(243,215,141,.12)",
+        pointBackgroundColor:"#ffd43b",
+        pointBorderColor:"#fff2a8",
+        pointBorderWidth:2,
+        pointRadius:6,
+        pointHoverRadius:9,
+        borderWidth:3,
+        tension:.25,
+        fill:true
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      layout:{padding:{top:20,right:15}},
+      plugins:{
+        legend:{
+          labels:{color:"#e2e9f2",font:{size:13,weight:"bold"}}
+        },
+        tooltip:{
+          callbacks:{
+            title:items.length?ctx=>{
+              const item=items[ctx[0].dataIndex];
+              return dateText(item.fullDate);
+            }:undefined,
+            label:ctx=>" Jumlah defect: "+numberFormat(ctx.raw)
+          }
+        },
+        datalabels:{
+          display:true,
+          color:"#ffd43b",
+          align:"top",
+          offset:7,
+          font:{size:12,weight:"bold"},
+          formatter:value=>numberFormat(value)
+        }
+      },
+      scales:{
+        x:{
+          title:{
+            display:true,
+            text:"TANGGAL",
+            color:"#f3d78d",
+            font:{size:13,weight:"bold"}
+          },
+          ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
+          grid:{color:"rgba(255,255,255,.13)"}
+        },
+        y:{
+          beginAtZero:true,
+          title:{
+            display:true,
+            text:"JUMLAH DEFECT",
+            color:"#f3d78d",
+            font:{size:13,weight:"bold"}
+          },
+          ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
+          grid:{color:"rgba(255,255,255,.16)"}
+        }
+      }
+    }
+  });
+
+  const total=totalDefect();
+  const highest=[...items].sort((a,b)=>b.value-a.value)[0];
+
+  $("trendInsight").textContent=highest
+    ?"Defect tertinggi terjadi pada tanggal "+
+      dateText(highest.fullDate)+" dengan jumlah "+
+      numberFormat(highest.value)+". Total defect periode ini "+
+      numberFormat(total)+"."
+    :"Belum tersedia data trend defect.";
 }
 
 /* =========================================
-   ANALISIS DATA
+   RINGKASAN
 ========================================= */
 
 function renderSummary(){
-  const total=sum(records,"jumlah");
+  const total=totalDefect();
   const defects=aggregate("defect");
   const machines=aggregate("mesin");
 
@@ -822,10 +1235,12 @@ function renderSummary(){
   $("coverTotal").textContent=
     numberFormat(records.length)+" RECORD DATA QUALITY";
 
-  const dates=records
-    .map(r=>dateValue(r.tanggal))
-    .filter(Boolean)
-    .sort((a,b)=>a-b);
+  $("coverPeriod").textContent=selectedPeriodText();
+
+  $("summaryPeriod").textContent="PERIODE: "+selectedPeriodText();
+
+  const dates=records.map(r=>dateValue(r.tanggal))
+    .filter(Boolean).sort((a,b)=>a-b);
 
   if(dates.length){
     $("coverPeriod").textContent=
@@ -835,74 +1250,156 @@ function renderSummary(){
   }
 
   $("summaryText").innerHTML=
-    "Laporan ini memuat <b>"+numberFormat(records.length)+
-    " record</b> dengan total akumulasi jumlah defect sebesar <b>"+
+    "Periode laporan: <b>"+escapeHtml(selectedPeriodText())+
+    "</b>. Laporan memuat <b>"+numberFormat(records.length)+
+    " record</b> dengan total akumulasi defect sebesar <b>"+
     numberFormat(total)+"</b>. Terdapat <b>"+defects.length+
     " jenis defect</b> dan <b>"+machines.length+
-    " mesin</b> yang tercatat dalam database. "+
+    " mesin</b> yang tercatat. "+
     (defects.length
-      ?"Jenis defect tertinggi adalah <b>"+defects[0].name+
-       "</b> dengan jumlah "+numberFormat(defects[0].value)+"."
+      ?"Jenis defect tertinggi adalah <b>"+escapeHtml(defects[0].name)+
+       "</b> dengan jumlah <b>"+numberFormat(defects[0].value)+
+       "</b> atau <b>"+percentText(defects[0].value,total)+"</b> dari total."
       :"Belum terdapat data jenis defect.");
 
   $("detailTotal").textContent=numberFormat(records.length);
 }
 
-function renderMonthly(){
-  makeBar("monthlyChart",monthlyData());
-}
+/* =========================================
+   DEFECT BREAKDOWN
+========================================= */
 
 function renderDefect(){
   const items=topItems("defect",10);
+  const topFive=items.slice(0,5);
 
-  makePie("defectPie",items);
+  makePie("defectPie",topFive);
   makeBar("defectBar",items,true);
 
-  $("defectInsight").textContent=items.length
-    ?"Jenis defect tertinggi adalah "+items[0].name+
-      " dengan jumlah "+numberFormat(items[0].value)+"."
+  const groups=aggregate("grup");
+
+  $("defectInsight").innerHTML=items.length
+    ?"Jenis defect tertinggi adalah <b>"+escapeHtml(items[0].name)+
+      "</b> sebanyak <b>"+numberFormat(items[0].value)+
+      "</b> ("+percentText(items[0].value,totalDefect())+
+      "). Kontribusi grup terbesar adalah <b>"+
+      escapeHtml(groups[0]?.name||"-")+"</b> sebesar <b>"+
+      percentText(groups[0]?.value||0,totalDefect())+"</b>."
     :"Belum tersedia data defect.";
+
+  renderDefectMachineTable();
 }
+
+function renderDefectMachineTable(){
+  const tbody=$("defectMachineTable");
+  tbody.innerHTML="";
+
+  const machines=aggregate("mesin");
+
+  machines.forEach(machine=>{
+    const machineRows=records.filter(r=>clean(r.mesin)===machine.name);
+    const defects=aggregate("defect",machineRows).slice(0,5);
+
+    defects.forEach((defect,index)=>{
+      const tr=document.createElement("tr");
+
+      const values=[
+        index===0?machine.name:"",
+        index+1,
+        defect.name,
+        numberFormat(defect.value),
+        percentText(defect.value,machine.value),
+        percentText(defect.value,totalDefect())
+      ];
+
+      values.forEach((value,i)=>{
+        const td=document.createElement("td");
+        td.textContent=value;
+
+        if(i===1) td.className="rank";
+        if(i>=4) td.className="percent";
+
+        tr.appendChild(td);
+      });
+
+      tbody.appendChild(tr);
+    });
+  });
+
+  if(!tbody.children.length){
+    tbody.innerHTML='<tr><td colspan="6" class="empty">Belum ada data</td></tr>';
+  }
+}
+
+/* =========================================
+   MC ANALYST
+========================================= */
 
 function renderMachine(){
-  const items=topItems("mesin",10);
-  makeBar("machineChart",items,true);
+  const items=topItems("mesin",20);
 
-  $("machineInsight").textContent=items.length
-    ?"Mesin dengan akumulasi defect tertinggi adalah "+
-      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+  makeBar("machineChart",items,true);
+  makePie("machinePie",items.slice(0,8));
+
+  $("machineInsight").innerHTML=items.length
+    ?"Ranking MC tertinggi adalah <b>"+escapeHtml(items[0].name)+
+      "</b> dengan jumlah defect <b>"+numberFormat(items[0].value)+
+      "</b> atau kontribusi <b>"+percentText(items[0].value,totalDefect())+
+      "</b> dari total defect periode terpilih."
     :"Belum tersedia data mesin.";
 }
+
+/* =========================================
+   ANALISIS MOTIF
+========================================= */
 
 function renderMotif(){
   const items=topItems("motif",10);
   makeBar("motifChart",items,true);
 
   $("motifInsight").textContent=items.length
-    ?"Motif dengan jumlah defect tertinggi adalah "+
-      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+    ?"Motif dengan jumlah defect tertinggi adalah "+items[0].name+
+      " sebanyak "+numberFormat(items[0].value)+
+      " ("+percentText(items[0].value,totalDefect())+")."
     :"Belum tersedia data motif.";
 }
+
+/* =========================================
+   ANALISIS PRODUK
+========================================= */
 
 function renderProduct(){
   const items=topItems("produk",10);
   makeBar("productChart",items,true);
 
   $("productInsight").textContent=items.length
-    ?"Kode produk dengan jumlah defect tertinggi adalah "+
-      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+    ?"Kode produk dengan defect tertinggi adalah "+items[0].name+
+      " sebanyak "+numberFormat(items[0].value)+
+      " atau "+percentText(items[0].value,totalDefect())+
+      " dari total defect."
     :"Belum tersedia data produk.";
 }
 
+/* =========================================
+   ANALISIS GRUP
+========================================= */
+
 function renderGroup(){
   const items=topItems("grup",20);
+
   makeBar("groupChart",items,true);
+  makeBar("groupChartFull",items,true);
 
   $("groupInsight").textContent=items.length
-    ?"Grup dengan akumulasi defect tertinggi adalah "+
-      items[0].name+" sebanyak "+numberFormat(items[0].value)+"."
+    ?"Grup dengan kontribusi defect tertinggi adalah "+items[0].name+
+      " sebanyak "+numberFormat(items[0].value)+
+      " ("+percentText(items[0].value,totalDefect())+")."
     :"Belum tersedia data grup.";
 }
+
+/* =========================================
+   ANALISIS OPERATOR
+========================================= */
 
 function renderOperator(){
   const items=topItems("operator",10);
@@ -910,8 +1407,9 @@ function renderOperator(){
 
   $("operatorInsight").textContent=items.length
     ?"Operator dengan jumlah defect tertinggi pada data adalah "+
-      items[0].name+" sebanyak "+numberFormat(items[0].value)+". "+
-      "Angka ini merupakan distribusi data, bukan penilaian kinerja individu."
+      items[0].name+" sebanyak "+numberFormat(items[0].value)+
+      " ("+percentText(items[0].value,totalDefect())+
+      "). Angka ini merupakan distribusi data, bukan penilaian kinerja individu."
     :"Belum tersedia data operator.";
 }
 
@@ -921,10 +1419,8 @@ function renderOperator(){
 
 function renderTable(){
   const tbody=$("detailTable");
-
   tbody.innerHTML="";
 
-  // Urutan data terbaru ditampilkan lebih dahulu.
   const sorted=[...records].sort((a,b)=>{
     const da=dateValue(a.tanggal);
     const db=dateValue(b.tanggal);
@@ -955,7 +1451,6 @@ function renderTable(){
       td.textContent=value;
 
       if(index===4) td.className="num";
-
       tr.appendChild(td);
     });
 
@@ -964,7 +1459,7 @@ function renderTable(){
 
   if(!records.length){
     tbody.innerHTML=
-      '<tr><td colspan="11" class="empty">Belum ada data</td></tr>';
+      '<tr><td colspan="11" class="empty">Tidak ada data pada periode ini</td></tr>';
   }
 }
 
@@ -974,7 +1469,7 @@ function renderTable(){
 
 function renderAll(){
   renderSummary();
-  renderMonthly();
+  renderTrend();
   renderDefect();
   renderMachine();
   renderMotif();
@@ -989,7 +1484,7 @@ function renderAll(){
 ========================================= */
 
 async function refreshData(){
-  $("connection").textContent="● MEMPERBARUI DATA...";
+  $("connection").textContent="● MEMPERBARUI...";
   $("connection").style.color="#f3d78d";
 
   try{
@@ -1005,14 +1500,14 @@ async function refreshData(){
     const result=await response.json();
 
     if(result.status!=="success"){
-      throw new Error(result.message || "API mengembalikan error");
+      throw new Error(result.message||"API mengembalikan error");
     }
 
     if(!Array.isArray(result.data)){
       throw new Error("Format data API tidak sesuai");
     }
 
-    records=result.data.map(r=>({
+    allRecords=result.data.map(r=>({
       tanggal:r.tanggal,
       bulan:r.bulan,
       roll:r.roll,
@@ -1026,16 +1521,17 @@ async function refreshData(){
       operator:r.operator
     }));
 
+    buildMonthOptions();
+    applyMonthFilter();
     renderAll();
 
     $("lastUpdate").textContent=
       new Date().toLocaleTimeString("id-ID",{
-        hour:"2-digit",
-        minute:"2-digit"
+        hour:"2-digit",minute:"2-digit"
       });
 
     $("connection").textContent=
-      "● TERHUBUNG · "+numberFormat(records.length)+" DATA";
+      "● ONLINE · "+numberFormat(records.length)+" DATA";
 
     $("connection").style.color="#65e6a0";
 
@@ -1045,10 +1541,10 @@ async function refreshData(){
     $("connection").textContent="● GAGAL MEMUAT DATA";
     $("connection").style.color="#ff8989";
 
-    if(!records.length){
+    if(!allRecords.length){
       $("loading").innerHTML=
         '<div class="error"><h3>GAGAL MENGAMBIL DATA</h3>'+
-        '<p>'+error.message+'</p>'+
+        '<p>'+escapeHtml(error.message)+'</p>'+
         '<button onclick="refreshData()">COBA LAGI</button>'+
         '<p>Periksa URL Apps Script, izin akses web app, dan koneksi internet.</p></div>';
       return;
@@ -1074,9 +1570,8 @@ function showSlide(number){
   $("pageInfo").textContent=
     "SLIDE "+currentSlide+" / "+SLIDE_COUNT;
 
-  document.querySelectorAll(".slide.active").forEach(slide=>{
-    slide.scrollTop=0;
-  });
+  const active=$("slide"+currentSlide);
+  if(active) active.scrollTop=0;
 }
 
 function nextSlide(){
@@ -1115,7 +1610,7 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight") nextSlide();
   if(e.key==="ArrowLeft") previousSlide();
 
-  if(e.key===" "){
+  if(e.key===" " && !["SELECT","INPUT"].includes(document.activeElement.tagName)){
     e.preventDefault();
     toggleAuto();
   }
@@ -1151,7 +1646,5 @@ refreshTimer=setInterval(()=>{
 },REFRESH_INTERVAL);
 
 </script>
-
 </body>
 </html>
-
