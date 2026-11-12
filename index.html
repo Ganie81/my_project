@@ -742,7 +742,10 @@ function kpi(label,value,note,icon){
 }
 
 function renderKpis(id,rows){
- const total=sum(rows);
+ const total=sum(rows.filter(r=>{
+ const v=String(r.operator??'').trim().toUpperCase();
+ return v!=='' && v!=='#N/A' && v!=='N/A' && v!=='TIDAK DIISI';
+}));
  const rolls=uniqueCount(rows,'roll');
  const machines=uniqueCount(rows,'mesin');
  const types=uniqueCount(rows,'defect');
