@@ -1230,84 +1230,252 @@ function renderHandling(){
   }).join('');
 }
 
-/* HALAMAN 9-11: DOKUMENTASI FOTO */
-function getPhotoData(){
- try{
-  return JSON.parse(localStorage.getItem(PHOTO_STORAGE_KEY)||'{}');
- }catch(e){
-  return {};
- }
-}
+/* HALAMAN 9-11: GOOGLE DRIVE PHOTO STORAGE */
 
-function getDriveImageUrl(value){
- const raw=String(value||'').trim();
- if(!raw)return '';
+let drivePhotos = {};
 
- if(!raw.includes('/')&&!raw.includes(':')){
-  return 'https://drive.google.com/uc?export=view&id='+encodeURIComponent(raw);
- }
-
- const match=raw.match(/\/file\/d\/([^/?]+)/)
-  ||raw.match(/[?&]id=([^&]+)/)
-  ||raw.match(/\/d\/([^/?]+)/);
-
- if(match){
-  return 'https://drive.google.com/uc?export=view&id='+encodeURIComponent(match[1]);
- }
-
- return raw;
-}
-
-function savePhoto(number){
- const url=document.getElementById('photo'+number+'-url').value.trim();
- const nomor=document.getElementById('photo'+number+'-number').value.trim();
- const caption=document.getElementById('photo'+number+'-caption').value.trim();
-
- const data=getPhotoData();
- data[number]={url,nomor,caption};
-
- try{
-  localStorage.setItem(PHOTO_STORAGE_KEY,JSON.stringify(data));
-  renderPhoto(number);
-  alert('Dokumentasi foto '+number+' berhasil disimpan.');
- }catch(e){
-  alert('Gagal menyimpan. Penyimpanan browser mungkin penuh.');
- }
-}
-
-function renderPhoto(number){
- const data=getPhotoData();
- const item=data[number]||{};
- const url=item.url||'';
+function photoDisplay(number){
  const display=document.getElementById('photo'+number+'-display');
+ const caption=document.getElementById('photo'+number+'-display-caption');
+ const item=drivePhotos[number];
 
- if(url){
-  const imageUrl=getDriveImageUrl(url);
+ if(!item){
+  display.className='photo-empty';
+  display.textContent='GAMBAR '+String.fromCharCode(64+number)+' BELUM DIPILIH';
+  caption.innerHTML='<strong>'+number+'.</strong> Keterangan gambar';
+  return;
+ }
+
+ const imageUrl=item.imageUrl||item.url||'';
+
+ if(imageUrl){
   display.className='';
   display.innerHTML=`
    <img
     src="${escapeHtml(imageUrl)}"
     alt="Dokumentasi foto ${number}"
-    onerror="this.style.display='none';this.parentElement.className='photo-empty';this.parentElement.textContent='Gambar tidak dapat dimuat. Periksa link dan izin Google Drive.'"
+    onerror="
+     this.style.display='none';
+     this.parentElement.className='photo-empty';
+     this.parentElement.textContent='Gambar tidak dapat dimuat. Periksa izin Google Drive.';
+    "
    >
   `;
  }else{
   display.className='photo-empty';
-  display.textContent='GAMBAR '+String.fromCharCode(64+number)+' BELUM DIPILIH';
+  display.textContent='GAMBAR TIDAK TERSEDIA';
  }
 
- document.getElementById('photo'+number+'-display-caption').innerHTML=
-  `<strong>${escapeHtml(item.nomor||number)}.</strong> ${escapeHtml(item.caption||'Keterangan gambar')}`;
+ document.getElementById('photo'+number+'-number').value=
+  item.number||number;
 
- document.getElementById('photo'+number+'-url').value=item.url||'';
- document.getElementById('photo'+number+'-number').value=item.nomor||String(number);
- document.getElementById('photo'+number+'-caption').value=item.caption||'';
+ document.getElementById('photo'+number+'-caption').value=
+  item.caption||'';
+
+ caption.innerHTML=
+  `<strong>${escapeHtml(item.number||number)}.</strong> ${escapeHtml(item.caption||'Keterangan gambar')}`;
 }
 
-function loadAllPhotos(){
- [1,2,3].forEach(renderPhoto);
+/* AMBIL FOTO DARI GOOGLE DRIVE */
+async function loadAllPhotos(){
+ try{
+  const url=API_URL+'?action=getPhotos&t='+Date.now();
+
+  const response=await fetch(url,{
+   method:'GET',
+   cache:'no-store'
+  });
+
+  if(!response.ok)throw new Error('HTTP '+response.status);
+
+  const result=await response.json();
+
+  if(result.status!=='success'){
+   throw new Error(result.message||'Gagal mengambil foto.');
+  }
+
+  drivePhotos={};
+
+  (result.photos||[]).forEach(photo=>{
+   drivePhotos[Number(photo.number)]=photo;
+  });
+
+  [1,2,3].forEach(photoDisplay);
+
+ }catch(error){
+  console.error('Gagal memuat foto Drive:',error);
+
+  [1,2,3].forEach(number=>{
+   const display=document.getElementById('photo'+number+'-display');
+   if(!drivePhotos[number]){
+    display.className='photo-empty';
+    display.textContent='Gagal memuat foto. Periksa koneksi internet.';
+   }
+  });
+ }
 }
 
+/* KOMPRES FOTO SEBELUM DIUNGGAH */
+async function compressPhoto(file){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+   const img=new Image();
+
+   img.onload=()=>{
+    const maxSize=1600;
+    let width=img.width;
+    let height=img.height;
+
+    if(width>maxSize||height>maxSize){
+     const ratio=Math.min(maxSize/width,maxSize/height);
+     width=Math.round(width*ratio);
+     height=Math.round(height*ratio);
+    }
+
+    const canvas=document.createElement('canvas');
+    canvas.width=width;
+    canvas.height=height;
+
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(img,0,0,width,height);
+
+    const dataUrl=canvas.toDataURL('image/jpeg',0.82);
+
+    resolve({
+     base64:dataUrl.split(',')[1],
+     mimeType:'image/jpeg',
+     fileName:file.name.replace(/\.[^.]+$/,'')+'.jpg'
+    });
+   };
+
+   img.onerror=()=>reject(new Error('File gambar tidak dapat dibaca.'));
+   img.src=reader.result;
+  };
+
+  reader.onerror=()=>reject(new Error('Gagal membaca file gambar.'));
+  reader.readAsDataURL(file);
+ });
+}
+
+/* SIMPAN FOTO KE GOOGLE DRIVE */
+async function savePhoto(number){
+ const fileInput=document.getElementById('photo'+number+'-file');
+ const caption=document.getElementById('photo'+number+'-caption').value.trim();
+ const nomor=document.getElementById('photo'+number+'-number').value.trim();
+ const button=document.getElementById('photo'+number+'-save');
+
+ const file=fileInput.files[0];
+
+ if(!file){
+  alert('Pilih foto terlebih dahulu.');
+  return;
+ }
+
+ if(!['image/jpeg','image/png','image/webp'].includes(file.type)){
+  alert('Format foto harus JPG, PNG, atau WEBP.');
+  return;
+ }
+
+ if(file.size>8*1024*1024){
+  alert('Ukuran foto maksimal 8 MB.');
+  return;
+ }
+
+ if(!nomor){
+  alert('Nomor foto harus diisi.');
+  return;
+ }
+
+ button.disabled=true;
+ button.textContent='MENGUNGGAH...';
+
+ try{
+  const compressed=await compressPhoto(file);
+
+  const payload={
+   action:'uploadPhoto',
+   number:number,
+   caption:caption,
+   base64:compressed.base64
+  };
+
+  const response=await fetch(API_URL,{
+   method:'POST',
+   headers:{
+    'Content-Type':'text/plain;charset=utf-8'
+   },
+   body:JSON.stringify(payload)
+  });
+
+  if(!response.ok)throw new Error('HTTP '+response.status);
+
+  const result=await response.json();
+
+  if(result.status!=='success'){
+   throw new Error(result.message||'Upload foto gagal.');
+  }
+
+  alert('Foto '+String.fromCharCode(64+number)+' berhasil disimpan ke Google Drive.');
+
+  fileInput.value='';
+
+  await loadAllPhotos();
+
+ }catch(error){
+  console.error('Upload foto:',error);
+  alert('Gagal menyimpan foto: '+error.message);
+ }finally{
+  button.disabled=false;
+  button.textContent='SIMPAN FOTO '+String.fromCharCode(64+number);
+ }
+}
+
+/* HAPUS FOTO DARI GOOGLE DRIVE */
+async function deletePhoto(number){
+ if(!drivePhotos[number]){
+  alert('Belum ada foto yang tersimpan.');
+  return;
+ }
+
+ const konfirmasi=confirm(
+  'Yakin ingin menghapus foto '+String.fromCharCode(64+number)+' dari Google Drive?'
+ );
+
+ if(!konfirmasi)return;
+
+ try{
+  const response=await fetch(API_URL,{
+   method:'POST',
+   headers:{
+    'Content-Type':'text/plain;charset=utf-8'
+   },
+   body:JSON.stringify({
+    action:'deletePhoto',
+    number:number
+   })
+  });
+
+  if(!response.ok)throw new Error('HTTP '+response.status);
+
+  const result=await response.json();
+
+  if(result.status!=='success'){
+   throw new Error(result.message||'Gagal menghapus foto.');
+  }
+
+  delete drivePhotos[number];
+
+  photoDisplay(number);
+
+  alert('Foto berhasil dihapus dari Google Drive.');
+
+ }catch(error){
+  console.error('Hapus foto:',error);
+  alert('Gagal menghapus foto: '+error.message);
+ }
+}
 /* RENDER SEMUA HALAMAN */
 function renderAll(){
  renderOverview();
