@@ -121,7 +121,16 @@ tr:hover td{background:#122b49}
 #printTitle{display:none}
 
 /* HALAMAN 7: RANKING OPERATOR */
-.operator-ranking-page .card{margin-bottom:13px}
+.operator-ranking-page #operator-ranking .bar-row{
+ grid-template-columns:50% minmax(0,1fr) 82px;
+ gap:7px;
+}
+
+.operator-ranking-page #operator-ranking .bar-track{
+ width:50%;
+ height:6px;
+}
+ .card{margin-bottom:13px}
 
 /* HALAMAN 8: LAPORAN ANALISA */
 .report-editor{
