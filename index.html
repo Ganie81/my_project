@@ -497,11 +497,11 @@ tr:hover td{background:#122b49}
 <!-- HALAMAN 9: FOTO A -->
 <section class="page hidden" id="page-photo1">
  <div class="page-head">
-  <div><h2>Dokumentasi Foto A</h2><p>Halaman dokumentasi gambar pertama.</p></div>
+  <div><h2>Dokumentasi Foto A</h2><p>Dokumentasi gambar tersimpan di Google Drive.</p></div>
  </div>
  <div class="report-editor no-print">
-  <label>LINK GOOGLE DRIVE / FILE ID
-   <input id="photo1-url" placeholder="Masukkan link atau ID gambar Drive">
+  <label>PILIH FOTO A
+   <input type="file" id="photo1-file" accept="image/jpeg,image/png,image/webp">
   </label>
   <label>NOMOR
    <input id="photo1-number" value="1">
@@ -509,10 +509,11 @@ tr:hover td{background:#122b49}
   <label>KETERANGAN
    <input id="photo1-caption" placeholder="Masukkan keterangan gambar">
   </label>
-  <button class="btn primary" onclick="savePhoto(1)">SIMPAN FOTO A</button>
+  <button class="btn primary" id="photo1-save" onclick="savePhoto(1)">SIMPAN FOTO A</button>
+  <button class="btn" onclick="deletePhoto(1)">HAPUS FOTO A</button>
  </div>
  <div class="photo-paper">
-  <div id="photo1-display" class="photo-empty">GAMBAR A BELUM DIPILIH</div>
+  <div id="photo1-display" class="photo-empty">MEMUAT FOTO A...</div>
   <div class="photo-caption" id="photo1-display-caption"><strong>1.</strong> Keterangan gambar</div>
  </div>
 </section>
@@ -520,11 +521,11 @@ tr:hover td{background:#122b49}
 <!-- HALAMAN 10: FOTO B -->
 <section class="page hidden" id="page-photo2">
  <div class="page-head">
-  <div><h2>Dokumentasi Foto B</h2><p>Halaman dokumentasi gambar kedua.</p></div>
+  <div><h2>Dokumentasi Foto B</h2><p>Dokumentasi gambar tersimpan di Google Drive.</p></div>
  </div>
  <div class="report-editor no-print">
-  <label>LINK GOOGLE DRIVE / FILE ID
-   <input id="photo2-url" placeholder="Masukkan link atau ID gambar Drive">
+  <label>PILIH FOTO B
+   <input type="file" id="photo2-file" accept="image/jpeg,image/png,image/webp">
   </label>
   <label>NOMOR
    <input id="photo2-number" value="2">
@@ -532,10 +533,11 @@ tr:hover td{background:#122b49}
   <label>KETERANGAN
    <input id="photo2-caption" placeholder="Masukkan keterangan gambar">
   </label>
-  <button class="btn primary" onclick="savePhoto(2)">SIMPAN FOTO B</button>
+  <button class="btn primary" id="photo2-save" onclick="savePhoto(2)">SIMPAN FOTO B</button>
+  <button class="btn" onclick="deletePhoto(2)">HAPUS FOTO B</button>
  </div>
  <div class="photo-paper">
-  <div id="photo2-display" class="photo-empty">GAMBAR B BELUM DIPILIH</div>
+  <div id="photo2-display" class="photo-empty">MEMUAT FOTO B...</div>
   <div class="photo-caption" id="photo2-display-caption"><strong>2.</strong> Keterangan gambar</div>
  </div>
 </section>
@@ -543,11 +545,11 @@ tr:hover td{background:#122b49}
 <!-- HALAMAN 11: FOTO C -->
 <section class="page hidden" id="page-photo3">
  <div class="page-head">
-  <div><h2>Dokumentasi Foto C</h2><p>Halaman dokumentasi gambar ketiga.</p></div>
+  <div><h2>Dokumentasi Foto C</h2><p>Dokumentasi gambar tersimpan di Google Drive.</p></div>
  </div>
  <div class="report-editor no-print">
-  <label>LINK GOOGLE DRIVE / FILE ID
-   <input id="photo3-url" placeholder="Masukkan link atau ID gambar Drive">
+  <label>PILIH FOTO C
+   <input type="file" id="photo3-file" accept="image/jpeg,image/png,image/webp">
   </label>
   <label>NOMOR
    <input id="photo3-number" value="3">
@@ -555,10 +557,11 @@ tr:hover td{background:#122b49}
   <label>KETERANGAN
    <input id="photo3-caption" placeholder="Masukkan keterangan gambar">
   </label>
-  <button class="btn primary" onclick="savePhoto(3)">SIMPAN FOTO C</button>
+  <button class="btn primary" id="photo3-save" onclick="savePhoto(3)">SIMPAN FOTO C</button>
+  <button class="btn" onclick="deletePhoto(3)">HAPUS FOTO C</button>
  </div>
  <div class="photo-paper">
-  <div id="photo3-display" class="photo-empty">GAMBAR C BELUM DIPILIH</div>
+  <div id="photo3-display" class="photo-empty">MEMUAT FOTO C...</div>
   <div class="photo-caption" id="photo3-display-caption"><strong>3.</strong> Keterangan gambar</div>
  </div>
 </section>
