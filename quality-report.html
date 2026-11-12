@@ -7,9 +7,6 @@
 <meta name="theme-color" content="#07182e">
 <title>QUALITY REPORT | PT BEHAESTEX</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-
 <style>
 :root{
   --navy:#07182e;
@@ -21,395 +18,167 @@
   --panel:#112b49;
   --border:rgba(213,173,85,.3);
 }
-
 *{box-sizing:border-box}
-
 body{
-  margin:0;
-  background:var(--navy);
-  color:var(--white);
-  font-family:Arial,Helvetica,sans-serif;
-  overflow:hidden;
-  font-size:14px;
-  font-weight:600;
+  margin:0;background:var(--navy);color:var(--white);
+  font-family:Arial,Helvetica,sans-serif;overflow:hidden;
+  font-size:14px;font-weight:600;
 }
-
 header{
-  min-height:68px;
-  padding:8px 25px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  background:#061326;
-  border-bottom:1px solid var(--border);
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:20;
+  min-height:68px;padding:8px 25px;display:flex;
+  align-items:center;justify-content:space-between;gap:12px;
+  background:#061326;border-bottom:1px solid var(--border);
+  position:fixed;top:0;left:0;right:0;z-index:20;
 }
-
 .brand{
-  font-size:16px;
-  font-weight:900;
-  letter-spacing:1.5px;
-  color:var(--gold2);
-  white-space:nowrap;
+  font-size:16px;font-weight:900;letter-spacing:1.5px;
+  color:var(--gold2);white-space:nowrap;
 }
-
 .brand small{
-  display:block;
-  font-size:11px;
-  color:var(--muted);
-  letter-spacing:1.5px;
-  margin-top:4px;
-  font-weight:800;
+  display:block;font-size:11px;color:var(--muted);
+  letter-spacing:1.5px;margin-top:4px;font-weight:800;
 }
-
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
+.header-right{display:flex;align-items:center;gap:12px}
 .filter-box{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  color:var(--gold2);
-  font-size:12px;
-  font-weight:800;
+  display:flex;align-items:center;gap:7px;
+  color:var(--gold2);font-size:12px;font-weight:800;
 }
-
 select{
-  background:#173655;
-  color:#fff;
-  border:1px solid var(--gold);
-  border-radius:7px;
-  padding:9px 10px;
-  font-size:13px;
-  font-weight:800;
-  max-width:165px;
+  background:#173655;color:#fff;border:1px solid var(--gold);
+  border-radius:7px;padding:9px 10px;font-size:13px;
+  font-weight:800;max-width:165px;
 }
-
-select option{
-  background:#102b4b;
-  color:#fff;
-}
-
-.status{
-  font-size:12px;
-  color:#65e6a0;
-  white-space:nowrap;
-  font-weight:800;
-}
-
+select option{background:#102b4b;color:#fff}
+.status{font-size:12px;color:#65e6a0;white-space:nowrap;font-weight:800}
 #presentation{
-  position:absolute;
-  top:68px;
-  bottom:68px;
-  left:0;
-  right:0;
+  position:absolute;top:68px;bottom:68px;left:0;right:0;
   overflow:hidden;
 }
-
 .slide{
-  display:none;
-  width:100%;
-  height:100%;
-  padding:30px 5%;
-  overflow-y:auto;
-  animation:fade .3s ease;
+  display:none;width:100%;height:100%;padding:30px 5%;
+  overflow-y:auto;animation:fade .3s ease;
 }
-
 .slide.active{display:block}
-
 @keyframes fade{
   from{opacity:0;transform:translateY(8px)}
   to{opacity:1;transform:translateY(0)}
 }
-
 .slide-head{
-  border-left:5px solid var(--gold);
-  padding-left:16px;
-  margin-bottom:22px;
+  border-left:5px solid var(--gold);padding-left:16px;margin-bottom:22px;
 }
-
 .slide-head h2{
-  margin:0;
-  font-size:clamp(23px,3vw,35px);
-  color:var(--gold2);
-  letter-spacing:.7px;
-  font-weight:900;
+  margin:0;font-size:clamp(23px,3vw,35px);
+  color:var(--gold2);letter-spacing:.7px;font-weight:900;
 }
-
 .slide-head p{
-  margin:8px 0 0;
-  color:var(--muted);
-  font-size:14px;
-  font-weight:700;
+  margin:8px 0 0;color:var(--muted);font-size:14px;font-weight:700;
 }
-
 .cover{
-  min-height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
+  min-height:100%;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
   background:radial-gradient(ellipse at center,rgba(213,173,85,.15),transparent 60%);
 }
-
-.cover .line{
-  width:110px;
-  height:4px;
-  background:var(--gold);
-  margin:20px;
-}
-
+.cover .line{width:110px;height:4px;background:var(--gold);margin:20px}
 .cover h1{
-  color:var(--gold2);
-  font-size:clamp(38px,7vw,78px);
-  line-height:1.1;
-  margin:10px;
-  letter-spacing:3px;
-  font-weight:900;
+  color:var(--gold2);font-size:clamp(38px,7vw,78px);
+  line-height:1.1;margin:10px;letter-spacing:3px;font-weight:900;
 }
-
-.cover h2{
-  font-size:clamp(16px,2vw,23px);
-  font-weight:800;
-  letter-spacing:2px;
-}
-
-.cover p{
-  color:var(--muted);
-  font-size:15px;
-  line-height:1.8;
-  font-weight:800;
-}
-
+.cover h2{font-size:clamp(16px,2vw,23px);font-weight:800;letter-spacing:2px}
+.cover p{color:var(--muted);font-size:15px;line-height:1.8;font-weight:800}
 .cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:22px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:15px;margin-bottom:22px;
 }
-
 .metric{
   background:linear-gradient(145deg,#173655,#0c2038);
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:20px;
-  min-height:115px;
+  border:1px solid var(--border);border-radius:13px;
+  padding:20px;min-height:115px;
 }
-
-.metric span{
-  color:var(--muted);
-  font-size:13px;
-  display:block;
-  font-weight:800;
-}
-
+.metric span{color:var(--muted);font-size:13px;display:block;font-weight:800}
 .metric strong{
-  display:block;
-  color:var(--gold2);
-  font-size:clamp(24px,3vw,36px);
-  margin-top:12px;
-  font-weight:900;
+  display:block;color:var(--gold2);
+  font-size:clamp(24px,3vw,36px);margin-top:12px;font-weight:900;
 }
-
-.metric small{
-  color:var(--muted);
-  font-size:12px;
-  font-weight:700;
-}
-
+.metric small{color:var(--muted);font-size:12px;font-weight:700}
 .panel{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:20px;
-  min-width:0;
-  margin-bottom:17px;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:13px;padding:20px;min-width:0;margin-bottom:17px;
 }
-
-.panel h3{
-  color:var(--gold2);
-  font-size:16px;
-  margin:0 0 18px;
-  font-weight:900;
-}
-
+.panel h3{color:var(--gold2);font-size:16px;margin:0 0 18px;font-weight:900}
 .chart-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:17px;
-  align-items:stretch;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:17px;align-items:stretch;
 }
-
-.chart-box{
-  height:300px;
-  position:relative;
-}
-
+.chart-box{height:300px;position:relative}
 .chart-box.large{height:360px}
 .chart-box.tall{height:410px}
-
 .table-wrap{
-  width:100%;
-  overflow:auto;
-  max-height:55vh;
-  border-radius:10px;
+  width:100%;overflow:auto;max-height:55vh;border-radius:10px;
 }
-
 table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:13px;
-  min-width:650px;
+  width:100%;border-collapse:collapse;font-size:13px;min-width:650px;
 }
-
 th{
-  background:#1d3c5c;
-  color:var(--gold2);
-  position:sticky;
-  top:0;
-  z-index:2;
-  font-weight:900;
+  background:#1d3c5c;color:var(--gold2);
+  position:sticky;top:0;z-index:2;font-weight:900;
 }
-
 th,td{
-  padding:13px 14px;
-  text-align:left;
-  border-bottom:1px solid rgba(255,255,255,.1);
-  font-weight:700;
+  padding:13px 14px;text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.1);font-weight:700;
 }
-
 td.num{text-align:right}
 tbody tr:hover{background:rgba(213,173,85,.09)}
-
-.rank{
-  color:var(--gold2);
-  font-weight:900;
-}
-
-.percent{
-  color:#f3d78d;
-  font-weight:900;
-  white-space:nowrap;
-}
-
-.empty{
-  text-align:center;
-  padding:35px;
-  color:var(--muted);
-}
-
+.rank{color:var(--gold2);font-weight:900}
+.percent{color:#f3d78d;font-weight:900;white-space:nowrap}
+.empty{text-align:center;padding:35px;color:var(--muted)}
 .insight{
-  background:rgba(213,173,85,.09);
-  border-left:4px solid var(--gold);
-  padding:17px;
-  border-radius:5px;
-  margin-top:15px;
-  font-size:14px;
-  line-height:1.9;
-  color:#eaf0f7;
-  font-weight:700;
+  background:rgba(213,173,85,.09);border-left:4px solid var(--gold);
+  padding:17px;border-radius:5px;margin-top:15px;
+  font-size:14px;line-height:1.9;color:#eaf0f7;font-weight:700;
 }
-
-.section-label{
-  color:var(--gold2);
-  font-size:15px;
-  font-weight:900;
-  margin:18px 0 12px;
-}
-
+.section-label{color:var(--gold2);font-size:15px;font-weight:900;margin:18px 0 12px}
 footer{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  min-height:68px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  background:#061326;
-  border-top:1px solid var(--border);
-  z-index:20;
+  position:fixed;bottom:0;left:0;right:0;min-height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 25px;background:#061326;
+  border-top:1px solid var(--border);z-index:20;
 }
-
-.controls{
-  display:flex;
-  align-items:center;
-  gap:9px;
-}
-
+.controls{display:flex;align-items:center;gap:9px}
 button{
-  background:#173655;
-  border:1px solid var(--border);
-  color:var(--gold2);
-  padding:11px 16px;
-  border-radius:7px;
-  font-weight:900;
-  font-size:13px;
-  cursor:pointer;
+  background:#173655;border:1px solid var(--border);
+  color:var(--gold2);padding:11px 16px;border-radius:7px;
+  font-weight:900;font-size:13px;cursor:pointer;
 }
-
 button:hover{background:#284d70}
 button:disabled{opacity:.3;cursor:not-allowed}
-
-.page-info{
-  font-size:13px;
-  color:var(--muted);
-  font-weight:900;
-}
-
+.page-info{font-size:13px;color:var(--muted);font-weight:900}
 #loading{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:#07182e;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:15px;
+  position:fixed;inset:0;z-index:100;background:#07182e;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:15px;
 }
-
 .spinner{
-  width:44px;
-  height:44px;
-  border:4px solid #29415a;
-  border-top-color:var(--gold);
-  border-radius:50%;
+  width:44px;height:44px;border:4px solid #29415a;
+  border-top-color:var(--gold);border-radius:50%;
   animation:spin 1s linear infinite;
 }
-
 @keyframes spin{to{transform:rotate(360deg)}}
-
-#loading p{
-  color:var(--gold2);
-  font-size:15px;
-  font-weight:900;
-}
-
+#loading p{color:var(--gold2);font-size:15px;font-weight:900}
 .error{
-  color:#ff8989;
-  max-width:500px;
-  text-align:center;
-  line-height:1.8;
-  padding:20px;
+  color:#ff8989;max-width:500px;text-align:center;
+  line-height:1.8;padding:20px;
 }
+.filter-note{color:var(--muted);font-size:12px;font-weight:700;margin-bottom:15px}
 
-.filter-note{
-  color:var(--muted);
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:15px;
+/* PAGINATION DETAIL */
+.pagination{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;margin-top:15px;color:var(--muted);
+  font-size:12px;font-weight:800;
 }
+.pagination-buttons{display:flex;gap:7px}
+.pagination button{padding:8px 13px;font-size:12px}
+.pagination button:disabled{opacity:.3}
 
 @media(max-width:800px){
   .cards{grid-template-columns:repeat(2,1fr)}
@@ -431,7 +200,6 @@ button:disabled{opacity:.3;cursor:not-allowed}
   .slide-head h2{font-size:23px}
   .slide-head p{font-size:13px}
 }
-
 @media(max-width:420px){
   .cards{gap:8px}
   .metric{padding:13px;min-height:105px}
@@ -458,7 +226,6 @@ button:disabled{opacity:.3;cursor:not-allowed}
     PT BEHAESTEX
     <small>DEPARTEMEN PRINTING</small>
   </div>
-
   <div class="header-right">
     <div class="filter-box">
       <span>PERIODE</span>
@@ -472,12 +239,11 @@ button:disabled{opacity:.3;cursor:not-allowed}
 
 <div id="loading">
   <div class="spinner"></div>
-  <p>MEMUAT QUALITY REPORT...</p>
+  <p id="loadingText">MEMUAT QUALITY REPORT...</p>
 </div>
 
 <main id="presentation">
 
-<!-- SLIDE 1 -->
 <section class="slide active" id="slide1">
   <div class="cover">
     <div class="line"></div>
@@ -490,45 +256,24 @@ button:disabled{opacity:.3;cursor:not-allowed}
   </div>
 </section>
 
-<!-- SLIDE 2 -->
 <section class="slide" id="slide2">
   <div class="slide-head">
     <h2>EXECUTIVE SUMMARY</h2>
     <p>Ringkasan keseluruhan data kualitas produksi</p>
   </div>
-
   <div class="filter-note" id="summaryPeriod">Periode: Semua Bulan</div>
-
   <div class="cards">
-    <div class="metric">
-      <span>TOTAL DATA</span>
-      <strong id="totalData">0</strong>
-      <small>Record produksi</small>
-    </div>
-    <div class="metric">
-      <span>TOTAL DEFECT</span>
-      <strong id="totalDefect">0</strong>
-      <small>Akumulasi jumlah defect</small>
-    </div>
-    <div class="metric">
-      <span>JUMLAH JENIS DEFECT</span>
-      <strong id="jenisDefect">0</strong>
-      <small>Jenis berbeda</small>
-    </div>
-    <div class="metric">
-      <span>JUMLAH MESIN</span>
-      <strong id="jumlahMesin">0</strong>
-      <small>Mesin terdata</small>
-    </div>
+    <div class="metric"><span>TOTAL DATA</span><strong id="totalData">0</strong><small>Record produksi</small></div>
+    <div class="metric"><span>TOTAL DEFECT</span><strong id="totalDefect">0</strong><small>Akumulasi jumlah defect</small></div>
+    <div class="metric"><span>JUMLAH JENIS DEFECT</span><strong id="jenisDefect">0</strong><small>Jenis berbeda</small></div>
+    <div class="metric"><span>JUMLAH MESIN</span><strong id="jumlahMesin">0</strong><small>Mesin terdata</small></div>
   </div>
-
   <div class="panel">
     <h3>RINGKASAN LAPORAN</h3>
     <div id="summaryText" class="insight">Menunggu data...</div>
   </div>
 </section>
 
-<!-- SLIDE 3 -->
 <section class="slide" id="slide3">
   <div class="slide-head">
     <h2>TREND DEFECT</h2>
@@ -536,186 +281,91 @@ button:disabled{opacity:.3;cursor:not-allowed}
   </div>
   <div class="panel">
     <h3>TREND DEFECT HARIAN · TITIK KOORDINAT</h3>
-    <div class="chart-box large">
-      <canvas id="monthlyChart"></canvas>
-    </div>
+    <div class="chart-box large"><canvas id="monthlyChart"></canvas></div>
     <div class="insight" id="trendInsight"></div>
   </div>
 </section>
 
-<!-- SLIDE 4 -->
 <section class="slide" id="slide4">
   <div class="slide-head">
     <h2>DEFECT BREAKDOWN</h2>
     <p>Komposisi jenis defect dan kontribusi setiap grup</p>
   </div>
-
   <div class="chart-grid">
-    <div class="panel">
-      <h3>KOMPOSISI 5 JENIS DEFECT TERBESAR</h3>
-      <div class="chart-box">
-        <canvas id="defectPie"></canvas>
-      </div>
-    </div>
-    <div class="panel">
-      <h3>TOP 10 JENIS DEFECT</h3>
-      <div class="chart-box">
-        <canvas id="defectBar"></canvas>
-      </div>
-    </div>
+    <div class="panel"><h3>KOMPOSISI 5 JENIS DEFECT TERBESAR</h3><div class="chart-box"><canvas id="defectPie"></canvas></div></div>
+    <div class="panel"><h3>TOP 10 JENIS DEFECT</h3><div class="chart-box"><canvas id="defectBar"></canvas></div></div>
   </div>
-
   <div class="panel">
     <h3>KONTRIBUSI DEFECT BERDASARKAN GRUP</h3>
-    <div class="chart-box large">
-      <canvas id="groupChart"></canvas>
-    </div>
+    <div class="chart-box large"><canvas id="groupChart"></canvas></div>
     <div id="defectInsight" class="insight"></div>
   </div>
-
   <div class="panel">
     <h3>KOMPOSISI 5 JENIS DEFECT TERBESAR BERDASARKAN MESIN</h3>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>MESIN</th>
-            <th>RANK</th>
-            <th>JENIS DEFECT</th>
-            <th>JUMLAH</th>
-            <th>% DARI MESIN</th>
-            <th>% DARI TOTAL</th>
-          </tr>
-        </thead>
+        <thead><tr><th>MESIN</th><th>RANK</th><th>JENIS DEFECT</th><th>JUMLAH</th><th>% DARI MESIN</th><th>% DARI TOTAL</th></tr></thead>
         <tbody id="defectMachineTable"></tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- SLIDE 5 -->
 <section class="slide" id="slide5">
   <div class="slide-head">
     <h2>MC ANALYST</h2>
     <p>Ranking mesin dan kontribusi defect berdasarkan mesin produksi</p>
   </div>
-
   <div class="chart-grid">
-    <div class="panel">
-      <h3>RANKING MC BERDASARKAN DEFECT (%)</h3>
-      <div class="chart-box tall">
-        <canvas id="machineChart"></canvas>
-      </div>
-    </div>
-    <div class="panel">
-      <h3>PIE DIAGRAM KONTRIBUSI MC</h3>
-      <div class="chart-box tall">
-        <canvas id="machinePie"></canvas>
-      </div>
-    </div>
+    <div class="panel"><h3>RANKING MC BERDASARKAN DEFECT (%)</h3><div class="chart-box tall"><canvas id="machineChart"></canvas></div></div>
+    <div class="panel"><h3>PIE DIAGRAM KONTRIBUSI MC</h3><div class="chart-box tall"><canvas id="machinePie"></canvas></div></div>
   </div>
-
   <div id="machineInsight" class="insight"></div>
 </section>
 
-<!-- SLIDE 6 -->
 <section class="slide" id="slide6">
-  <div class="slide-head">
-    <h2>ANALISIS MOTIF</h2>
-    <p>Identifikasi motif dengan jumlah defect tertinggi</p>
-  </div>
-  <div class="panel">
-    <h3>TOP 10 MOTIF · JUMLAH DAN PERSENTASE</h3>
-    <div class="chart-box large">
-      <canvas id="motifChart"></canvas>
-    </div>
-  </div>
+  <div class="slide-head"><h2>ANALISIS MOTIF</h2><p>Identifikasi motif dengan jumlah defect tertinggi</p></div>
+  <div class="panel"><h3>TOP 10 MOTIF · JUMLAH DAN PERSENTASE</h3><div class="chart-box large"><canvas id="motifChart"></canvas></div></div>
   <div id="motifInsight" class="insight"></div>
 </section>
 
-<!-- SLIDE 7 -->
 <section class="slide" id="slide7">
-  <div class="slide-head">
-    <h2>ANALISIS PRODUK</h2>
-    <p>Distribusi defect berdasarkan kode produk</p>
-  </div>
-  <div class="panel">
-    <h3>TOP 10 KODE PRODUK · KONTRIBUSI DEFECT (%)</h3>
-    <div class="chart-box large">
-      <canvas id="productChart"></canvas>
-    </div>
-  </div>
+  <div class="slide-head"><h2>ANALISIS PRODUK</h2><p>Distribusi defect berdasarkan kode produk</p></div>
+  <div class="panel"><h3>TOP 10 KODE PRODUK · KONTRIBUSI DEFECT (%)</h3><div class="chart-box large"><canvas id="productChart"></canvas></div></div>
   <div id="productInsight" class="insight"></div>
 </section>
 
-<!-- SLIDE 8 -->
 <section class="slide" id="slide8">
-  <div class="slide-head">
-    <h2>ANALISIS GRUP</h2>
-    <p>Perbandingan jumlah defect dan persentase kontribusi antargrup</p>
-  </div>
-  <div class="panel">
-    <h3>DEFECT BERDASARKAN GRUP</h3>
-    <div class="chart-box large">
-      <canvas id="groupChartFull"></canvas>
-    </div>
-  </div>
+  <div class="slide-head"><h2>ANALISIS GRUP</h2><p>Perbandingan jumlah defect dan persentase kontribusi antargrup</p></div>
+  <div class="panel"><h3>DEFECT BERDASARKAN GRUP</h3><div class="chart-box large"><canvas id="groupChartFull"></canvas></div></div>
   <div id="groupInsight" class="insight"></div>
 </section>
 
-<!-- SLIDE 9 -->
 <section class="slide" id="slide9">
-  <div class="slide-head">
-    <h2>ANALISIS OPERATOR</h2>
-    <p>Distribusi data defect berdasarkan operator</p>
-  </div>
-  <div class="panel">
-    <h3>TOP 10 OPERATOR BERDASARKAN JUMLAH DEFECT</h3>
-    <div class="chart-box large">
-      <canvas id="operatorChart"></canvas>
-    </div>
-  </div>
+  <div class="slide-head"><h2>ANALISIS OPERATOR</h2><p>Distribusi data defect berdasarkan operator</p></div>
+  <div class="panel"><h3>TOP 10 OPERATOR BERDASARKAN JUMLAH DEFECT</h3><div class="chart-box large"><canvas id="operatorChart"></canvas></div></div>
   <div id="operatorInsight" class="insight"></div>
 </section>
 
-<!-- SLIDE 10 -->
 <section class="slide" id="slide10">
-  <div class="slide-head">
-    <h2>DETAIL DATA QUALITY</h2>
-    <p>Data aktual yang diterima dari Spreadsheet QLTY</p>
-  </div>
-
+  <div class="slide-head"><h2>DETAIL DATA QUALITY</h2><p>Data aktual yang diterima dari Spreadsheet QLTY</p></div>
   <div class="cards">
-    <div class="metric">
-      <span>TOTAL RECORD</span>
-      <strong id="detailTotal">0</strong>
-    </div>
-    <div class="metric">
-      <span>UPDATE TERAKHIR</span>
-      <strong style="font-size:18px" id="lastUpdate">-</strong>
-    </div>
+    <div class="metric"><span>TOTAL RECORD</span><strong id="detailTotal">0</strong></div>
+    <div class="metric"><span>UPDATE TERAKHIR</span><strong style="font-size:18px" id="lastUpdate">-</strong></div>
   </div>
-
   <div class="panel">
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>NO</th>
-            <th>TANGGAL</th>
-            <th>ROLL</th>
-            <th>KODE PRODUK</th>
-            <th>JUMLAH</th>
-            <th>DEFECT</th>
-            <th>MESIN</th>
-            <th>MOTIF</th>
-            <th>BLOK</th>
-            <th>GRUP</th>
-            <th>OPERATOR</th>
-          </tr>
-        </thead>
+        <thead><tr><th>NO</th><th>TANGGAL</th><th>ROLL</th><th>KODE PRODUK</th><th>JUMLAH</th><th>DEFECT</th><th>MESIN</th><th>MOTIF</th><th>BLOK</th><th>GRUP</th><th>OPERATOR</th></tr></thead>
         <tbody id="detailTable"></tbody>
       </table>
+    </div>
+    <div class="pagination">
+      <span id="tableInfo">Menampilkan data</span>
+      <div class="pagination-buttons">
+        <button id="prevTable" onclick="changeTablePage(-1)">◀</button>
+        <button id="nextTable" onclick="changeTablePage(1)">▶</button>
+      </div>
     </div>
   </div>
 </section>
@@ -742,6 +392,7 @@ const API_URL =
 
 const REFRESH_INTERVAL = 60 * 1000;
 const SLIDE_COUNT = 10;
+const PAGE_SIZE = 100;
 const MONTH_STORAGE_KEY = "QLTY_GLOBAL_MONTH_FILTER_V1";
 
 let currentSlide = 1;
@@ -752,10 +403,12 @@ let allRecords = [];
 let records = [];
 let charts = {};
 let selectedMonth = localStorage.getItem(MONTH_STORAGE_KEY) || "ALL";
-
-/* =========================================
-   UTILITAS
-========================================= */
+let isFetching = false;
+let chartLibraryPromise = null;
+let renderedKey = {};
+let tablePage = 0;
+let sortedRecords = [];
+let lastUpdateTime = "-";
 
 const $ = id => document.getElementById(id);
 
@@ -768,67 +421,50 @@ function clean(value){
 
 function escapeHtml(value){
   return String(value ?? "").replace(/[&<>"']/g,c=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[c]));
 }
 
 function dateValue(value){
   if(value instanceof Date) return value;
-
   if(typeof value === "number"){
-    const d = new Date(value);
-    return isNaN(d.getTime()) ? null : d;
+    const d=new Date(value);
+    return isNaN(d.getTime())?null:d;
   }
-
-  const s = String(value || "").trim();
+  const s=String(value||"").trim();
   if(!s) return null;
 
-  // Format YYYY-MM-DD
-  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
   if(m){
-    const d = new Date(+m[1],+m[2]-1,+m[3]);
-    return isNaN(d.getTime()) ? null : d;
+    const d=new Date(+m[1],+m[2]-1,+m[3]);
+    return isNaN(d.getTime())?null:d;
   }
 
-  // Format DD/MM/YYYY atau DD-MM-YYYY
-  m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
+  m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
   if(m){
-    const d = new Date(+m[3],+m[2]-1,+m[1]);
-    return isNaN(d.getTime()) ? null : d;
+    const d=new Date(+m[3],+m[2]-1,+m[1]);
+    return isNaN(d.getTime())?null:d;
   }
 
-  const d = new Date(s);
-  return isNaN(d.getTime()) ? null : d;
+  const d=new Date(s);
+  return isNaN(d.getTime())?null:d;
 }
 
 function monthKey(value){
-  const d = dateValue(value);
+  const d=dateValue(value);
   if(!d) return "";
-
   return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
 }
 
 function dateText(value){
-  const d = dateValue(value);
-  return d ? d.toLocaleDateString("id-ID",{
+  const d=dateValue(value);
+  return d?d.toLocaleDateString("id-ID",{
     day:"2-digit",month:"short",year:"numeric"
-  }) : clean(value);
-}
-
-function monthText(value){
-  const d = dateValue(value);
-  return d ? d.toLocaleDateString("id-ID",{
-    month:"long",year:"numeric"
-  }) : clean(value);
+  }):clean(value);
 }
 
 function selectedPeriodText(){
   if(selectedMonth==="ALL") return "SEMUA BULAN";
-
   const parts=selectedMonth.split("-");
   return new Date(+parts[0],+parts[1]-1,1)
     .toLocaleDateString("id-ID",{month:"long",year:"numeric"})
@@ -836,8 +472,9 @@ function selectedPeriodText(){
 }
 
 function sum(rows,key){
-  return rows.reduce((total,r)=>
-    total+(Number(r[key])||0),0);
+  let total=0;
+  for(let i=0;i<rows.length;i++) total+=Number(rows[i][key])||0;
+  return total;
 }
 
 function totalDefect(){
@@ -845,29 +482,27 @@ function totalDefect(){
 }
 
 function percent(value,total){
-  if(!total) return 0;
-  return value/total*100;
+  return total?value/total*100:0;
 }
 
 function percentText(value,total){
   return percent(value,total).toLocaleString("id-ID",{
-    minimumFractionDigits:1,
-    maximumFractionDigits:1
+    minimumFractionDigits:1,maximumFractionDigits:1
   })+"%";
 }
 
+/* AGREGASI SATU KALI PER PEMANGGILAN */
 function aggregate(key,source=records){
-  const result={};
+  const result=new Map();
 
-  source.forEach(r=>{
+  for(let i=0;i<source.length;i++){
+    const r=source[i];
     const name=clean(r[key]);
-    if(name==="-") return;
+    if(name==="-") continue;
+    result.set(name,(result.get(name)||0)+(Number(r.jumlah)||0));
+  }
 
-    result[name]=(result[name]||0)+(Number(r.jumlah)||0);
-  });
-
-  return Object.entries(result)
-    .map(([name,value])=>({name,value}))
+  return Array.from(result,([name,value])=>({name,value}))
     .sort((a,b)=>b.value-a.value);
 }
 
@@ -882,13 +517,55 @@ function destroyChart(id){
   }
 }
 
-function chartPercent(items){
-  const total=totalDefect();
-  return items.map(x=>percent(x.value,total));
+function destroyAllCharts(){
+  Object.keys(charts).forEach(destroyChart);
+  renderedKey={};
+}
+
+const goldColors=[
+  "#d5ad55","#4e91c9","#56b68a","#bd7fcd",
+  "#df805d","#76a9a8","#e5c66b","#8199c4",
+  "#bb8c73","#8fc5a7"
+];
+
+/* =========================================
+   LOAD CHART.JS SAAT DIBUTUHKAN SAJA
+========================================= */
+
+function loadScript(url){
+  return new Promise((resolve,reject)=>{
+    const script=document.createElement("script");
+    script.src=url;
+    script.async=true;
+    script.onload=resolve;
+    script.onerror=()=>reject(new Error("Gagal memuat library grafik"));
+    document.head.appendChild(script);
+  });
+}
+
+function loadChartLibrary(){
+  if(window.Chart) return Promise.resolve();
+  if(chartLibraryPromise) return chartLibraryPromise;
+
+  chartLibraryPromise=(async()=>{
+    await loadScript("https://cdn.jsdelivr.net/npm/chart.js");
+    await loadScript("https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2");
+
+    if(window.ChartDataLabels){
+      Chart.register(ChartDataLabels);
+    }
+
+    Chart.defaults.color="#e2e9f2";
+    Chart.defaults.font.family="Arial";
+    Chart.defaults.font.size=13;
+    Chart.defaults.font.weight="bold";
+  })();
+
+  return chartLibraryPromise;
 }
 
 /* =========================================
-   FILTER BULAN GLOBAL
+   FILTER BULAN
 ========================================= */
 
 function buildMonthOptions(){
@@ -902,81 +579,113 @@ function buildMonthOptions(){
   select.innerHTML='<option value="ALL">SEMUA BULAN</option>';
 
   months.forEach(key=>{
-    const parts=key.split("-");
-    const label=new Date(+parts[0],+parts[1]-1,1)
-      .toLocaleDateString("id-ID",{month:"long",year:"numeric"});
-
+    const p=key.split("-");
     const option=document.createElement("option");
     option.value=key;
-    option.textContent=label;
+    option.textContent=new Date(+p[0],+p[1]-1,1)
+      .toLocaleDateString("id-ID",{month:"long",year:"numeric"});
     select.appendChild(option);
   });
 
-  const exists=months.includes(oldValue);
-  selectedMonth=oldValue==="ALL" || exists ? oldValue : "ALL";
+  selectedMonth=(oldValue==="ALL"||months.includes(oldValue))
+    ?oldValue:"ALL";
 
   select.value=selectedMonth;
   localStorage.setItem(MONTH_STORAGE_KEY,selectedMonth);
 }
 
+function applyMonthFilter(){
+  if(selectedMonth==="ALL"){
+    records=allRecords;
+  }else{
+    records=allRecords.filter(r=>monthKey(r.tanggal)===selectedMonth);
+  }
+
+  tablePage=0;
+  sortedRecords=[];
+  renderedKey={};
+}
+
 function changeMonthFilter(){
-  selectedMonth=$("monthFilter").value || "ALL";
+  selectedMonth=$("monthFilter").value||"ALL";
   localStorage.setItem(MONTH_STORAGE_KEY,selectedMonth);
 
   applyMonthFilter();
-  renderAll();
-  showSlide(currentSlide);
+  destroyAllCharts();
+  renderCover();
+
+  if(currentSlide!==1) renderSlideContent(currentSlide);
 }
 
-function applyMonthFilter(){
-  records=allRecords.filter(r=>{
-    if(selectedMonth==="ALL") return true;
-    return monthKey(r.tanggal)===selectedMonth;
-  });
+/* =========================================
+   COVER DAN RINGKASAN
+========================================= */
+
+function renderCover(){
+  $("coverTotal").textContent=numberFormat(records.length)+" RECORD DATA QUALITY";
+
+  const dates=records.map(r=>dateValue(r.tanggal)).filter(Boolean);
+
+  if(dates.length){
+    let min=dates[0],max=dates[0];
+    for(let i=1;i<dates.length;i++){
+      if(dates[i]<min) min=dates[i];
+      if(dates[i]>max) max=dates[i];
+    }
+
+    $("coverPeriod").textContent=
+      min.toLocaleDateString("id-ID",{month:"long",year:"numeric"})+
+      " — "+
+      max.toLocaleDateString("id-ID",{month:"long",year:"numeric"});
+  }else{
+    $("coverPeriod").textContent=selectedPeriodText();
+  }
+}
+
+function renderSummary(){
+  const total=totalDefect();
+  const defects=aggregate("defect");
+  const machines=aggregate("mesin");
+
+  $("totalData").textContent=numberFormat(records.length);
+  $("totalDefect").textContent=numberFormat(total);
+  $("jenisDefect").textContent=defects.length;
+  $("jumlahMesin").textContent=machines.length;
+
+  $("summaryPeriod").textContent="PERIODE: "+selectedPeriodText();
+  $("detailTotal").textContent=numberFormat(records.length);
+
+  $("summaryText").innerHTML=
+    "Periode laporan: <b>"+escapeHtml(selectedPeriodText())+
+    "</b>. Laporan memuat <b>"+numberFormat(records.length)+
+    " record</b> dengan total akumulasi defect sebesar <b>"+
+    numberFormat(total)+"</b>. Terdapat <b>"+defects.length+
+    " jenis defect</b> dan <b>"+machines.length+
+    " mesin</b> yang tercatat. "+
+    (defects.length
+      ?"Jenis defect tertinggi adalah <b>"+escapeHtml(defects[0].name)+
+       "</b> dengan jumlah <b>"+numberFormat(defects[0].value)+
+       "</b> atau <b>"+percentText(defects[0].value,total)+"</b> dari total."
+      :"Belum terdapat data jenis defect.");
 }
 
 /* =========================================
    KONFIGURASI GRAFIK
 ========================================= */
 
-const goldColors=[
-  "#d5ad55","#4e91c9","#56b68a","#bd7fcd",
-  "#df805d","#76a9a8","#e5c66b","#8199c4",
-  "#bb8c73","#8fc5a7"
-];
-
-if(window.ChartDataLabels){
-  Chart.register(ChartDataLabels);
-}
-
-Chart.defaults.color="#e2e9f2";
-Chart.defaults.font.family="Arial";
-Chart.defaults.font.size=13;
-Chart.defaults.font.weight="bold";
-
 function commonScales(){
   return {
     x:{
-      ticks:{
-        color:"#e2e9f2",
-        font:{size:12,weight:"bold"}
-      },
+      ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
       grid:{color:"rgba(255,255,255,.13)"}
     },
     y:{
       beginAtZero:true,
-      ticks:{
-        color:"#e2e9f2",
-        font:{size:12,weight:"bold"}
-      },
+      ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
       grid:{color:"rgba(255,255,255,.13)"}
     }
   };
 }
-
-/* =========================================
-   GRAFIK BAR DENGAN PERSENTASE
-========================================= */
 
 function makeBar(id,items,horizontal=false){
   destroyChart(id);
@@ -991,17 +700,15 @@ function makeBar(id,items,horizontal=false){
       datasets:[{
         label:"Jumlah defect",
         data:items.map(x=>x.value),
-        percentages:percentages,
         backgroundColor:items.map((x,i)=>goldColors[i%goldColors.length]),
-        borderRadius:5,
-        borderSkipped:false
+        borderRadius:5,borderSkipped:false
       }]
     },
     options:{
       indexAxis:horizontal?"y":"x",
-      responsive:true,
-      maintainAspectRatio:false,
-      layout:{padding:{right:horizontal?55:10,top:15}},
+      responsive:true,maintainAspectRatio:false,
+      animation:false,
+      layout:{padding:{right:horizontal?65:10,top:15}},
       plugins:{
         legend:{display:false},
         tooltip:{
@@ -1014,12 +721,8 @@ function makeBar(id,items,horizontal=false){
           }
         },
         datalabels:{
-          color:"#ffffff",
-          anchor:horizontal?"end":"end",
-          align:horizontal?"right":"top",
-          offset:4,
-          clamp:true,
-          font:{size:12,weight:"bold"},
+          color:"#ffffff",anchor:"end",align:horizontal?"right":"top",
+          offset:4,clamp:true,font:{size:12,weight:"bold"},
           formatter:(value,ctx)=>{
             const p=percentages[ctx.dataIndex]||0;
             return numberFormat(value)+" · "+
@@ -1042,13 +745,8 @@ function makeBar(id,items,horizontal=false){
   });
 }
 
-/* =========================================
-   GRAFIK PIE / DOUGHNUT
-========================================= */
-
 function makePie(id,items){
   destroyChart(id);
-
   const total=totalDefect();
 
   charts[id]=new Chart($(id),{
@@ -1058,19 +756,17 @@ function makePie(id,items){
       datasets:[{
         data:items.map(x=>x.value),
         backgroundColor:items.map((x,i)=>goldColors[i%goldColors.length]),
-        borderColor:"#112b49",
-        borderWidth:3
+        borderColor:"#112b49",borderWidth:3
       }]
     },
     options:{
-      responsive:true,
-      maintainAspectRatio:false,
+      responsive:true,maintainAspectRatio:false,
+      animation:false,
       plugins:{
         legend:{
           position:"bottom",
           labels:{
-            color:"#e2e9f2",
-            padding:13,
+            color:"#e2e9f2",padding:13,
             font:{size:12,weight:"bold"},
             generateLabels(chart){
               const data=chart.data;
@@ -1080,8 +776,7 @@ function makePie(id,items){
                   text:label+" · "+percentText(value,total),
                   fillStyle:data.datasets[0].backgroundColor[i],
                   strokeStyle:data.datasets[0].backgroundColor[i],
-                  hidden:false,
-                  index:i
+                  hidden:false,index:i
                 };
               });
             }
@@ -1094,8 +789,7 @@ function makePie(id,items){
           }
         },
         datalabels:{
-          color:"#ffffff",
-          font:{size:13,weight:"bold"},
+          color:"#ffffff",font:{size:13,weight:"bold"},
           formatter:value=>percentText(value,total),
           display:ctx=>ctx.dataset.data[ctx.dataIndex]>0
         }
@@ -1105,41 +799,36 @@ function makePie(id,items){
 }
 
 /* =========================================
-   TREND DEFECT HARIAN
+   SLIDE 3 - TREND
 ========================================= */
 
 function dailyData(){
-  const result={};
+  const result=new Map();
 
-  records.forEach(r=>{
+  for(let i=0;i<records.length;i++){
+    const r=records[i];
     const d=dateValue(r.tanggal);
-    if(!d) return;
+    if(!d) continue;
 
     const key=d.getFullYear()+"-"+
       String(d.getMonth()+1).padStart(2,"0")+"-"+
       String(d.getDate()).padStart(2,"0");
 
-    result[key]=(result[key]||0)+(Number(r.jumlah)||0);
-  });
+    result.set(key,(result.get(key)||0)+(Number(r.jumlah)||0));
+  }
 
-  return Object.entries(result)
-    .sort((a,b)=>a[0].localeCompare(b[0]))
-    .map(([key,value])=>({
-      name:key.slice(8,10),
-      fullDate:key,
-      value
-    }));
+  return Array.from(result,([name,value])=>({name,value}))
+    .sort((a,b)=>a.name.localeCompare(b.name));
 }
 
 function renderTrend(){
   destroyChart("monthlyChart");
-
   const items=dailyData();
 
   charts.monthlyChart=new Chart($("monthlyChart"),{
     type:"line",
     data:{
-      labels:items.map(x=>x.name),
+      labels:items.map(x=>x.name.slice(8,10)),
       datasets:[{
         label:"Jumlah defect",
         data:items.map(x=>x.value),
@@ -1147,59 +836,37 @@ function renderTrend(){
         backgroundColor:"rgba(243,215,141,.12)",
         pointBackgroundColor:"#ffd43b",
         pointBorderColor:"#fff2a8",
-        pointBorderWidth:2,
-        pointRadius:6,
-        pointHoverRadius:9,
-        borderWidth:3,
-        tension:.25,
-        fill:true
+        pointBorderWidth:2,pointRadius:4,pointHoverRadius:7,
+        borderWidth:3,tension:.25,fill:true
       }]
     },
     options:{
-      responsive:true,
-      maintainAspectRatio:false,
+      responsive:true,maintainAspectRatio:false,animation:false,
       layout:{padding:{top:20,right:15}},
       plugins:{
-        legend:{
-          labels:{color:"#e2e9f2",font:{size:13,weight:"bold"}}
-        },
+        legend:{labels:{color:"#e2e9f2",font:{size:13,weight:"bold"}}},
         tooltip:{
           callbacks:{
-            title:items.length?ctx=>{
-              const item=items[ctx[0].dataIndex];
-              return dateText(item.fullDate);
-            }:undefined,
+            title:ctx=>dateText(items[ctx[0].dataIndex].name),
             label:ctx=>" Jumlah defect: "+numberFormat(ctx.raw)
           }
         },
         datalabels:{
-          display:true,
-          color:"#ffd43b",
-          align:"top",
-          offset:7,
-          font:{size:12,weight:"bold"},
+          display:items.length<=100,
+          color:"#ffd43b",align:"top",offset:7,
+          font:{size:11,weight:"bold"},
           formatter:value=>numberFormat(value)
         }
       },
       scales:{
         x:{
-          title:{
-            display:true,
-            text:"TANGGAL",
-            color:"#f3d78d",
-            font:{size:13,weight:"bold"}
-          },
-          ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
+          title:{display:true,text:"TANGGAL",color:"#f3d78d",font:{size:13,weight:"bold"}},
+          ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"},maxTicksLimit:20},
           grid:{color:"rgba(255,255,255,.13)"}
         },
         y:{
           beginAtZero:true,
-          title:{
-            display:true,
-            text:"JUMLAH DEFECT",
-            color:"#f3d78d",
-            font:{size:13,weight:"bold"}
-          },
+          title:{display:true,text:"JUMLAH DEFECT",color:"#f3d78d",font:{size:13,weight:"bold"}},
           ticks:{color:"#e2e9f2",font:{size:12,weight:"bold"}},
           grid:{color:"rgba(255,255,255,.16)"}
         }
@@ -1207,76 +874,90 @@ function renderTrend(){
     }
   });
 
-  const total=totalDefect();
-  const highest=[...items].sort((a,b)=>b.value-a.value)[0];
+  let highest=null;
+  for(const item of items){
+    if(!highest||item.value>highest.value) highest=item;
+  }
 
   $("trendInsight").textContent=highest
-    ?"Defect tertinggi terjadi pada tanggal "+
-      dateText(highest.fullDate)+" dengan jumlah "+
-      numberFormat(highest.value)+". Total defect periode ini "+
-      numberFormat(total)+"."
+    ?"Defect tertinggi terjadi pada tanggal "+dateText(highest.name)+
+      " dengan jumlah "+numberFormat(highest.value)+
+      ". Total defect periode ini "+numberFormat(totalDefect())+"."
     :"Belum tersedia data trend defect.";
 }
 
 /* =========================================
-   RINGKASAN
+   SLIDE 4 - DEFECT BREAKDOWN
 ========================================= */
 
-function renderSummary(){
-  const total=totalDefect();
-  const defects=aggregate("defect");
-  const machines=aggregate("mesin");
+function renderDefectMachineTable(){
+  const grouped=new Map();
 
-  $("totalData").textContent=numberFormat(records.length);
-  $("totalDefect").textContent=numberFormat(total);
-  $("jenisDefect").textContent=defects.length;
-  $("jumlahMesin").textContent=machines.length;
+  // Satu kali proses seluruh data, bukan filter berulang per mesin.
+  for(let i=0;i<records.length;i++){
+    const r=records[i];
+    const machine=clean(r.mesin);
+    const defect=clean(r.defect);
+    if(machine==="-"||defect==="-") continue;
 
-  $("coverTotal").textContent=
-    numberFormat(records.length)+" RECORD DATA QUALITY";
-
-  $("coverPeriod").textContent=selectedPeriodText();
-
-  $("summaryPeriod").textContent="PERIODE: "+selectedPeriodText();
-
-  const dates=records.map(r=>dateValue(r.tanggal))
-    .filter(Boolean).sort((a,b)=>a-b);
-
-  if(dates.length){
-    $("coverPeriod").textContent=
-      dates[0].toLocaleDateString("id-ID",{month:"long",year:"numeric"})
-      +" — "+
-      dates[dates.length-1].toLocaleDateString("id-ID",{month:"long",year:"numeric"});
+    if(!grouped.has(machine)) grouped.set(machine,new Map());
+    const map=grouped.get(machine);
+    map.set(defect,(map.get(defect)||0)+(Number(r.jumlah)||0));
   }
 
-  $("summaryText").innerHTML=
-    "Periode laporan: <b>"+escapeHtml(selectedPeriodText())+
-    "</b>. Laporan memuat <b>"+numberFormat(records.length)+
-    " record</b> dengan total akumulasi defect sebesar <b>"+
-    numberFormat(total)+"</b>. Terdapat <b>"+defects.length+
-    " jenis defect</b> dan <b>"+machines.length+
-    " mesin</b> yang tercatat. "+
-    (defects.length
-      ?"Jenis defect tertinggi adalah <b>"+escapeHtml(defects[0].name)+
-       "</b> dengan jumlah <b>"+numberFormat(defects[0].value)+
-       "</b> atau <b>"+percentText(defects[0].value,total)+"</b> dari total."
-      :"Belum terdapat data jenis defect.");
+  const machineTotals=new Map();
+  for(const [machine,map] of grouped){
+    let total=0;
+    for(const value of map.values()) total+=value;
+    machineTotals.set(machine,total);
+  }
 
-  $("detailTotal").textContent=numberFormat(records.length);
+  const machines=Array.from(grouped.keys())
+    .sort((a,b)=>machineTotals.get(b)-machineTotals.get(a));
+
+  const tbody=$("defectMachineTable");
+  const fragment=document.createDocumentFragment();
+
+  machines.forEach(machine=>{
+    const defects=Array.from(grouped.get(machine),([name,value])=>({name,value}))
+      .sort((a,b)=>b.value-a.value).slice(0,5);
+
+    defects.forEach((defect,index)=>{
+      const tr=document.createElement("tr");
+      const values=[
+        index===0?machine:"",
+        index+1,
+        defect.name,
+        numberFormat(defect.value),
+        percentText(defect.value,machineTotals.get(machine)),
+        percentText(defect.value,totalDefect())
+      ];
+
+      values.forEach((value,i)=>{
+        const td=document.createElement("td");
+        td.textContent=value;
+        if(i===1) td.className="rank";
+        if(i>=4) td.className="percent";
+        tr.appendChild(td);
+      });
+      fragment.appendChild(tr);
+    });
+  });
+
+  tbody.replaceChildren(fragment);
+
+  if(!tbody.children.length){
+    tbody.innerHTML='<tr><td colspan="6" class="empty">Belum ada data</td></tr>';
+  }
 }
-
-/* =========================================
-   DEFECT BREAKDOWN
-========================================= */
 
 function renderDefect(){
   const items=topItems("defect",10);
-  const topFive=items.slice(0,5);
-
-  makePie("defectPie",topFive);
-  makeBar("defectBar",items,true);
-
   const groups=aggregate("grup");
+
+  makePie("defectPie",items.slice(0,5));
+  makeBar("defectBar",items,true);
+  makeBar("groupChart",groups,true);
 
   $("defectInsight").innerHTML=items.length
     ?"Jenis defect tertinggi adalah <b>"+escapeHtml(items[0].name)+
@@ -1290,54 +971,12 @@ function renderDefect(){
   renderDefectMachineTable();
 }
 
-function renderDefectMachineTable(){
-  const tbody=$("defectMachineTable");
-  tbody.innerHTML="";
-
-  const machines=aggregate("mesin");
-
-  machines.forEach(machine=>{
-    const machineRows=records.filter(r=>clean(r.mesin)===machine.name);
-    const defects=aggregate("defect",machineRows).slice(0,5);
-
-    defects.forEach((defect,index)=>{
-      const tr=document.createElement("tr");
-
-      const values=[
-        index===0?machine.name:"",
-        index+1,
-        defect.name,
-        numberFormat(defect.value),
-        percentText(defect.value,machine.value),
-        percentText(defect.value,totalDefect())
-      ];
-
-      values.forEach((value,i)=>{
-        const td=document.createElement("td");
-        td.textContent=value;
-
-        if(i===1) td.className="rank";
-        if(i>=4) td.className="percent";
-
-        tr.appendChild(td);
-      });
-
-      tbody.appendChild(tr);
-    });
-  });
-
-  if(!tbody.children.length){
-    tbody.innerHTML='<tr><td colspan="6" class="empty">Belum ada data</td></tr>';
-  }
-}
-
 /* =========================================
-   MC ANALYST
+   SLIDE 5 - MESIN
 ========================================= */
 
 function renderMachine(){
   const items=topItems("mesin",20);
-
   makeBar("machineChart",items,true);
   makePie("machinePie",items.slice(0,8));
 
@@ -1350,7 +989,7 @@ function renderMachine(){
 }
 
 /* =========================================
-   ANALISIS MOTIF
+   SLIDE 6 - MOTIF
 ========================================= */
 
 function renderMotif(){
@@ -1365,7 +1004,7 @@ function renderMotif(){
 }
 
 /* =========================================
-   ANALISIS PRODUK
+   SLIDE 7 - PRODUK
 ========================================= */
 
 function renderProduct(){
@@ -1381,13 +1020,11 @@ function renderProduct(){
 }
 
 /* =========================================
-   ANALISIS GRUP
+   SLIDE 8 - GRUP
 ========================================= */
 
 function renderGroup(){
   const items=topItems("grup",20);
-
-  makeBar("groupChart",items,true);
   makeBar("groupChartFull",items,true);
 
   $("groupInsight").textContent=items.length
@@ -1398,7 +1035,7 @@ function renderGroup(){
 }
 
 /* =========================================
-   ANALISIS OPERATOR
+   SLIDE 9 - OPERATOR
 ========================================= */
 
 function renderOperator(){
@@ -1414,88 +1051,178 @@ function renderOperator(){
 }
 
 /* =========================================
-   TABEL DETAIL
+   SLIDE 10 - DETAIL DENGAN PAGINATION
 ========================================= */
 
 function renderTable(){
   const tbody=$("detailTable");
-  tbody.innerHTML="";
 
-  const sorted=[...records].sort((a,b)=>{
-    const da=dateValue(a.tanggal);
-    const db=dateValue(b.tanggal);
+  if(!sortedRecords.length && records.length){
+    sortedRecords=[...records].sort((a,b)=>{
+      const da=dateValue(a.tanggal);
+      const db=dateValue(b.tanggal);
+      if(!da) return 1;
+      if(!db) return -1;
+      return db-da;
+    });
+  }
 
-    if(!da || !db) return 0;
-    return db-da;
-  });
+  const total=sortedRecords.length;
+  const totalPages=Math.max(1,Math.ceil(total/PAGE_SIZE));
 
-  sorted.forEach((r,i)=>{
+  tablePage=Math.max(0,Math.min(tablePage,totalPages-1));
+
+  const start=tablePage*PAGE_SIZE;
+  const end=Math.min(start+PAGE_SIZE,total);
+  const fragment=document.createDocumentFragment();
+
+  for(let i=start;i<end;i++){
+    const r=sortedRecords[i];
     const tr=document.createElement("tr");
 
     const values=[
-      i+1,
-      dateText(r.tanggal),
-      clean(r.roll),
-      clean(r.produk),
-      numberFormat(r.jumlah),
-      clean(r.defect),
-      clean(r.mesin),
-      clean(r.motif),
-      clean(r.blok),
-      clean(r.grup),
-      clean(r.operator)
+      i+1,dateText(r.tanggal),clean(r.roll),clean(r.produk),
+      numberFormat(r.jumlah),clean(r.defect),clean(r.mesin),
+      clean(r.motif),clean(r.blok),clean(r.grup),clean(r.operator)
     ];
 
     values.forEach((value,index)=>{
       const td=document.createElement("td");
       td.textContent=value;
-
       if(index===4) td.className="num";
       tr.appendChild(td);
     });
 
-    tbody.appendChild(tr);
-  });
+    fragment.appendChild(tr);
+  }
 
-  if(!records.length){
-    tbody.innerHTML=
-      '<tr><td colspan="11" class="empty">Tidak ada data pada periode ini</td></tr>';
+  tbody.replaceChildren(fragment);
+
+  if(!total){
+    tbody.innerHTML='<tr><td colspan="11" class="empty">Tidak ada data pada periode ini</td></tr>';
+  }
+
+  $("tableInfo").textContent=total
+    ?"Menampilkan "+numberFormat(total?start+1:0)+"–"+numberFormat(end)+
+      " dari "+numberFormat(total)+" data · Halaman "+(tablePage+1)+
+      " / "+totalPages
+    :"Tidak ada data";
+
+  $("prevTable").disabled=tablePage===0;
+  $("nextTable").disabled=tablePage>=totalPages-1;
+}
+
+function changeTablePage(direction){
+  tablePage+=direction;
+  renderTable();
+  $("slide10").scrollTop=$("slide10").scrollHeight;
+}
+
+/* =========================================
+   RENDER SESUAI SLIDE SAJA
+========================================= */
+
+async function renderSlideContent(number){
+  if(!allRecords.length && !records.length) return;
+
+  if(number===1){
+    renderCover();
+    return;
+  }
+
+  if(number===2){
+    renderSummary();
+    return;
+  }
+
+  if(number===10){
+    renderTable();
+    return;
+  }
+
+  const key=number+"_"+selectedMonth+"_"+records.length;
+  if(renderedKey[number]===key) return;
+
+  try{
+    $("connection").textContent="● MENYIAPKAN GRAFIK...";
+    $("connection").style.color="#f3d78d";
+
+    await loadChartLibrary();
+
+    // Jika user sudah pindah slide saat library sedang dimuat,
+    // jangan menggambar grafik slide yang sudah tidak aktif.
+    if(currentSlide!==number) return;
+
+    if(number===3) renderTrend();
+    if(number===4) renderDefect();
+    if(number===5) renderMachine();
+    if(number===6) renderMotif();
+    if(number===7) renderProduct();
+    if(number===8) renderGroup();
+    if(number===9) renderOperator();
+
+    renderedKey[number]=key;
+
+    $("connection").textContent="● ONLINE · "+numberFormat(records.length)+" DATA";
+    $("connection").style.color="#65e6a0";
+
+  }catch(error){
+    console.error(error);
+    $("connection").textContent="● GAGAL MEMUAT GRAFIK";
+    $("connection").style.color="#ff8989";
   }
 }
 
 /* =========================================
-   RENDER SEMUA
+   NAVIGASI SLIDE
 ========================================= */
 
-function renderAll(){
-  renderSummary();
-  renderTrend();
-  renderDefect();
-  renderMachine();
-  renderMotif();
-  renderProduct();
-  renderGroup();
-  renderOperator();
-  renderTable();
+function showSlide(number){
+  currentSlide=Math.max(1,Math.min(SLIDE_COUNT,number));
+
+  document.querySelectorAll(".slide").forEach(slide=>{
+    slide.classList.remove("active");
+  });
+
+  $("slide"+currentSlide).classList.add("active");
+  $("pageInfo").textContent="SLIDE "+currentSlide+" / "+SLIDE_COUNT;
+
+  const active=$("slide"+currentSlide);
+  if(active) active.scrollTop=0;
+
+  renderSlideContent(currentSlide);
+}
+
+function nextSlide(){
+  showSlide(currentSlide===SLIDE_COUNT?1:currentSlide+1);
+}
+
+function previousSlide(){
+  showSlide(currentSlide===1?SLIDE_COUNT:currentSlide-1);
 }
 
 /* =========================================
-   AMBIL DATA APPS SCRIPT
+   REFRESH DATA - ANTI REQUEST BERTUMPUK
 ========================================= */
 
 async function refreshData(){
+  if(isFetching) return;
+
+  isFetching=true;
   $("connection").textContent="● MEMPERBARUI...";
   $("connection").style.color="#f3d78d";
+
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),60000);
 
   try{
     const response=await fetch(API_URL,{
       method:"GET",
-      cache:"no-store"
+      cache:"no-store",
+      signal:controller.signal
     });
 
-    if(!response.ok){
-      throw new Error("HTTP "+response.status);
-    }
+    if(!response.ok) throw new Error("HTTP "+response.status);
 
     const result=await response.json();
 
@@ -1507,6 +1234,7 @@ async function refreshData(){
       throw new Error("Format data API tidak sesuai");
     }
 
+    // Normalisasi data hanya satu kali saat data diterima.
     allRecords=result.data.map(r=>({
       tanggal:r.tanggal,
       bulan:r.bulan,
@@ -1523,17 +1251,23 @@ async function refreshData(){
 
     buildMonthOptions();
     applyMonthFilter();
-    renderAll();
+    destroyAllCharts();
 
-    $("lastUpdate").textContent=
-      new Date().toLocaleTimeString("id-ID",{
-        hour:"2-digit",minute:"2-digit"
-      });
+    lastUpdateTime=new Date().toLocaleTimeString("id-ID",{
+      hour:"2-digit",minute:"2-digit"
+    });
 
-    $("connection").textContent=
-      "● ONLINE · "+numberFormat(records.length)+" DATA";
+    $("lastUpdate").textContent=lastUpdateTime;
 
+    renderCover();
+
+    // Hanya tampilkan isi slide yang sedang aktif.
+    await renderSlideContent(currentSlide);
+
+    $("connection").textContent="● ONLINE · "+numberFormat(records.length)+" DATA";
     $("connection").style.color="#65e6a0";
+
+    $("loading").style.display="none";
 
   }catch(error){
     console.error(error);
@@ -1547,39 +1281,14 @@ async function refreshData(){
         '<p>'+escapeHtml(error.message)+'</p>'+
         '<button onclick="refreshData()">COBA LAGI</button>'+
         '<p>Periksa URL Apps Script, izin akses web app, dan koneksi internet.</p></div>';
-      return;
+    }else{
+      $("loading").style.display="none";
     }
+
+  }finally{
+    clearTimeout(timeout);
+    isFetching=false;
   }
-
-  $("loading").style.display="none";
-}
-
-/* =========================================
-   NAVIGASI SLIDE
-========================================= */
-
-function showSlide(number){
-  currentSlide=Math.max(1,Math.min(SLIDE_COUNT,number));
-
-  document.querySelectorAll(".slide").forEach(slide=>{
-    slide.classList.remove("active");
-  });
-
-  $("slide"+currentSlide).classList.add("active");
-
-  $("pageInfo").textContent=
-    "SLIDE "+currentSlide+" / "+SLIDE_COUNT;
-
-  const active=$("slide"+currentSlide);
-  if(active) active.scrollTop=0;
-}
-
-function nextSlide(){
-  showSlide(currentSlide===SLIDE_COUNT?1:currentSlide+1);
-}
-
-function previousSlide(){
-  showSlide(currentSlide===1?SLIDE_COUNT:currentSlide-1);
 }
 
 /* =========================================
@@ -1591,11 +1300,9 @@ function toggleAuto(){
 
   if(autoPlay){
     $("autoBtn").textContent="Ⅱ PAUSE";
-
     autoTimer=setInterval(()=>{
       nextSlide();
     },12000);
-
   }else{
     $("autoBtn").textContent="▶ AUTO";
     clearInterval(autoTimer);
@@ -1628,7 +1335,6 @@ document.addEventListener("touchstart",e=>{
 
 document.addEventListener("touchend",e=>{
   const distance=e.changedTouches[0].screenX-touchStart;
-
   if(Math.abs(distance)>70){
     if(distance<0) nextSlide();
     else previousSlide();
@@ -1636,14 +1342,27 @@ document.addEventListener("touchend",e=>{
 },{passive:true});
 
 /* =========================================
+   REFRESH OTOMATIS
+========================================= */
+
+// Refresh tetap setiap 60 detik.
+// Jika tab tidak aktif, refresh ditunda agar HP tidak terbebani.
+refreshTimer=setInterval(()=>{
+  if(!document.hidden) refreshData();
+},REFRESH_INTERVAL);
+
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden && allRecords.length===0){
+    refreshData();
+  }
+});
+
+/* =========================================
    JALANKAN APLIKASI
 ========================================= */
 
+showSlide(1);
 refreshData();
-
-refreshTimer=setInterval(()=>{
-  refreshData();
-},REFRESH_INTERVAL);
 
 </script>
 </body>
