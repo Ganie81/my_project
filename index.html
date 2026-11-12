@@ -707,10 +707,25 @@ function sum(rows){
 
 function groupSum(rows,key){
  const map={};
+
  rows.forEach(r=>{
-  const k=safe(r[key]);
-  map[k]=(map[k]||0)+r.jumlah;
+  const raw=String(r[key]??'').trim();
+  const k=raw.toUpperCase();
+
+  // Abaikan data kosong dan error
+  if(
+   !raw ||
+   k==='#N/A' ||
+   k==='N/A' ||
+   k==='#VALUE!' ||
+   k==='#REF!' ||
+   k==='#ERROR!' ||
+   k==='TIDAK DIISI'
+  ) return;
+
+  map[raw]=(map[raw]||0)+r.jumlah;
  });
+
  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
 }
 
