@@ -900,8 +900,7 @@ function renderMain(items){
       const ranking=calculateRanking(x);
 
       // Target asli Apps Script dikalikan 3.
-      const target=Number(x.targetKD||0)*TARGET_MULTIPLIER;
-
+      const target=Number(x.targetKD||0);
       return `
         <tr>
           <td class="mc">${esc(x.mc)}</td>
