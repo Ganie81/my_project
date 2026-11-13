@@ -964,22 +964,29 @@ function renderMain(items){
     target:0
   });
 
-  foot.innerHTML=`
-    <tr>
-      <td>TOTAL</td>
+// Ranking berdasarkan TOTAL PCS seluruh mesin
+const totalRanking=calculateRanking({
+  aPCS:total.a,
+  bPCS:total.b,
+  cPCS:total.c
+});
 
-      <td class="number">${num(total.a)} PCS</td>
-      <td class="number">${num(total.b)} PCS</td>
-      <td class="number">${num(total.c)} PCS</td>
+foot.innerHTML=`
+  <tr>
+    <td>TOTAL</td>
 
-      <td class="number">${num(total.kd)} KD</td>
-      <td class="number">${num(total.target)} KD</td>
+    <td class="number">${num(total.a)} PCS</td>
+    <td class="number">${num(total.b)} PCS</td>
+    <td class="number">${num(total.c)} PCS</td>
 
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-  `;
+    <td class="number">${num(total.kd)} KD</td>
+    <td class="number">${num(total.target)} KD</td>
+
+    <td class="rank">${totalRanking.A}</td>
+    <td class="rank">${totalRanking.B}</td>
+    <td class="rank">${totalRanking.C}</td>
+  </tr>
+`;
 }
 
 /* =========================================
