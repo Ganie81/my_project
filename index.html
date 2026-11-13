@@ -120,17 +120,45 @@ tr:hover td{background:#122b49}
 .hidden{display:none!important}
 #printTitle{display:none}
 
+/* TOMBOL TAMPIL / SEMBUNYI KPI */
+.kpi-toggle-wrap{
+ display:flex;
+ justify-content:flex-end;
+ align-items:center;
+ margin:0 0 13px;
+}
+.kpi-toggle-btn{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ gap:9px;
+ border:1px solid #315b80;
+ border-radius:11px;
+ background:linear-gradient(135deg,#123d68,#102b49);
+ color:#edf5ff;
+ padding:10px 15px;
+ font-size:12px;
+ font-weight:900;
+ letter-spacing:.3px;
+ box-shadow:0 5px 16px #0002;
+}
+.kpi-toggle-btn:hover{filter:brightness(1.2)}
+.kpi-toggle-btn img{
+ width:23px;
+ height:23px;
+ object-fit:contain;
+}
+
 /* HALAMAN 7: RANKING OPERATOR */
 .operator-ranking-page #operator-ranking .bar-row{
  grid-template-columns:30% minmax(0,1fr) 82px;
  gap:7px;
 }
-
 .operator-ranking-page #operator-ranking .bar-track{
  width:100%;
  height:11px;
 }
- .card{margin-bottom:13px}
+.card{margin-bottom:13px}
 
 /* HALAMAN 8: LAPORAN ANALISA */
 .report-editor{
@@ -199,11 +227,11 @@ tr:hover td{background:#122b49}
  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
  .two{grid-template-columns:1fr}
 }
- @media(max-width:560px){
+@media(max-width:560px){
  .operator-ranking-page #operator-ranking .bar-row{
   grid-template-columns:30% minmax(0,1fr) 76px;
  }
- }
+}
 @media(max-width:560px){
  .app{padding:13px 11px 25px}
  .topbar{align-items:flex-start}
@@ -228,12 +256,14 @@ tr:hover td{background:#122b49}
  .kpi-note{font-size:11px}
  .photo-paper{padding:10px}
  .photo-paper img,.photo-empty{min-height:400px}
+ .kpi-toggle-wrap{justify-content:flex-start}
+ .kpi-toggle-btn{width:100%}
 }
 @media print{
  @page{size:A4 portrait;margin:10mm}
  body{background:#fff!important;color:#111!important}
  .app{max-width:none;padding:0}
- .topbar,.sidebar,.top-actions,.status,.filter-wrap,.footer,.no-print{display:none!important}
+ .topbar,.sidebar,.top-actions,.status,.filter-wrap,.footer,.no-print,.kpi-toggle-wrap{display:none!important}
  .layout{display:block}
  .card,.machine-defect-block{background:#fff!important;border:1px solid #ddd!important;box-shadow:none!important;break-inside:avoid;color:#111}
  .page-head p,.kpi-top,.kpi-note,.card-title span,.legend,td,.bar-label,.bar-value{color:#333!important}
@@ -313,13 +343,21 @@ tr:hover td{background:#122b49}
  <p id="printSubtitle"></p>
 </div>
 
+<!-- TOMBOL KPI HALAMAN 1-7 -->
+<div id="shared-kpi-controls" class="kpi-toggle-wrap no-print">
+ <button type="button" class="kpi-toggle-btn" id="toggleKpiBtn" aria-expanded="false">
+  <img src="https://www.behaestex.co.id/bima-themes/www/newbehaestex/bima-assets/images/logoutama-small.webp" alt="">
+  <span id="toggleKpiText">TAMPILKAN KPI</span>
+ </button>
+</div>
+
 <!-- HALAMAN 1 -->
 <section class="page" id="page-overview">
  <div class="page-head">
   <div><h2>Quality Overview</h2><p>Ringkasan performa kualitas berdasarkan data defect.</p></div>
   <div class="filter-wrap"><label>PERIODE</label><select id="month-overview" data-filter="overview"></select></div>
  </div>
- <div class="grid kpis" id="kpi-overview"></div>
+ <div class="grid kpis hidden" id="kpi-overview"></div>
  <div class="grid two">
   <div class="card">
    <div class="card-title"><h3>Komposisi Jenis Defect</h3><span>Top 5 · Persentase</span></div>
@@ -340,7 +378,7 @@ tr:hover td{background:#122b49}
   <div><h2>Defect Trend</h2><p>Pergerakan jumlah defect harian pada periode terpilih.</p></div>
   <div class="filter-wrap"><label>PERIODE</label><select id="month-trend" data-filter="trend"></select></div>
  </div>
- <div class="grid kpis" id="kpi-trend"></div>
+ <div class="grid kpis hidden" id="kpi-trend"></div>
  <div class="card">
   <div class="card-title"><h3>Tren Defect Harian</h3><span>Titik kuning · Nilai PCS</span></div>
   <div class="chart-box"><canvas id="chart-trend"></canvas></div>
@@ -353,7 +391,7 @@ tr:hover td{background:#122b49}
   <div><h2>Machine Analysis</h2><p>Kontribusi defect berdasarkan mesin produksi.</p></div>
   <div class="filter-wrap"><label>PERIODE</label><select id="month-machine" data-filter="machine"></select></div>
  </div>
- <div class="grid kpis" id="kpi-machine"></div>
+ <div class="grid kpis hidden" id="kpi-machine"></div>
  <div class="grid two">
   <div class="card">
    <div class="card-title"><h3>Ranking Defect Mesin</h3><span>PCS · Persentase</span></div>
@@ -373,7 +411,7 @@ tr:hover td{background:#122b49}
   <div><h2>Product Analysis</h2><p>Produk dengan jumlah defect tertinggi.</p></div>
   <div class="filter-wrap"><label>PERIODE</label><select id="month-product" data-filter="product"></select></div>
  </div>
- <div class="grid kpis" id="kpi-product"></div>
+ <div class="grid kpis hidden" id="kpi-product"></div>
  <div class="card">
   <div class="card-title"><h3>Top 10 Kode Produk</h3><span>PCS · Persentase total defect</span></div>
   <div class="bar-list" id="product-ranking"></div>
@@ -386,7 +424,7 @@ tr:hover td{background:#122b49}
   <div><h2>Defect Breakdown</h2><p>Analisis jenis defect, kontribusi grup, dan mesin.</p></div>
   <div class="filter-wrap"><label>PERIODE</label><select id="month-defect" data-filter="defect"></select></div>
  </div>
- <div class="grid kpis" id="kpi-defect"></div>
+ <div class="grid kpis hidden" id="kpi-defect"></div>
  <div class="grid two">
   <div class="card">
    <div class="card-title"><h3>Jenis Defect</h3><span>Top 5 · PCS · Persentase</span></div>
@@ -412,7 +450,7 @@ tr:hover td{background:#122b49}
   <div><h2>Data Summary</h2><p>Rincian record QLTY sesuai periode terpilih.</p></div>
   <div class="filter-wrap"><label>PERIODE</label><select id="month-data" data-filter="data"></select></div>
  </div>
- <div class="grid kpis" id="kpi-data"></div>
+ <div class="grid kpis hidden" id="kpi-data"></div>
  <div class="card">
   <div class="card-title"><h3>Detail Data Defect</h3><span id="row-count">0 record</span></div>
   <div class="table-wrap">
@@ -437,7 +475,7 @@ tr:hover td{background:#122b49}
   </div>
   <div class="filter-wrap"><label>PERIODE</label><select id="month-operator" data-filter="operator"></select></div>
  </div>
- <div class="grid kpis" id="kpi-operator"></div>
+ <div class="grid kpis hidden" id="kpi-operator"></div>
  <div class="card">
   <div class="card-title">
    <h3>Ranking 10 Operator Penghasil Defect</h3>
@@ -585,6 +623,43 @@ const DB_STORE='REPORT_DATA';
 const DB_VERSION=1;
 const MONTH_STORAGE_KEY='QLTY_GLOBAL_MONTH_V2';
 const PHOTO_STORAGE_KEY='QLTY_PHOTO_REPORT_V1';
+
+/* STATUS VISIBILITAS KPI: AWALNYA TERSEMBUNYI */
+let sharedKpiVisible=false;
+
+const KPI_CONTAINER_IDS=[
+ 'kpi-overview',
+ 'kpi-trend',
+ 'kpi-machine',
+ 'kpi-product',
+ 'kpi-defect',
+ 'kpi-data',
+ 'kpi-operator'
+];
+
+/* SATU TOMBOL MENGATUR KPI DI SEMUA HALAMAN 1-7 */
+function setSharedKpiVisibility(show){
+ sharedKpiVisible=Boolean(show);
+
+ KPI_CONTAINER_IDS.forEach(id=>{
+  const element=document.getElementById(id);
+  if(element){
+   element.classList.toggle('hidden',!sharedKpiVisible);
+  }
+ });
+
+ const button=document.getElementById('toggleKpiBtn');
+ const text=document.getElementById('toggleKpiText');
+
+ if(button){
+  button.setAttribute('aria-expanded',String(sharedKpiVisible));
+ }
+
+ if(text){
+  text.textContent=sharedKpiVisible?
+   'SEMBUNYIKAN KPI':'TAMPILKAN KPI';
+ }
+}
 
 function openQLTYDB(){
  return new Promise((resolve,reject)=>{
@@ -1476,6 +1551,7 @@ async function deletePhoto(number){
   alert('Gagal menghapus foto: '+error.message);
  }
 }
+
 /* RENDER SEMUA HALAMAN */
 function renderAll(){
  renderOverview();
@@ -1491,6 +1567,9 @@ function renderAll(){
   `${fmt(allData.length)} record · Update: ${meta.waktuUpdate||'belum tersedia'}`;
 
  updatePrintSubtitle();
+
+ /* PASTIKAN STATUS KPI TETAP SESUAI PILIHAN TOMBOL */
+ setSharedKpiVisibility(sharedKpiVisible);
 }
 
 function updatePrintSubtitle(){
@@ -1512,6 +1591,18 @@ function showPage(page){
  document.querySelectorAll('.nav').forEach(x=>{
   x.classList.toggle('active',x.dataset.page===page);
  });
+
+ /* TOMBOL KPI HANYA MUNCUL DI HALAMAN 1-7 */
+ const kpiPages=[
+  'overview','trend','machine','product',
+  'defect','data','operator'
+ ];
+
+ const kpiControls=document.getElementById('shared-kpi-controls');
+
+ if(kpiControls){
+  kpiControls.classList.toggle('hidden',!kpiPages.includes(page));
+ }
 
  updatePrintSubtitle();
  window.scrollTo({top:0,behavior:'smooth'});
@@ -1626,6 +1717,11 @@ document.getElementById('handling-defect-select')
 
 document.getElementById('handling-title-input')
  .addEventListener('input',renderHandling);
+
+/* TOMBOL BUKA / TUTUP KPI */
+document.getElementById('toggleKpiBtn').addEventListener('click',()=>{
+ setSharedKpiVisibility(!sharedKpiVisible);
+});
 
 /* TOMBOL */
 document.getElementById('refreshBtn').addEventListener('click',syncData);
