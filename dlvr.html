@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -101,12 +100,21 @@ button{cursor:pointer}
   display:flex;align-items:flex-end;justify-content:space-between;
   gap:14px;margin:3px 0 16px;flex-wrap:wrap
 }
-.page-head h2{font-size:clamp(20px,3vw,28px);margin:0 0 5px}
+.page-head h2{
+  font-size:clamp(20px,3vw,28px);
+  margin:0 0 5px;
+  cursor:pointer;
+  user-select:none;
+}
+.page-head h2:hover{color:var(--cyan)}
 .page-head p{font-size:11px;color:var(--muted);margin:0}
 .filter-panel{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   background:var(--panel);border:1px solid var(--line);
   border-radius:12px;padding:9px
+}
+.filter-panel.filter-collapsed{
+  display:none;
 }
 .filter-panel label{
   color:var(--muted);font-size:9px;font-weight:800
@@ -1137,6 +1145,39 @@ document.querySelectorAll('.nav').forEach(btn=>{
   btn.addEventListener('click',()=>{
     showPage(btn.dataset.page);
   });
+});
+
+/* =========================================================
+   FITUR BUKA / TUTUP FILTER MELALUI JUDUL HALAMAN
+========================================================= */
+
+document.querySelectorAll('.page-head h2').forEach(title=>{
+
+  const pageHead = title.closest('.page-head');
+  const filterPanel = pageHead.querySelector('.filter-panel');
+
+  if(!filterPanel) return;
+
+  title.setAttribute('role','button');
+  title.setAttribute('tabindex','0');
+  title.setAttribute('aria-expanded','true');
+  title.setAttribute('title','Tekan judul untuk membuka atau menutup filter');
+
+  function toggleFilter(){
+    const isHidden = filterPanel.classList.toggle('filter-collapsed');
+
+    title.setAttribute('aria-expanded',String(!isHidden));
+  }
+
+  title.addEventListener('click',toggleFilter);
+
+  title.addEventListener('keydown',event=>{
+    if(event.key === 'Enter' || event.key === ' '){
+      event.preventDefault();
+      toggleFilter();
+    }
+  });
+
 });
 
 /* =========================================================
