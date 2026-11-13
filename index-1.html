@@ -952,9 +952,7 @@ function renderMain(items){
     a.pcs+=Number(x.totalPCS||0);
     a.kd+=Number(x.totalKD||0);
 
-    // Target setiap mesin dikalikan 3
-    a.target+=Number(x.targetKD||0)*TARGET_MULTIPLIER;
-
+    a.target+=Number(x.targetKD||0);
     return a;
 
   },{
