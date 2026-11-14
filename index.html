@@ -168,23 +168,37 @@ tr:hover td{background:#122b49}
 /* HALAMAN 9-11: FOTO DARI GITHUB */
 .photo-paper{
  background:#fff;color:#172337;border-radius:12px;
- padding:20px;min-height:700px;display:flex;flex-direction:column;
- box-shadow:0 10px 30px #0002
+ padding:20px;min-height:0;
+ display:flex;flex-direction:column;
+ box-shadow:0 10px 30px #0002;
+ width:100%;overflow:hidden;
 }
 .photo-title{
- color:#102b49;text-align:center;text-transform:uppercase;
- font-size:clamp(23px,3.5vw,34px);font-weight:950;
- line-height:1.3;margin:5px 0 22px;padding:0 5px;
- overflow-wrap:anywhere
+ color:#102b49;text-align:left;text-transform:uppercase;
+ font-size:clamp(20px,3vw,28px);font-weight:950;
+ line-height:1.3;margin:0 0 15px;padding:0;
+ overflow-wrap:anywhere;
 }
 .photo-paper img{
- display:block;width:100%;height:auto;max-height:900px;
- flex:1;min-height:450px;object-fit:contain;
- background:#f0f2f5
+ display:block;
+ width:100%;
+ height:auto;
+ max-width:100%;
+ max-height:none;
+ min-height:0;
+ flex:0 0 auto;
+ object-fit:contain;
+ background:#fff;
 }
 .photo-empty{
- flex:1;min-height:450px;display:grid;place-items:center;
- background:#f0f2f5;color:#64748b;text-align:center;padding:20px
+ flex:0 0 auto;
+ min-height:260px;
+ display:grid;
+ place-items:center;
+ background:#f0f2f5;
+ color:#64748b;
+ text-align:center;
+ padding:20px;
 }
 .photo-title-editor{
  display:flex;gap:10px;align-items:center;
@@ -235,8 +249,9 @@ tr:hover td{background:#122b49}
  .kpi-value{font-size:26px}
  .kpi-note{font-size:11px}
  .photo-paper{padding:10px}
- .photo-paper img,.photo-empty{min-height:400px}
- .photo-title{font-size:22px;margin:8px 0 16px}
+ .photo-paper img{min-height:0}
+ .photo-empty{min-height:220px}
+ .photo-title{font-size:20px;margin:0 0 12px}
  .photo-title-editor{padding:10px}
 }
 @media print{
@@ -253,16 +268,23 @@ tr:hover td{background:#122b49}
  #printTitle{display:block!important;color:#111!important;margin-bottom:15px}
  .table-wrap{max-height:none;overflow:visible}
  tr{break-inside:avoid}
- .report-paper,.photo-paper{
+ .report-paper{
   box-shadow:none;border-radius:0;
   min-height:0;height:277mm;
   break-inside:avoid;page-break-inside:avoid
  }
- .report-paper{padding:15mm}
- .photo-paper{padding:5mm}
- .photo-paper img{max-height:225mm;min-height:0;object-fit:contain}
+ .photo-paper{
+  box-shadow:none;border-radius:0;
+  min-height:0;height:auto;
+  padding:5mm;
+  break-inside:avoid;page-break-inside:avoid
+ }
+ .photo-paper img{
+  width:100%;height:auto;max-height:250mm;
+  min-height:0;object-fit:contain
+ }
  .photo-empty{min-height:0}
- .photo-title{font-size:24px;margin:5mm 0 10mm}
+ .photo-title{font-size:24px;margin:0 0 8mm;text-align:left}
  .analysis-item{break-inside:avoid}
 }
 </style>
@@ -478,9 +500,6 @@ tr:hover td{background:#122b49}
 
 <!-- HALAMAN 9: FOTO A -->
 <section class="page hidden" id="page-photo1">
- <div class="page-head">
-  <div><h2>Dokumentasi Foto A</h2><p>Gambar dokumentasi dari GitHub.</p></div>
- </div>
  <div class="photo-title-editor no-print">
   <label>JUDUL GAMBAR A
    <input id="photo1-title-input" value="DOKUMENTASI FOTO A" placeholder="Masukkan judul gambar">
@@ -496,9 +515,6 @@ tr:hover td{background:#122b49}
 
 <!-- HALAMAN 10: FOTO B -->
 <section class="page hidden" id="page-photo2">
- <div class="page-head">
-  <div><h2>Dokumentasi Foto B</h2><p>Gambar dokumentasi dari GitHub.</p></div>
- </div>
  <div class="photo-title-editor no-print">
   <label>JUDUL GAMBAR B
    <input id="photo2-title-input" value="DOKUMENTASI FOTO B" placeholder="Masukkan judul gambar">
@@ -514,9 +530,6 @@ tr:hover td{background:#122b49}
 
 <!-- HALAMAN 11: FOTO C -->
 <section class="page hidden" id="page-photo3">
- <div class="page-head">
-  <div><h2>Dokumentasi Foto C</h2><p>Gambar dokumentasi dari GitHub.</p></div>
- </div>
  <div class="photo-title-editor no-print">
   <label>JUDUL GAMBAR C
    <input id="photo3-title-input" value="DOKUMENTASI FOTO C" placeholder="Masukkan judul gambar">
