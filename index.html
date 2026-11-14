@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -60,12 +61,8 @@ button{cursor:pointer}
 }
 .side-label{font-size:11px;letter-spacing:1.6px;color:#91a9c6;font-weight:900;padding:10px}
 .nav-list{
- max-height:490px;
- overflow-y:auto;
- overflow-x:hidden;
- scrollbar-width:thin;
- scrollbar-color:#315b80 #0a1b30;
- padding-right:3px;
+ max-height:490px;overflow-y:auto;overflow-x:hidden;
+ scrollbar-width:thin;scrollbar-color:#315b80 #0a1b30;padding-right:3px;
 }
 .nav-list::-webkit-scrollbar{width:6px}
 .nav-list::-webkit-scrollbar-track{background:#0a1b30;border-radius:10px}
@@ -142,16 +139,13 @@ tr:hover td{background:#122b49}
 
 /* HALAMAN PEMBUKA PRESENTASI */
 .cover-page{
- height:100%;
- min-height:490px;
+ height:100%;min-height:490px;
  display:flex;align-items:center;justify-content:center;
  position:relative;overflow:hidden;
  border:1px solid #285477;border-radius:22px;
- background:
-  radial-gradient(ellipse at 50% 45%,#164a70 0%,#102c4a 36%,#091a30 75%,#061222 100%);
+ background:radial-gradient(ellipse at 50% 45%,#164a70 0%,#102c4a 36%,#091a30 75%,#061222 100%);
  box-shadow:0 18px 55px #0005;
- padding:clamp(28px,6vw,75px);
- isolation:isolate;
+ padding:clamp(28px,6vw,75px);isolation:isolate;
 }
 .cover-page:before,.cover-page:after{
  content:"";position:absolute;pointer-events:none;z-index:-1;
@@ -172,9 +166,7 @@ tr:hover td{background:#122b49}
  border:1px solid #53d4e855;border-radius:30px;padding:10px 19px;
  background:#0b2745a8;margin-bottom:30px;
 }
-.cover-kicker:before,.cover-kicker:after{
- content:"";width:22px;height:1px;background:#53d4e8;
-}
+.cover-kicker:before,.cover-kicker:after{content:"";width:22px;height:1px;background:#53d4e8}
 .cover-title{
  margin:0;color:#fff;font-size:clamp(38px,7vw,76px);
  font-weight:1000;letter-spacing:clamp(1px,1vw,5px);
@@ -187,55 +179,32 @@ tr:hover td{background:#122b49}
 }
 .cover-subtitle{
  color:#9bdff0;font-size:clamp(17px,3vw,25px);
- font-weight:900;letter-spacing:clamp(2px,.7vw,5px);
- margin:0 0 38px;
+ font-weight:900;letter-spacing:clamp(2px,.7vw,5px);margin:0 0 38px;
 }
 .cover-meeting{
- display:inline-block;
- color:#fff;
- font-size:10px;
- font-weight:800;
- letter-spacing:1px;
- padding:0;
- margin-top:15px;
- background:transparent;
- border:none;
- box-shadow:none;
- border-radius:0;
- white-space:nowrap;
+ display:inline-block;color:#fff;font-size:10px;font-weight:800;
+ letter-spacing:1px;padding:0;margin-top:15px;
+ background:transparent;border:none;box-shadow:none;border-radius:0;white-space:nowrap;
 }
-.cover-date{
- color:inherit;
- font-size:inherit;
- font-weight:inherit;
- letter-spacing:inherit;
- margin:0;
-}
+.cover-date{color:inherit;font-size:inherit;font-weight:inherit;letter-spacing:inherit;margin:0}
 .cover-bottom{
  display:flex;justify-content:center;align-items:center;gap:10px;
- color:#789bb9;font-size:10px;letter-spacing:3px;
- margin-top:55px;
+ color:#789bb9;font-size:10px;letter-spacing:3px;margin-top:55px;
 }
-.cover-bottom:before,.cover-bottom:after{
- content:"";width:42px;height:1px;background:#3d6687;
-}
+.cover-bottom:before,.cover-bottom:after{content:"";width:42px;height:1px;background:#3d6687}
 
 /* HALAMAN PENUTUP PRESENTASI */
 .closing-page{
- height:100%;
- min-height:490px;
+ height:100%;min-height:490px;
  display:flex;align-items:center;justify-content:center;
  position:relative;overflow:hidden;
  border:1px solid #285477;border-radius:22px;
- background:
-  radial-gradient(ellipse at 50% 50%,#16476b 0%,#102b49 42%,#08182c 82%,#061222 100%);
+ background:radial-gradient(ellipse at 50% 50%,#16476b 0%,#102b49 42%,#08182c 82%,#061222 100%);
  box-shadow:0 18px 55px #0005;
- padding:clamp(28px,6vw,75px);
- isolation:isolate;
+ padding:clamp(28px,6vw,75px);isolation:isolate;
 }
 .closing-page:before,.closing-page:after{
- content:"";position:absolute;z-index:-1;pointer-events:none;
- border:1px solid #53d4e82b;border-radius:50%;
+ content:"";position:absolute;z-index:-1;pointer-events:none;border:1px solid #53d4e82b;border-radius:50%;
 }
 .closing-page:before{width:560px;height:560px;left:-230px;top:-310px}
 .closing-page:after{width:460px;height:460px;right:-210px;bottom:-260px}
@@ -243,8 +212,7 @@ tr:hover td{background:#122b49}
 .closing-symbol{
  width:76px;height:76px;margin:0 auto 30px;
  display:grid;place-items:center;border-radius:50%;
- border:1px solid #53d4e8;background:#103957;
- color:#73e2ef;font-size:32px;
+ border:1px solid #53d4e8;background:#103957;color:#73e2ef;font-size:32px;
  box-shadow:0 0 35px #36a2ff55,inset 0 0 20px #36a2ff22;
 }
 .closing-title{
@@ -257,62 +225,30 @@ tr:hover td{background:#122b49}
  background:linear-gradient(90deg,transparent,#36a2ff,#53d4e8,#36a2ff,transparent);
  box-shadow:0 0 18px #36a2ff77;
 }
-.closing-message{
- color:#a8e8f1;font-size:clamp(17px,3vw,25px);
- font-weight:900;letter-spacing:1.5px;line-height:1.5;
- margin:0;
-}
-.closing-caption{
- color:#8caac5;font-size:11px;letter-spacing:3px;
- margin-top:42px;font-weight:850;
-}
-#page-intro{
- min-height:490px;
-}
+.closing-message{color:#a8e8f1;font-size:clamp(17px,3vw,25px);font-weight:900;letter-spacing:1.5px;line-height:1.5;margin:0}
+.closing-caption{color:#8caac5;font-size:11px;letter-spacing:3px;margin-top:42px;font-weight:850}
+#page-intro{min-height:490px}
+#page-closing{min-height:650px}
+#page-intro .cover-page{height:100%;min-height:inherit}
+#page-closing .closing-page{height:100%;min-height:650px}
 
-#page-closing{
- min-height:650px;
-}
-
-#page-intro .cover-page{
- height:100%;
- min-height:inherit;
-}
-
-#page-closing .closing-page{
- height:100%;
- min-height:650px;
-}
-
-/* HALAMAN 8: LAPORAN ANALISA */
+/* HALAMAN 9: LAPORAN ANALISA */
 .report-editor{
- display:flex;flex-wrap:wrap;gap:10px;
- margin-bottom:13px;background:#0d2038;
- border:1px solid var(--line);padding:13px;border-radius:12px
+ display:flex;flex-wrap:wrap;gap:10px;margin-bottom:13px;
+ background:#0d2038;border:1px solid var(--line);padding:13px;border-radius:12px
 }
-.report-editor label{
- display:grid;gap:6px;flex:1 1 180px;
- color:var(--muted);font-size:11px;font-weight:900
-}
+.report-editor label{display:grid;gap:6px;flex:1 1 180px;color:var(--muted);font-size:11px;font-weight:900}
 .report-editor input,.report-editor select{
  width:100%;min-width:0;background:#142d49;color:white;
  border:1px solid #315171;border-radius:8px;padding:11px;outline:none
 }
 .report-paper{
  background:#fff;color:#172337;border-radius:12px;
- padding:clamp(20px,4vw,48px);min-height:700px;
- box-shadow:0 10px 30px #0002
+ padding:clamp(20px,4vw,48px);min-height:700px;box-shadow:0 10px 30px #0002
 }
-.report-paper h1{
- color:#102b49;font-size:clamp(23px,4vw,34px);
- font-weight:950;margin:0 0 12px;text-align:center
-}
+.report-paper h1{color:#102b49;font-size:clamp(23px,4vw,34px);font-weight:950;margin:0 0 12px;text-align:center}
 .report-line{height:4px;background:#123b61;margin:15px 0 25px}
-.report-subtitle{
- text-align:center;color:#1679bd;
- font-size:clamp(18px,3vw,25px);
- font-weight:950;margin:12px 0;text-transform:uppercase
-}
+.report-subtitle{text-align:center;color:#1679bd;font-size:clamp(18px,3vw,25px);font-weight:950;margin:12px 0;text-transform:uppercase}
 .report-date{text-align:center;color:#536579;font-size:14px;margin:12px 0 30px}
 .analysis-list{display:grid;gap:20px}
 .analysis-item{border-bottom:1px solid #d5dfe9;padding:0 0 17px}
@@ -320,39 +256,30 @@ tr:hover td{background:#122b49}
 .analysis-item .analysis-value{color:#152e48;font-size:clamp(17px,2.5vw,23px);font-weight:950}
 .analysis-item .analysis-detail{color:#52677c;font-size:14px;margin-top:5px;line-height:1.6}
 
-/* HALAMAN 9-11: FOTO DARI GITHUB */
+/* HALAMAN FOTO DARI GITHUB */
 .photo-paper{
- background:#fff;color:#172337;border-radius:12px;
- padding:20px;min-height:0;
- display:flex;flex-direction:column;
- box-shadow:0 10px 30px #0002;
+ background:#fff;color:#172337;border-radius:12px;padding:20px;min-height:0;
+ display:flex;flex-direction:column;box-shadow:0 10px 30px #0002;
  width:100%;overflow:hidden;
 }
 .photo-title{
  color:#102b49;text-align:left;text-transform:uppercase;
  font-size:clamp(20px,3vw,28px);font-weight:950;
- line-height:1.3;margin:0 0 15px;padding:0;
- overflow-wrap:anywhere;
+ line-height:1.3;margin:0 0 15px;padding:0;overflow-wrap:anywhere;
 }
 .photo-paper img{
  display:block;width:100%;height:auto;max-width:100%;
- max-height:none;min-height:0;flex:0 0 auto;
- object-fit:contain;background:#fff;
+ max-height:none;min-height:0;flex:0 0 auto;object-fit:contain;background:#fff;
 }
 .photo-empty{
- flex:0 0 auto;min-height:260px;display:grid;
- place-items:center;background:#f0f2f5;color:#64748b;
- text-align:center;padding:20px;
+ flex:0 0 auto;min-height:260px;display:grid;place-items:center;
+ background:#f0f2f5;color:#64748b;text-align:center;padding:20px;
 }
 .photo-title-editor{
- display:flex;gap:10px;align-items:center;
- margin-bottom:13px;background:#0d2038;
- border:1px solid var(--line);padding:13px;border-radius:12px
+ display:flex;gap:10px;align-items:center;margin-bottom:13px;
+ background:#0d2038;border:1px solid var(--line);padding:13px;border-radius:12px
 }
-.photo-title-editor label{
- display:grid;gap:6px;flex:1;
- color:var(--muted);font-size:11px;font-weight:900
-}
+.photo-title-editor label{display:grid;gap:6px;flex:1;color:var(--muted);font-size:11px;font-weight:900}
 .photo-title-editor input{
  width:100%;min-width:0;background:#142d49;color:white;
  border:1px solid #315171;border-radius:8px;padding:11px;outline:none
@@ -362,11 +289,7 @@ tr:hover td{background:#122b49}
  .layout{grid-template-columns:1fr}
  .sidebar{position:static;display:block;overflow:visible;padding:8px}
  .side-label,.side-foot{display:none}
- .nav-list{
-  display:flex;flex-direction:row;gap:4px;
-  max-height:none;overflow-x:auto;overflow-y:hidden;
-  padding:2px 2px 8px;
- }
+ .nav-list{display:flex;flex-direction:row;gap:4px;max-height:none;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px}
  .nav{white-space:nowrap;width:auto;flex:0 0 auto;padding:11px}
  .nav .num{display:none}
  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -402,11 +325,7 @@ tr:hover td{background:#122b49}
  .photo-empty{min-height:220px}
  .photo-title{font-size:20px;margin:0 0 12px}
  .photo-title-editor{padding:10px}
- .cover-page,.closing-page{
- height:390px;
- min-height:390px;
- padding:25px 18px;
-}
+ .cover-page,.closing-page{height:390px;min-height:390px;padding:25px 18px}
  .cover-kicker{font-size:9px;letter-spacing:2px;padding:9px 12px}
  .cover-bottom{margin-top:38px;font-size:9px}
  .closing-caption{font-size:9px;letter-spacing:2px}
@@ -426,29 +345,16 @@ tr:hover td{background:#122b49}
  .table-wrap{max-height:none;overflow:visible}
  tr{break-inside:avoid}
  .cover-page,.closing-page{
-  min-height:260mm;height:277mm;
-  print-color-adjust:exact;-webkit-print-color-adjust:exact;
+  min-height:260mm;height:277mm;print-color-adjust:exact;-webkit-print-color-adjust:exact;
   break-after:page;page-break-after:always;
  }
- .report-paper{
-  box-shadow:none;border-radius:0;
-  min-height:0;height:277mm;
-  break-inside:avoid;page-break-inside:avoid
- }
- .photo-paper{
-  box-shadow:none;border-radius:0;
-  min-height:0;height:auto;padding:5mm;
-  break-inside:avoid;page-break-inside:avoid
- }
- .photo-paper img{
-  width:100%;height:auto;max-height:250mm;
-  min-height:0;object-fit:contain
- }
+ .report-paper{box-shadow:none;border-radius:0;min-height:0;height:277mm;break-inside:avoid;page-break-inside:avoid}
+ .photo-paper{box-shadow:none;border-radius:0;min-height:0;height:auto;padding:5mm;break-inside:avoid;page-break-inside:avoid}
+ .photo-paper img{width:100%;height:auto;max-height:250mm;min-height:0;object-fit:contain}
  .photo-empty{min-height:0}
  .photo-title{font-size:24px;margin:0 0 8mm;text-align:left}
  .analysis-item{break-inside:avoid}
 }
-
 </style>
 </head>
 
@@ -486,19 +392,21 @@ tr:hover td{background:#122b49}
  <div class="side-label">PRESENTATION MENU</div>
 
  <div class="nav-list">
-  <button class="nav active" data-page="intro"><span class="num">00</span> ✦ OPENING PRESENTATION</button>
-  <button class="nav" data-page="overview"><span class="num">01</span> ◫ QUALITY OVERVIEW</button>
-  <button class="nav" data-page="trend"><span class="num">02</span> ↗ DEFECT TREND</button>
-  <button class="nav" data-page="machine"><span class="num">03</span> ⚙ MACHINE ANALYSIS</button>
-  <button class="nav" data-page="product"><span class="num">04</span> ◈ PRODUCT ANALYSIS</button>
-  <button class="nav" data-page="defect"><span class="num">05</span> ◉ DEFECT BREAKDOWN</button>
-  <button class="nav" data-page="data"><span class="num">06</span> ▤ DATA SUMMARY</button>
-  <button class="nav" data-page="operator"><span class="num">07</span> ★ TOP 10 OPERATOR</button>
-  <button class="nav" data-page="handling"><span class="num">08</span> ◈ DEFECT HANDLING</button>
-  <button class="nav" data-page="photo1"><span class="num">09</span> ▧ PHOTO A</button>
-  <button class="nav" data-page="photo2"><span class="num">10</span> ▧ PHOTO B</button>
-  <button class="nav" data-page="photo3"><span class="num">11</span> ▧ PHOTO C</button>
-  <button class="nav" data-page="closing"><span class="num">12</span> ✦ CLOSING PRESENTATION</button>
+  <button class="nav active" data-page="intro"><span class="num">01</span> ✦ OPENING PRESENTATION</button>
+  <button class="nav" data-page="photoqa"><span class="num">02</span> ▧ GAMBARQA.jpg</button>
+  <button class="nav" data-page="overview"><span class="num">03</span> ◫ QUALITY OVERVIEW</button>
+  <button class="nav" data-page="trend"><span class="num">04</span> ↗ DEFECT TREND</button>
+  <button class="nav" data-page="machine"><span class="num">05</span> ⚙ MACHINE ANALYSIS</button>
+  <button class="nav" data-page="product"><span class="num">06</span> ◈ PRODUCT ANALYSIS</button>
+  <button class="nav" data-page="defect"><span class="num">07</span> ◉ DEFECT BREAKDOWN</button>
+  <button class="nav" data-page="data"><span class="num">08</span> ▤ DATA SUMMARY</button>
+  <button class="nav" data-page="operator"><span class="num">09</span> ★ TOP 10 OPERATOR</button>
+  <button class="nav" data-page="handling"><span class="num">10</span> ◈ DEFECT HANDLING</button>
+  <button class="nav" data-page="photo1"><span class="num">11</span> ▧ GAMBAR1.jpg</button>
+  <button class="nav" data-page="photo2"><span class="num">12</span> ▧ GAMBAR2.jpg</button>
+  <button class="nav" data-page="photo3"><span class="num">13</span> ▧ GAMBAR3.jpg</button>
+  <button class="nav" data-page="photo4"><span class="num">14</span> ▧ GAMBAR4.jpg</button>
+  <button class="nav" data-page="closing"><span class="num">15</span> ✦ CLOSING PRESENTATION</button>
  </div>
 
  <div class="side-foot">QUALITY MANAGEMENT<br>Data source: Google Spreadsheet · QM / QLTY</div>
@@ -510,7 +418,7 @@ tr:hover td{background:#122b49}
  <p id="printSubtitle"></p>
 </div>
 
-<!-- HALAMAN PEMBUKA PRESENTASI -->
+<!-- HALAMAN 01: OPENING -->
 <section class="page" id="page-intro">
  <div class="cover-page">
   <div class="cover-grid"></div>
@@ -519,15 +427,28 @@ tr:hover td{background:#122b49}
    <h1 class="cover-title">DEFECT<br>MANAGEMENT</h1>
    <div class="cover-line"></div>
    <h2 class="cover-subtitle">DEPARTMENT PRINTING</h2>
-<div class="cover-meeting">
- MEETING QUALITY - <span id="coverDate"></span>
-</div>
+   <div class="cover-meeting">MEETING QUALITY - <span id="coverDate"></span></div>
    <div class="cover-bottom">QUALITY PERFORMANCE · CONTINUOUS IMPROVEMENT</div>
   </div>
  </div>
 </section>
 
-<!-- HALAMAN 1 -->
+<!-- HALAMAN 02: GAMBAR QA -->
+<section class="page hidden" id="page-photoqa">
+ <div class="photo-title-editor no-print">
+  <label>JUDUL GAMBAR QA
+   <input id="photoqa-title-input" value="DOKUMENTASI QUALITY ASSURANCE" placeholder="Masukkan judul gambar">
+  </label>
+ </div>
+ <div class="photo-paper">
+  <h2 class="photo-title" id="photoqa-title">DOKUMENTASI QUALITY ASSURANCE</h2>
+  <img src="./GAMBARQA.jpg" alt="Dokumentasi Quality Assurance"
+   onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+  <div class="photo-empty" style="display:none">GAMBARQA.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
+ </div>
+</section>
+
+<!-- HALAMAN 03: QUALITY OVERVIEW -->
 <section class="page hidden" id="page-overview">
  <div class="page-head">
   <div><h2>Quality Overview</h2><p>Ringkasan performa kualitas berdasarkan data defect.</p></div>
@@ -548,7 +469,7 @@ tr:hover td{background:#122b49}
  </div>
 </section>
 
-<!-- HALAMAN 2 -->
+<!-- HALAMAN 04: DEFECT TREND -->
 <section class="page hidden" id="page-trend">
  <div class="page-head">
   <div><h2>Defect Trend</h2><p>Pergerakan jumlah defect harian pada periode terpilih.</p></div>
@@ -561,7 +482,7 @@ tr:hover td{background:#122b49}
  </div>
 </section>
 
-<!-- HALAMAN 3 -->
+<!-- HALAMAN 05: MACHINE ANALYSIS -->
 <section class="page hidden" id="page-machine">
  <div class="page-head">
   <div><h2>Machine Analysis</h2><p>Kontribusi defect berdasarkan mesin produksi.</p></div>
@@ -581,7 +502,7 @@ tr:hover td{background:#122b49}
  </div>
 </section>
 
-<!-- HALAMAN 4 -->
+<!-- HALAMAN 06: PRODUCT ANALYSIS -->
 <section class="page hidden" id="page-product">
  <div class="page-head">
   <div><h2>Product Analysis</h2><p>Produk dengan jumlah defect tertinggi.</p></div>
@@ -594,7 +515,7 @@ tr:hover td{background:#122b49}
  </div>
 </section>
 
-<!-- HALAMAN 5 -->
+<!-- HALAMAN 07: DEFECT BREAKDOWN -->
 <section class="page hidden" id="page-defect">
  <div class="page-head">
   <div><h2>Defect Breakdown</h2><p>Analisis jenis defect, kontribusi grup, dan mesin.</p></div>
@@ -612,15 +533,12 @@ tr:hover td{background:#122b49}
   </div>
  </div>
  <div class="card" style="margin-top:13px">
-  <div class="card-title">
-   <h3>Komposisi 5 Besar Jenis Defect Berdasarkan Mesin</h3>
-   <span>Persentase dari defect masing-masing mesin</span>
-  </div>
+  <div class="card-title"><h3>Komposisi 5 Besar Jenis Defect Berdasarkan Mesin</h3><span>Persentase dari defect masing-masing mesin</span></div>
   <div id="machine-defect-breakdown"></div>
  </div>
 </section>
 
-<!-- HALAMAN 6 -->
+<!-- HALAMAN 08: DATA SUMMARY -->
 <section class="page hidden" id="page-data">
  <div class="page-head">
   <div><h2>Data Summary</h2><p>Rincian record QLTY sesuai periode terpilih.</p></div>
@@ -642,7 +560,7 @@ tr:hover td{background:#122b49}
  </div>
 </section>
 
-<!-- HALAMAN 7 -->
+<!-- HALAMAN 09: TOP 10 OPERATOR -->
 <section class="page hidden operator-ranking-page" id="page-operator">
  <div class="page-head">
   <div><h2>Top 10 Operator Defect</h2><p>Ranking operator berdasarkan jumlah defect dan kontribusi persentase.</p></div>
@@ -664,7 +582,7 @@ tr:hover td{background:#122b49}
  </div>
 </section>
 
-<!-- HALAMAN 8 -->
+<!-- HALAMAN 10: DEFECT HANDLING -->
 <section class="page hidden" id="page-handling">
 <div class="page-head">
  <div><h2>Defect Handling Analysis</h2><p>Analisis penanganan berdasarkan jenis defect yang dipilih.</p></div>
@@ -683,52 +601,59 @@ tr:hover td{background:#122b49}
 </div>
 </section>
 
-<!-- HALAMAN 9: FOTO A -->
+<!-- HALAMAN 11: GAMBAR1 -->
 <section class="page hidden" id="page-photo1">
  <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR A
-   <input id="photo1-title-input" value="DOKUMENTASI FOTO A" placeholder="Masukkan judul gambar">
-  </label>
+  <label>JUDUL GAMBAR 1<input id="photo1-title-input" value="DOKUMENTASI FOTO 1" placeholder="Masukkan judul gambar"></label>
  </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photo1-title">DOKUMENTASI FOTO A</h2>
-  <img src="./GAMBAR1.jpg" alt="Dokumentasi Foto A"
+  <h2 class="photo-title" id="photo1-title">DOKUMENTASI FOTO 1</h2>
+  <img src="./GAMBAR1.jpg" alt="Dokumentasi Foto 1"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBAR1.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
  </div>
 </section>
 
-<!-- HALAMAN 10: FOTO B -->
+<!-- HALAMAN 12: GAMBAR2 -->
 <section class="page hidden" id="page-photo2">
  <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR B
-   <input id="photo2-title-input" value="DOKUMENTASI FOTO B" placeholder="Masukkan judul gambar">
-  </label>
+  <label>JUDUL GAMBAR 2<input id="photo2-title-input" value="DOKUMENTASI FOTO 2" placeholder="Masukkan judul gambar"></label>
  </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photo2-title">DOKUMENTASI FOTO B</h2>
-  <img src="./GAMBAR2.jpg" alt="Dokumentasi Foto B"
+  <h2 class="photo-title" id="photo2-title">DOKUMENTASI FOTO 2</h2>
+  <img src="./GAMBAR2.jpg" alt="Dokumentasi Foto 2"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBAR2.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
  </div>
 </section>
 
-<!-- HALAMAN 11: FOTO C -->
+<!-- HALAMAN 13: GAMBAR3 -->
 <section class="page hidden" id="page-photo3">
  <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR C
-   <input id="photo3-title-input" value="DOKUMENTASI FOTO C" placeholder="Masukkan judul gambar">
-  </label>
+  <label>JUDUL GAMBAR 3<input id="photo3-title-input" value="DOKUMENTASI FOTO 3" placeholder="Masukkan judul gambar"></label>
  </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photo3-title">DOKUMENTASI FOTO C</h2>
-  <img src="./GAMBAR3.jpg" alt="Dokumentasi Foto C"
+  <h2 class="photo-title" id="photo3-title">DOKUMENTASI FOTO 3</h2>
+  <img src="./GAMBAR3.jpg" alt="Dokumentasi Foto 3"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBAR3.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
  </div>
 </section>
 
-<!-- HALAMAN PENUTUP PRESENTASI -->
+<!-- HALAMAN 14: GAMBAR4 -->
+<section class="page hidden" id="page-photo4">
+ <div class="photo-title-editor no-print">
+  <label>JUDUL GAMBAR 4<input id="photo4-title-input" value="DOKUMENTASI FOTO 4" placeholder="Masukkan judul gambar"></label>
+ </div>
+ <div class="photo-paper">
+  <h2 class="photo-title" id="photo4-title">DOKUMENTASI FOTO 4</h2>
+  <img src="./GAMBAR4.jpg" alt="Dokumentasi Foto 4"
+   onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+  <div class="photo-empty" style="display:none">GAMBAR4.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
+ </div>
+</section>
+
+<!-- HALAMAN 15: CLOSING -->
 <section class="page hidden" id="page-closing">
  <div class="closing-page">
   <div class="closing-content">
@@ -828,6 +753,7 @@ document.getElementById('toggleKpiBtn').addEventListener('click',toggleKpi);
 
 const PAGE_NAMES={
  intro:'Opening Presentation',
+ photoqa:'GAMBAR QA',
  overview:'Quality Overview',
  trend:'Defect Trend',
  machine:'Machine Analysis',
@@ -836,9 +762,10 @@ const PAGE_NAMES={
  data:'Data Summary',
  operator:'Top 10 Operator Defect',
  handling:'Defect Handling Analysis',
- photo1:'Dokumentasi Foto A',
- photo2:'Dokumentasi Foto B',
- photo3:'Dokumentasi Foto C',
+ photo1:'Dokumentasi Gambar 1',
+ photo2:'Dokumentasi Gambar 2',
+ photo3:'Dokumentasi Gambar 3',
+ photo4:'Dokumentasi Gambar 4',
  closing:'Closing Presentation'
 };
 
@@ -982,7 +909,7 @@ function drawLine(id,rows){
  });
 }
 
-/* HALAMAN 1 */
+/* HALAMAN ANALISIS */
 function renderOverview(){
  const r=filtered();renderKpis('kpi-overview',r);
  const defects=groupSum(r,'defect');const topDefects=defects.slice(0,5);
@@ -1030,7 +957,7 @@ function renderOperator(){
  `).join(''):'<tr><td colspan="4" class="empty">Belum ada data operator.</td></tr>';
 }
 
-/* HALAMAN 8: DEFECT HANDLING */
+/* HALAMAN DEFECT HANDLING */
 function fillHandlingDefects(){
  const select=document.getElementById('handling-defect-select');const defects=groupSum(filtered(),'defect');const previous=select.value;
  select.innerHTML=defects.map(([name])=>`<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join('');
@@ -1059,11 +986,13 @@ function renderHandling(){
  }).join('');
 }
 
-/* HALAMAN 9-11: JUDUL FOTO DISIMPAN DI BROWSER */
+/* JUDUL FOTO DISIMPAN DI BROWSER */
 const PHOTO_CONFIG=[
- {number:1,input:'photo1-title-input',title:'photo1-title',defaultTitle:'DOKUMENTASI FOTO A'},
- {number:2,input:'photo2-title-input',title:'photo2-title',defaultTitle:'DOKUMENTASI FOTO B'},
- {number:3,input:'photo3-title-input',title:'photo3-title',defaultTitle:'DOKUMENTASI FOTO C'}
+ {number:'qa',input:'photoqa-title-input',title:'photoqa-title',defaultTitle:'DOKUMENTASI QUALITY ASSURANCE'},
+ {number:1,input:'photo1-title-input',title:'photo1-title',defaultTitle:'DOKUMENTASI FOTO 1'},
+ {number:2,input:'photo2-title-input',title:'photo2-title',defaultTitle:'DOKUMENTASI FOTO 2'},
+ {number:3,input:'photo3-title-input',title:'photo3-title',defaultTitle:'DOKUMENTASI FOTO 3'},
+ {number:4,input:'photo4-title-input',title:'photo4-title',defaultTitle:'DOKUMENTASI FOTO 4'}
 ];
 
 function loadPhotoTitles(){
@@ -1079,7 +1008,7 @@ function loadPhotoTitles(){
 }
 
 function savePhotoTitle(number){
- const item=PHOTO_CONFIG.find(x=>x.number===number);
+ const item=PHOTO_CONFIG.find(x=>String(x.number)===String(number));
  if(!item)return;
  const input=document.getElementById(item.input);
  const heading=document.getElementById(item.title);
@@ -1123,7 +1052,7 @@ function updatePrintSubtitle(){
  document.getElementById('printSubtitle').textContent=PAGE_NAMES[activePage]+' · '+monthLabel(currentMonth)+' · '+fmt(p.length)+' record';
 }
 
-/* NAVIGASI */
+/* NAVIGASI 15 HALAMAN */
 function showPage(page){
  if(!PAGE_NAMES[page])return;
  activePage=page;
@@ -1190,7 +1119,7 @@ document.querySelectorAll('[data-filter]').forEach(el=>{
  });
 });
 
-/* EVENT HALAMAN 8 */
+/* EVENT HALAMAN 10 */
 document.getElementById('handling-defect-select').addEventListener('change',renderHandling);
 document.getElementById('handling-title-input').addEventListener('input',renderHandling);
 
@@ -1202,15 +1131,22 @@ document.getElementById('fullBtn').addEventListener('click',()=>{
  else document.exitFullscreen?.();
 });
 
-/* KEYBOARD NAVIGASI */
+/* KEYBOARD NAVIGASI SESUAI URUTAN MENU */
+const PRESENTATION_ORDER=[
+ 'intro','photoqa','overview','trend','machine','product','defect',
+ 'data','operator','handling','photo1','photo2','photo3','photo4','closing'
+];
+
 document.addEventListener('keydown',e=>{
  if(e.key==='ArrowRight'||e.key==='PageDown'){
-  const keys=Object.keys(PAGE_NAMES);const i=keys.indexOf(activePage);
-  showPage(keys[Math.min(keys.length-1,i+1)]);
+  e.preventDefault();
+  const i=PRESENTATION_ORDER.indexOf(activePage);
+  showPage(PRESENTATION_ORDER[Math.min(PRESENTATION_ORDER.length-1,i+1)]);
  }
  if(e.key==='ArrowLeft'||e.key==='PageUp'){
-  const keys=Object.keys(PAGE_NAMES);const i=keys.indexOf(activePage);
-  showPage(keys[Math.max(0,i-1)]);
+  e.preventDefault();
+  const i=PRESENTATION_ORDER.indexOf(activePage);
+  showPage(PRESENTATION_ORDER[Math.max(0,i-1)]);
  }
  if(e.key==='Escape'&&document.fullscreenElement)document.exitFullscreen?.();
 });
