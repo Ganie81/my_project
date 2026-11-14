@@ -777,6 +777,16 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 @media(max-width:900px){
  #page-machine .grid.two{grid-template-columns:1fr;}
 }
+
+/* Judul Defect Handling menjadi tombol buka/tutup input laporan */
+.handling-toggle-title{
+ display:inline-flex;align-items:center;gap:9px;padding:0;margin:0;border:0;
+ background:transparent;color:inherit;cursor:pointer;text-align:left;
+}
+.handling-toggle-title h2{margin:0!important}
+.handling-toggle-icon{font-size:20px;line-height:1;color:#65d9e8;transition:transform .2s ease}
+.handling-toggle-title[aria-expanded="false"] .handling-toggle-icon{transform:rotate(-90deg)}
+.handling-toggle-title:focus-visible{outline:2px solid #65d9e8;outline-offset:5px;border-radius:5px}
 </style>
 </head>
 
@@ -1007,10 +1017,10 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 <!-- HALAMAN 10: DEFECT HANDLING -->
 <section class="page hidden" id="page-handling">
 <div class="page-head">
- <div><h2>Defect Handling Analysis</h2><p>Analisis penanganan berdasarkan jenis defect yang dipilih.</p></div>
+ <div><button type="button" class="handling-toggle-title" id="handling-editor-toggle" aria-expanded="true" aria-controls="handling-report-editor"><h2>Defect Handling Analysis</h2><span class="handling-toggle-icon" aria-hidden="true">⌄</span></button><p>Analisis penanganan berdasarkan jenis defect yang dipilih.</p></div>
  <div class="filter-wrap"><label>PERIODE</label><select id="month-handling" data-filter="handling"></select></div>
 </div>
-<div class="report-editor no-print">
+<div class="report-editor no-print" id="handling-report-editor">
  <label>JUDUL LAPORAN<input id="handling-title-input" value="ANALISA PENANGANAN DEFECT"></label>
  <label>SUBTITLE / JENIS DEFECT<select id="handling-defect-select"></select></label>
 </div>
@@ -1581,6 +1591,15 @@ window.addEventListener('resize',()=>{
   if(activePage==='trend')drawLine('chart-trend',filtered());
   if(activePage==='machine')drawDonut('chart-machine',groupSum(filtered(),'mesin').slice(0,7),'legend-machine');
  },120);
+});
+
+// Judul halaman membuka/menyembunyikan kolom input judul laporan dan subtitle
+document.getElementById('handling-editor-toggle').addEventListener('click',()=>{
+ const editor=document.getElementById('handling-report-editor');
+ const toggle=document.getElementById('handling-editor-toggle');
+ const isOpen=toggle.getAttribute('aria-expanded')==='true';
+ editor.classList.toggle('hidden',isOpen);
+ toggle.setAttribute('aria-expanded',String(!isOpen));
 });
 
 /* LOAD CACHE DULU, KEMUDIAN SINKRONISASI */
