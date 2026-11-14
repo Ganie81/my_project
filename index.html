@@ -413,7 +413,73 @@ tr:hover td{background:#122b49}
   overflow-x:auto;
  }
 }
+/* FIX LEBAR LAYAR HP SAAT PRESENTASI */
+@media(max-width:900px){
 
+ html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:clip;
+ }
+
+ .app{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  overflow-x:clip;
+ }
+
+ .topbar{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  flex-wrap:wrap;
+ }
+
+ .brand{
+  min-width:0;
+  max-width:100%;
+  flex:1 1 100%;
+ }
+
+ .brand > div{
+  min-width:0;
+ }
+
+ .top-actions{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  justify-content:flex-start;
+  flex-wrap:wrap;
+ }
+
+ .layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  width:100%;
+  max-width:100%;
+  min-width:0;
+ }
+
+ .sidebar,.content,.page{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+ }
+
+ .cover-page,.closing-page{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+ }
+
+ .cover-content,.closing-content{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+ }
+}
 </style>
 </head>
 
