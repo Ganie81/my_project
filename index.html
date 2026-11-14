@@ -1864,7 +1864,7 @@ window.addEventListener('resize',()=>{
  if(!allData.length)return;
  setTimeout(()=>{
   if(activePage==='overview')drawDonut('chart-overview',groupSum(filtered(),'defect').slice(0,5),'legend-overview');
-  if(activePage==='trend')drawLine('chart-trend',filtered());
+  if(activePage==='trend')drawTop3Trend(filtered());
   if(activePage==='machine')drawDonut('chart-machine',groupSum(filtered(),'mesin').slice(0,7),'legend-machine');
  },120);
 });
