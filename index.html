@@ -1245,6 +1245,17 @@ function groupSum(rows,key){
  });
  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
 }
+ function formatGroupKashift(group){
+ const key=String(group??'').trim().toUpperCase();
+
+ const leaders={
+  'A':'A - (RIDWAN)',
+  'B':'B - (ULIS)',
+  'C':'C - (SAICHU)'
+ };
+
+ return leaders[key]||group;
+}
 function uniqueCount(rows,key){
  return new Set(rows.map(r=>safe(r[key])).filter(x=>x!=='TIDAK DIISI')).size;
 }
