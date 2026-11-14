@@ -849,6 +849,38 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  }
 }
 
+ /* FIX TOMBOL PRESENTASI HP PORTRAIT */
+@media (max-width:560px) and (orientation:portrait){
+
+ .topbar{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  width:100%;
+ }
+
+ .brand{
+  width:100%;
+  flex:0 0 auto;
+ }
+
+ .top-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  width:100%;
+  gap:8px;
+ }
+
+ .top-actions .btn{
+  width:100%;
+  min-width:0;
+  text-align:center;
+  padding:12px;
+  font-size:12px;
+ }
+
+}
+
 </style>
 </head>
 
