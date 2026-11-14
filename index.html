@@ -1418,24 +1418,61 @@ function fillHandlingDefects(){
  renderHandling();
 }
 function renderHandling(){
- const rows=filtered();const selected=document.getElementById('handling-defect-select').value;
- const title=document.getElementById('handling-title-input').value.trim()||'ANALISA PENANGANAN DEFECT';
+ const rows=filtered();
+ const selected=document.getElementById('handling-defect-select').value;
+
+ const title=document.getElementById('handling-title-input').value.trim()
+  ||'ANALISA PENANGANAN DEFECT';
+
  document.getElementById('handling-title').textContent=title;
  document.getElementById('handling-subtitle').textContent=selected||'BELUM ADA DATA';
+
  const now=new Date();
- document.getElementById('handling-date').textContent=now.toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).toUpperCase();
- const selectedRows=rows.filter(r=>safe(r.defect)===selected);const total=sum(selectedRows);
+
+ document.getElementById('handling-date').textContent=
+  now.toLocaleDateString('id-ID',{
+   weekday:'long',
+   day:'2-digit',
+   month:'long',
+   year:'numeric'
+  }).toUpperCase();
+
+ const selectedRows=rows.filter(r=>safe(r.defect)===selected);
+ const total=sum(selectedRows);
+
  const analysis=[
   {title:'1. JUMLAH DEFECT',value:fmt(total)+' PCS',detail:'Total akumulasi defect jenis '+selected},
   {title:'2. MESIN PENYUMBANG DEFECT TERBANYAK',data:groupSum(selectedRows,'mesin')},
   {title:'3. KODE PRODUK TERDAMPAK TERBANYAK',data:groupSum(selectedRows,'produk')},
-  {title:'4. GRUP PENYUMBANG DEFECT TERBANYAK',data:groupSum(selectedRows,'grup')},
+  {title:'4. GRUP PENYUMBANG DEFECT TERBANYAK',data:groupSum(selectedRows,'grup'),isGroup:true},
   {title:'5. OPERATOR DENGAN DEFECT TERBANYAK',data:groupSum(selectedRows,'operator')}
  ];
+
  document.getElementById('handling-analysis').innerHTML=analysis.map(item=>{
-  if(item.value!==undefined)return `<div class="analysis-item"><h3>${item.title}</h3><div class="analysis-value">${item.value}</div><div class="analysis-detail">${escapeHtml(item.detail)}</div></div>`;
+  if(item.value!==undefined){
+   return `<div class="analysis-item">
+    <h3>${item.title}</h3>
+    <div class="analysis-value">${item.value}</div>
+    <div class="analysis-detail">${escapeHtml(item.detail)}</div>
+   </div>`;
+  }
+
   const first=item.data[0];
-  return `<div class="analysis-item"><h3>${item.title}</h3>${first?`<div class="analysis-value">${escapeHtml(first[0])}</div><div class="analysis-detail">Jumlah defect: <b>${fmt(first[1])} PCS</b> · Kontribusi: ${pctText(first[1],total)}</div>`:`<div class="analysis-value">BELUM ADA DATA</div>`}</div>`;
+
+  const displayName=first
+   ?(item.isGroup?formatGroupKashift(first[0]):first[0])
+   :'BELUM ADA DATA';
+
+  return `<div class="analysis-item">
+   <h3>${item.title}</h3>
+   ${first
+    ?`<div class="analysis-value"><b>${escapeHtml(displayName)}</b></div>
+      <div class="analysis-detail">
+       Jumlah defect: <b>${fmt(first[1])} PCS</b>
+       · Kontribusi: ${pctText(first[1],total)}
+      </div>`
+    :`<div class="analysis-value">BELUM ADA DATA</div>`}
+  </div>`;
  }).join('');
 }
 
