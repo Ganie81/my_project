@@ -1381,37 +1381,191 @@ function drawDonut(id,items,legendId){
   if(legend)legend.innerHTML=shown.map((x,i)=>`<span><i style="background:${colors[i%colors.length]}"></i>${escapeHtml(x[0])} · ${pctText(x[1],total)}</span>`).join('');
  }
 }
-function drawLine(id,rows){
- const canvas=document.getElementById(id);
+
+function drawTop3Trend(rows){
+ const canvas=document.getElementById('chart-trend');
+ const legend=document.getElementById('trend-legend');
  if(!canvas)return;
+
  const rect=canvas.getBoundingClientRect();
  if(!rect.width||!rect.height)return;
+
  const dpr=window.devicePixelRatio||1;
- canvas.width=Math.max(1,rect.width*dpr);canvas.height=Math.max(1,rect.height*dpr);
- const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
- const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);
- const daily={};
- rows.forEach(r=>{const day=r.tanggal.slice(8,10);daily[day]=(daily[day]||0)+r.jumlah;});
- const entries=Object.entries(daily).sort((a,b)=>Number(a[0])-Number(b[0]));
- if(!entries.length){ctx.fillStyle='#a9bfd8';ctx.textAlign='center';ctx.font='bold 13px sans-serif';ctx.fillText('Tidak ada data',w/2,h/2);return;}
- const pad={l:48,r:18,t:34,b:31};const cw=w-pad.l-pad.r;const ch=h-pad.t-pad.b;
- const max=Math.max(1,...entries.map(x=>x[1]));const step=max/4;
- ctx.font='bold 10px sans-serif';ctx.textAlign='right';
- for(let i=0;i<=4;i++){
-  const y=pad.t+ch*i/4;ctx.strokeStyle='#294766';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();
-  ctx.fillStyle='#a9bfd8';ctx.fillText(fmt(Math.round(max-i*step)),pad.l-7,y+4);
+ const w=rect.width;
+ const h=rect.height;
+
+ canvas.width=Math.round(w*dpr);
+ canvas.height=Math.round(h*dpr);
+
+ const ctx=canvas.getContext('2d');
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.clearRect(0,0,w,h);
+
+ const colors=['#39FF14','#FF2BD6','#00E5FF'];
+
+ const top3=groupSum(rows,'defect').slice(0,3);
+
+ if(!top3.length){
+  ctx.fillStyle='#a9bfd8';
+  ctx.font='bold 14px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('Tidak ada data defect',w/2,h/2);
+  if(legend)legend.innerHTML='';
+  return;
  }
- const pts=entries.map((x,i)=>({x:pad.l+(entries.length===1?cw/2:i*cw/(entries.length-1)),y:pad.t+ch-(x[1]/max)*ch,label:x[0],value:x[1]}));
- ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle='#36a2ff';ctx.lineWidth=2.5;ctx.stroke();
- ctx.lineTo(pts[pts.length-1].x,pad.t+ch);ctx.lineTo(pts[0].x,pad.t+ch);ctx.closePath();
- const grad=ctx.createLinearGradient(0,pad.t,0,h);grad.addColorStop(0,'#36a2ff44');grad.addColorStop(1,'#36a2ff00');ctx.fillStyle=grad;ctx.fill();
- ctx.textAlign='center';
- pts.forEach((p,i)=>{
-  ctx.beginPath();ctx.arc(p.x,p.y,4.5,0,Math.PI*2);ctx.fillStyle='#f7c65b';ctx.fill();ctx.strokeStyle='#fff1bd';ctx.lineWidth=1;ctx.stroke();
-  ctx.fillStyle='#ffe08a';ctx.font='bold 10px sans-serif';ctx.fillText(fmt(p.value),p.x,p.y-10);
-  if(i%Math.ceil(entries.length/12)===0||i===entries.length-1){ctx.fillStyle='#c7d8e9';ctx.font='bold 10px sans-serif';ctx.fillText(p.label,p.x,h-9);}
+
+ const dates=[...new Set(rows.map(r=>r.tanggal))]
+  .filter(Boolean)
+  .sort();
+
+ if(!dates.length){
+  if(legend)legend.innerHTML='';
+  return;
+ }
+
+ const daily={};
+
+ top3.forEach(([name])=>{
+  daily[name]={};
+  dates.forEach(date=>daily[name][date]=0);
  });
+
+ rows.forEach(r=>{
+  const name=String(r.defect??'').trim();
+  if(daily[name]&&daily[name][r.tanggal]!==undefined){
+   daily[name][r.tanggal]+=Number(r.jumlah)||0;
+  }
+ });
+
+ let maxValue=0;
+ top3.forEach(([name])=>{
+  dates.forEach(date=>{
+   maxValue=Math.max(maxValue,daily[name][date]||0);
+  });
+ });
+
+ const maxY=Math.max(4,Math.ceil(maxValue/4)*4);
+ const pad={l:57,r:20,t:25,b:43};
+ const cw=w-pad.l-pad.r;
+ const ch=h-pad.t-pad.b;
+
+ const xPos=i=>pad.l+(dates.length===1?cw/2:i*cw/(dates.length-1));
+ const yPos=value=>pad.t+ch-(value/maxY)*ch;
+
+ // LATAR GRAFIK
+ ctx.fillStyle='rgba(4,15,28,.22)';
+ ctx.fillRect(pad.l,pad.t,cw,ch);
+
+ // GARIS KOORDINAT HORIZONTAL
+ ctx.font='bold 10px sans-serif';
+ ctx.textAlign='right';
+
+ for(let i=0;i<=4;i++){
+  const value=maxY-(maxY*i/4);
+  const y=pad.t+(ch*i/4);
+
+  ctx.beginPath();
+  ctx.moveTo(pad.l,y);
+  ctx.lineTo(w-pad.r,y);
+  ctx.strokeStyle='rgba(150,190,220,.24)';
+  ctx.lineWidth=1;
+  ctx.stroke();
+
+  ctx.fillStyle='#b7cce0';
+  ctx.fillText(fmt(Math.round(value)),pad.l-9,y+4);
+ }
+
+ // GARIS KOORDINAT VERTIKAL
+ dates.forEach((date,i)=>{
+  const x=xPos(i);
+
+  ctx.beginPath();
+  ctx.moveTo(x,pad.t);
+  ctx.lineTo(x,pad.t+ch);
+  ctx.strokeStyle='rgba(150,190,220,.13)';
+  ctx.lineWidth=1;
+  ctx.stroke();
+ });
+
+ // GARIS TREN MASING-MASING DEFECT
+ top3.forEach(([name,total],seriesIndex)=>{
+  const color=colors[seriesIndex];
+
+  const points=dates.map((date,i)=>({
+   x:xPos(i),
+   y:yPos(daily[name][date]||0),
+   value:daily[name][date]||0,
+   date
+  }));
+
+  // GARIS UTAMA
+  ctx.save();
+  ctx.beginPath();
+
+  points.forEach((p,i)=>{
+   if(i===0)ctx.moveTo(p.x,p.y);
+   else ctx.lineTo(p.x,p.y);
+  });
+
+  ctx.strokeStyle=color;
+  ctx.lineWidth=3;
+  ctx.lineJoin='round';
+  ctx.lineCap='round';
+  ctx.shadowColor=color;
+  ctx.shadowBlur=12;
+  ctx.stroke();
+  ctx.restore();
+
+  // TITIK DATA
+  points.forEach((p,i)=>{
+   ctx.beginPath();
+   ctx.arc(p.x,p.y,4,0,Math.PI*2);
+   ctx.fillStyle=color;
+   ctx.shadowColor=color;
+   ctx.shadowBlur=10;
+   ctx.fill();
+
+   ctx.shadowBlur=0;
+   ctx.strokeStyle='#ffffff';
+   ctx.lineWidth=1;
+   ctx.stroke();
+  });
+ });
+
+ // LABEL TANGGAL SUMBU X
+ const labelStep=Math.max(1,Math.ceil(dates.length/12));
+ ctx.textAlign='center';
+ ctx.font='bold 10px sans-serif';
+ ctx.fillStyle='#c5d9ec';
+
+ dates.forEach((date,i)=>{
+  if(i%labelStep===0||i===dates.length-1){
+   ctx.fillText(date.slice(8,10),xPos(i),h-15);
+  }
+ });
+
+ // LABEL SUMBU Y
+ ctx.save();
+ ctx.translate(13,pad.t+ch/2);
+ ctx.rotate(-Math.PI/2);
+ ctx.textAlign='center';
+ ctx.fillStyle='#a9bfd8';
+ ctx.font='bold 10px sans-serif';
+ ctx.fillText('JUMLAH DEFECT (PCS)',0,0);
+ ctx.restore();
+
+ // LEGENDA DAN TOTAL MASING-MASING DEFECT
+ if(legend){
+  legend.innerHTML=top3.map(([name,total],i)=>`
+   <div class="trend-legend-item">
+    <span class="trend-legend-line"
+     style="background:${colors[i]};color:${colors[i]}"></span>
+    <span>${escapeHtml(name)} · ${fmt(total)} PCS</span>
+   </div>
+  `).join('');
+ }
 }
+
 
 /* HALAMAN ANALISIS */
 function renderOverview(){
