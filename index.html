@@ -1369,9 +1369,19 @@ function renderMachine(){
 }
 function renderProduct(){const r=filtered();renderKpis('kpi-product',r);drawBars('product-ranking',groupSum(r,'produk').slice(0,10),sum(r));}
 function renderDefect(){
- const r=filtered();renderKpis('kpi-defect',r);
- const total=sum(r);const defects=groupSum(r,'defect');const groups=groupSum(r,'grup');
- drawBars('defect-ranking',defects.slice(0,5),total);drawBars('group-ranking',groups,total);
+ const r=filtered();
+ renderKpis('kpi-defect',r);
+
+ const total=sum(r);
+ const defects=groupSum(r,'defect');
+
+ const groups=groupSum(r,'grup').map(([name,value])=>[
+  formatGroupKashift(name),value
+ ]);
+
+ drawBars('defect-ranking',defects.slice(0,5),total);
+ drawBars('group-ranking',groups,total);
+
  renderMachineDefectBreakdown(r);
 }
 function renderMachineDefectBreakdown(rows){
