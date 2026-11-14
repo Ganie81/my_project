@@ -762,6 +762,21 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  .cover-page,.closing-page{box-shadow:none!important}
 }
 
+
+/* PERLEBAR DIAGRAM BATANG RANKING DEFECT MESIN */
+#page-machine .grid.two{
+ grid-template-columns:minmax(0,1.8fr) minmax(250px,.8fr);
+}
+#page-machine #machine-ranking .bar-row{
+ grid-template-columns:minmax(85px,125px) minmax(0,1fr) minmax(75px,90px);
+ gap:10px;
+}
+#page-machine #machine-ranking .bar-track{
+ width:100%;
+}
+@media(max-width:900px){
+ #page-machine .grid.two{grid-template-columns:1fr;}
+}
 </style>
 </head>
 
