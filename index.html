@@ -881,39 +881,35 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 
 }
 
-/* FIX LAYOUT PRESENTASI HP PORTRAIT */
-@media screen and (orientation:portrait) and (max-width:1000px){
+/* HP PORTRAIT - SUSUNAN KHUSUS MODE PRESENTASI */
+@media screen and (max-width:600px) and (orientation:portrait){
 
- .layout{
-  display:flex !important;
-  flex-direction:column !important;
-  width:100% !important;
-  max-width:100% !important;
-  gap:14px !important;
- }
+  html:fullscreen .layout{
+    display:flex !important;
+    flex-direction:column !important;
+    width:100% !important;
+    gap:14px !important;
+  }
 
- .sidebar{
-  position:relative !important;
-  top:auto !important;
-  width:100% !important;
-  max-width:100% !important;
-  order:1 !important;
- }
+  html:fullscreen .sidebar{
+    order:1 !important;
+    position:static !important;
+    width:100% !important;
+  }
 
- .content{
-  width:100% !important;
-  max-width:100% !important;
-  min-width:0 !important;
-  order:2 !important;
- }
+  html:fullscreen .content{
+    order:2 !important;
+    width:100% !important;
+    min-width:0 !important;
+  }
 
- .page{
-  width:100% !important;
-  max-width:100% !important;
-  min-width:0 !important;
- }
+  html:fullscreen .page{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
 
-} 
+}
 
 </style>
 </head>
