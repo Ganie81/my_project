@@ -355,6 +355,65 @@ tr:hover td{background:#122b49}
  .photo-title{font-size:24px;margin:0 0 8mm;text-align:left}
  .analysis-item{break-inside:avoid}
 }
+ 
+/* PERBAIKAN PRESENTASI FULLSCREEN DI HP */
+@media(max-width:900px){
+ html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+ }
+
+ .app{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+ }
+
+ .layout,
+ .content,
+ .page{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+ }
+
+ .page{
+  overflow-x:hidden;
+ }
+
+ .cover-page,
+ .closing-page{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+ }
+
+ .cover-content,
+ .closing-content{
+  min-width:0;
+  max-width:100%;
+  overflow-wrap:anywhere;
+ }
+
+ .cover-title,
+ .closing-title{
+  overflow-wrap:anywhere;
+ }
+
+ .photo-paper,
+ .report-paper,
+ .card{
+  max-width:100%;
+  min-width:0;
+ }
+
+ .table-wrap{
+  max-width:100%;
+  overflow-x:auto;
+ }
+}
+
 </style>
 </head>
 
