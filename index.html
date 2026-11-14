@@ -789,47 +789,64 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 .handling-toggle-title:focus-visible{outline:2px solid #65d9e8;outline-offset:5px;border-radius:5px}
  
 /* HALAMAN 04 - GRAFIK GABUNGAN 3 DEFECT TERBESAR */
+/* HALAMAN 04 - TINGGI TOTAL MENDEKATI HALAMAN 01 */
 #page-trend .trend-chart-card{
- min-height:490px;
- padding:20px;
+ min-height:0;
+ height:340px;
+ padding:16px 20px;
+ box-sizing:border-box;
 }
+
 #page-trend .trend-chart-box{
- height:405px;
+ height:235px;
  width:100%;
  position:relative;
 }
+
 #page-trend .trend-legend{
  display:flex;
  flex-wrap:wrap;
- gap:12px 22px;
- margin-top:15px;
- padding:12px 14px;
+ gap:8px 18px;
+ margin-top:8px;
+ padding:8px 12px;
  border:1px solid rgba(133,177,216,.18);
  border-radius:12px;
  background:rgba(5,17,31,.45);
 }
+
 #page-trend .trend-legend-item{
  display:flex;
  align-items:center;
  gap:8px;
  color:#edf5ff;
- font-size:12px;
+ font-size:11px;
  font-weight:900;
 }
+
 #page-trend .trend-legend-line{
  width:25px;
  height:4px;
  border-radius:5px;
  box-shadow:0 0 9px currentColor;
 }
+
 @media(max-width:560px){
- #page-trend .trend-chart-card{min-height:440px;padding:13px}
- #page-trend .trend-chart-box{height:350px}
- #page-trend .trend-legend{gap:10px;padding:10px}
- #page-trend .trend-legend-item{font-size:10px}
+ #page-trend .trend-chart-card{
+  height:340px;
+  padding:12px;
+ }
+ #page-trend .trend-chart-box{
+  height:235px;
+ }
 }
+
 @media print{
- #page-trend .trend-chart-box{height:350px}
+ #page-trend .trend-chart-card{
+  height:340px;
+ }
+ #page-trend .trend-chart-box{
+  height:235px;
+ }
 }
 
 </style>
