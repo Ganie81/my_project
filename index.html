@@ -946,18 +946,34 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  </div>
 </section>
 
+
 <!-- HALAMAN 04: DEFECT TREND -->
 <section class="page hidden" id="page-trend">
  <div class="page-head">
-  <div><h2>Defect Trend</h2><p>Pergerakan jumlah defect harian pada periode terpilih.</p></div>
-  <div class="filter-wrap"><label>PERIODE</label><select id="month-trend" data-filter="trend"></select></div>
+  <div>
+   <h2>Defect Trend</h2>
+   <p>Perbandingan tren harian 3 jenis defect terbesar.</p>
+  </div>
+  <div class="filter-wrap">
+   <label>PERIODE</label>
+   <select id="month-trend" data-filter="trend"></select>
+  </div>
  </div>
+
  <div class="grid kpis hidden" id="kpi-trend"></div>
- <div class="card">
-  <div class="card-title"><h3>Tren Defect Harian</h3><span>Titik kuning · Nilai PCS</span></div>
-  <div class="chart-box"><canvas id="chart-trend"></canvas></div>
+
+ <div class="card trend-chart-card">
+  <div class="card-title">
+   <h3>TOP 3 DEFECT TREND</h3>
+   <span>PCS · Harian · 3 Jenis Defect Terbesar</span>
+  </div>
+  <div class="trend-chart-box">
+   <canvas id="chart-trend"></canvas>
+  </div>
+  <div class="trend-legend" id="trend-legend"></div>
  </div>
 </section>
+
 
 <!-- HALAMAN 05: MACHINE ANALYSIS -->
 <section class="page hidden" id="page-machine">
