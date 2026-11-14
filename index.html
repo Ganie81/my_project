@@ -1576,8 +1576,11 @@ function renderOverview(){
  document.getElementById('overview-defect-note').innerHTML='<b>5 jenis defect terbesar:</b> '+topDefects.map(x=>escapeHtml(x[0])+' ('+pctText(x[1],total)+')').join(' · ');
  drawBars('machine-bars',groupSum(r,'mesin').slice(0,7),total);
 }
-function renderTrend(){const r=filtered();renderKpis('kpi-trend',r);drawLine('chart-trend',r);}
-function renderMachine(){
+function renderTrend(){
+ const r=filtered();
+ renderKpis('kpi-trend',r);
+ drawTop3Trend(r);
+}function renderMachine(){
  const r=filtered();renderKpis('kpi-machine',r);
  const machines=groupSum(r,'mesin');const total=sum(r);
  drawBars('machine-ranking',machines,total);drawDonut('chart-machine',machines.slice(0,7),'legend-machine');
