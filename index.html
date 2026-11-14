@@ -417,6 +417,35 @@ tr:hover td{background:#122b49}
  .photo-title{font-size:24px;margin:0 0 8mm;text-align:left}
  .analysis-item{break-inside:avoid}
 }
+ /* NORMALISASI TINGGI HALAMAN PEMBUKA DAN PENUTUP */
+#page-intro,
+#page-closing{
+  min-height:0 !important;
+  height:auto !important;
+  padding:0 !important;
+}
+
+#page-intro .cover,
+#page-closing .cover{
+  min-height:0 !important;
+  height:auto !important;
+  padding:45px 25px !important;
+  box-sizing:border-box;
+}
+
+#page-intro .cover-content,
+#page-closing .cover-content{
+  min-height:0 !important;
+  height:auto !important;
+}
+
+/* Tampilan HP */
+@media(max-width:900px){
+  #page-intro .cover,
+  #page-closing .cover{
+    padding:35px 18px !important;
+  }
+}
 </style>
 </head>
 
