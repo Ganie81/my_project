@@ -1777,7 +1777,7 @@ function showPage(page){
 
  setTimeout(()=>{
   if(page==='overview')drawDonut('chart-overview',groupSum(filtered(),'defect').slice(0,5),'legend-overview');
-  if(page==='trend')drawLine('chart-trend',filtered());
+  if(page==='trend')drawTop3Trend(filtered());
   if(page==='machine')drawDonut('chart-machine',groupSum(filtered(),'mesin').slice(0,7),'legend-machine');
  },80);
 }
