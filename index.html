@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -61,7 +60,7 @@ button{cursor:pointer}
 }
 .side-label{font-size:11px;letter-spacing:1.6px;color:#91a9c6;font-weight:900;padding:10px}
 .nav-list{
- max-height:490px;overflow-y:auto;overflow-x:hidden;
+ max-height:415px;overflow-y:auto;overflow-x:hidden;
  scrollbar-width:thin;scrollbar-color:#315b80 #0a1b30;padding-right:3px;
 }
 .nav-list::-webkit-scrollbar{width:6px}
@@ -70,7 +69,7 @@ button{cursor:pointer}
 .nav{
  width:100%;display:flex;align-items:center;gap:11px;text-align:left;
  background:transparent;border:1px solid transparent;color:#c2d2e5;
- padding:13px 11px;border-radius:11px;margin:3px 0;
+ padding:11px 11px;border-radius:11px;margin:3px 0;
  font-size:12px;font-weight:850;white-space:nowrap
 }
 .nav .num{font-size:11px;color:#91a9c6;width:20px}
@@ -555,12 +554,12 @@ body{
  box-shadow:0 14px 35px rgba(0,0,0,.18);
 }
 .side-label{color:#7fa0bd;font-size:10px;letter-spacing:1.9px;padding:12px}
-.nav-list{max-height:calc(100vh - 210px);scrollbar-color:#315d80 #0a1b30}
+.nav-list{max-height:415px;scrollbar-color:#315d80 #0a1b30}
 .nav{
  color:#b8cbe0;
  border:1px solid transparent;
  border-radius:12px;
- padding:12px 11px;
+ padding:11px 11px;
  font-size:11px;
  letter-spacing:.025em;
  transition:background .18s ease,border-color .18s ease,transform .18s ease;
@@ -678,7 +677,7 @@ tr:hover td{background:rgba(51,135,190,.13)}
 }
 .closing-page{
  background:
-  radial-gradient(ellipse at 50% 50%,rgba(28,91,128,.8) 0%,rgba(13,39,65,.96) 48%,#061426 100%);
+  radial-gradient(ellipse at 50% 50%,rgba(28,91,128,.8) 0%,rgba(13,39,65,.96) 48%,#061222 100%);
 }
 .cover-kicker{
  background:rgba(6,27,46,.48);
@@ -892,8 +891,51 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 
 }
 
+/* =========================================================
+   MODE PRESENTASI (FULLSCREEN):
+   HEADER & KOTAK PRESENTATION MENU TETAP MENGAMBANG (TIDAK TENGGELAM)
+========================================================= */
+html:fullscreen .app{
+ overflow:visible !important;
+}
+
+html:fullscreen .topbar{
+ position:sticky !important;
+ top:10px !important;
+ z-index:1000 !important;
+ background:linear-gradient(120deg,rgba(13,35,58,.97),rgba(7,21,37,.96)) !important;
+ box-shadow:0 14px 36px rgba(0,0,0,.55) !important;
+}
+
+@media screen and (min-width:901px){
+ html:fullscreen .sidebar{
+  position:sticky !important;
+  top:118px !important;
+  z-index:900 !important;
+ }
+ html:fullscreen .nav-list{
+  max-height:415px !important;
+ }
+}
+
+@media screen and (max-width:900px){
+ html:fullscreen .sidebar{
+  position:sticky !important;
+  top:105px !important;
+  z-index:900 !important;
+  background:rgba(10,27,48,.97) !important;
+  box-shadow:0 10px 26px rgba(0,0,0,.5) !important;
+ }
+}
+
 /* HP PORTRAIT - SUSUNAN KHUSUS MODE PRESENTASI */
 @media screen and (max-width:600px) and (orientation:portrait){
+
+  html:fullscreen .topbar{
+    position:sticky !important;
+    top:6px !important;
+    z-index:1000 !important;
+  }
 
   html:fullscreen .layout{
     display:flex !important;
@@ -904,7 +946,9 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 
   html:fullscreen .sidebar{
     order:1 !important;
-    position:static !important;
+    position:sticky !important;
+    top:195px !important;
+    z-index:900 !important;
     width:100% !important;
   }
 
