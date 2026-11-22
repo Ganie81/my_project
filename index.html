@@ -997,7 +997,8 @@ html:fullscreen .topbar{
  <div class="top-actions">
   <button class="btn" id="refreshBtn">↻ Sinkronisasi</button>
   <button class="btn" id="fullBtn">⛶ Presentasi</button>
-  <button class="btn primary" id="pdfBtn">⇩ Export PDF</button>
+  <button class="btn" id="jpgBtn">▧ Export JPG</button>
+   <button class="btn primary" id="pdfBtn">⇩ Export PDF</button>
  </div>
 </header>
 
@@ -1015,19 +1016,20 @@ html:fullscreen .topbar{
  <div class="nav-list">
   <button class="nav active" data-page="intro"><span class="num">01</span> ✦ OPENING PRESENTATION</button>
   <button class="nav" data-page="photoqa"><span class="num">02</span> ▧ GAMBARQA.jpg</button>
-  <button class="nav" data-page="overview"><span class="num">03</span> ◫ QUALITY OVERVIEW</button>
-  <button class="nav" data-page="trend"><span class="num">04</span> ↗ DEFECT TREND</button>
-  <button class="nav" data-page="machine"><span class="num">05</span> ⚙ MACHINE ANALYSIS</button>
-  <button class="nav" data-page="product"><span class="num">06</span> ◈ PRODUCT ANALYSIS</button>
-  <button class="nav" data-page="defect"><span class="num">07</span> ◉ DEFECT BREAKDOWN</button>
-  <button class="nav" data-page="data"><span class="num">08</span> ▤ DATA SUMMARY</button>
-  <button class="nav" data-page="operator"><span class="num">09</span> ★ TOP 10 OPERATOR</button>
-  <button class="nav" data-page="handling"><span class="num">10</span> ◈ DEFECT HANDLING</button>
-  <button class="nav" data-page="photo1"><span class="num">11</span> ▧ GAMBAR1.jpg</button>
-  <button class="nav" data-page="photo2"><span class="num">12</span> ▧ GAMBAR2.jpg</button>
-  <button class="nav" data-page="photo3"><span class="num">13</span> ▧ GAMBAR3.jpg</button>
-  <button class="nav" data-page="photo4"><span class="num">14</span> ▧ GAMBAR4.jpg</button>
-  <button class="nav" data-page="closing"><span class="num">15</span> ✦ CLOSING PRESENTATION</button>
+  <button class="nav" data-page="photoqa2"><span class="num">03</span> ▧ GAMBARQA2.jpg</button>
+  <button class="nav" data-page="overview"><span class="num">04</span> ◫ QUALITY OVERVIEW</button>
+  <button class="nav" data-page="trend"><span class="num">05</span> ↗ DEFECT TREND</button>
+  <button class="nav" data-page="machine"><span class="num">06</span> ⚙ MACHINE ANALYSIS</button>
+  <button class="nav" data-page="product"><span class="num">07</span> ◈ PRODUCT ANALYSIS</button>
+  <button class="nav" data-page="defect"><span class="num">08</span> ◉ DEFECT BREAKDOWN</button>
+  <button class="nav" data-page="data"><span class="num">09</span> ▤ DATA SUMMARY</button>
+  <button class="nav" data-page="operator"><span class="num">10</span> ★ TOP 10 OPERATOR</button>
+  <button class="nav" data-page="handling"><span class="num">11</span> ◈ DEFECT HANDLING</button>
+  <button class="nav" data-page="photo1"><span class="num">12</span> ▧ GAMBAR1.jpg</button>
+  <button class="nav" data-page="photo2"><span class="num">13</span> ▧ GAMBAR2.jpg</button>
+  <button class="nav" data-page="photo3"><span class="num">14</span> ▧ GAMBAR3.jpg</button>
+  <button class="nav" data-page="photo4"><span class="num">15</span> ▧ GAMBAR4.jpg</button>
+  <button class="nav" data-page="closing"><span class="num">16</span> ✦ CLOSING PRESENTATION</button>
  </div>
 
  <div class="side-foot">QUALITY MANAGEMENT<br>Data source: Google Spreadsheet · QM / QLTY</div>
@@ -1069,7 +1071,22 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-<!-- HALAMAN 03: QUALITY OVERVIEW -->
+<!-- HALAMAN 03: GAMBAR QA 2 -->
+<section class="page hidden" id="page-photoqa2">
+ <div class="photo-title-editor no-print">
+  <label>JUDUL GAMBAR QA 2
+   <input id="photoqa2-title-input" value="DOKUMENTASI QUALITY ASSURANCE 2" placeholder="Masukkan judul gambar">
+  </label>
+ </div>
+ <div class="photo-paper">
+  <h2 class="photo-title" id="photoqa2-title">DOKUMENTASI QUALITY ASSURANCE 2</h2>
+  <img src="./GAMBARQA2.jpg" alt="Dokumentasi Quality Assurance 2"
+   onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+  <div class="photo-empty" style="display:none">GAMBARQA2.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
+ </div>
+</section>
+
+<!-- HALAMAN 04: QUALITY OVERVIEW -->
 <section class="page hidden" id="page-overview">
  <div class="page-head">
   <div><h2>Quality Overview</h2><p>Ringkasan performa kualitas berdasarkan data defect.</p></div>
@@ -1311,6 +1328,7 @@ html:fullscreen .topbar{
 </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 'use strict';
 
@@ -1391,6 +1409,7 @@ document.getElementById('toggleKpiBtn').addEventListener('click',toggleKpi);
 const PAGE_NAMES={
  intro:'Opening Presentation',
  photoqa:'GAMBAR QA',
+ photoqa2:'GAMBAR QA 2',
  overview:'Quality Overview',
  trend:'Defect Trend',
  machine:'Machine Analysis',
@@ -1841,6 +1860,7 @@ function renderHandling(){
 /* JUDUL FOTO DISIMPAN DI BROWSER */
 const PHOTO_CONFIG=[
  {number:'qa',input:'photoqa-title-input',title:'photoqa-title',defaultTitle:'DOKUMENTASI QUALITY ASSURANCE'},
+ {number:'qa2',input:'photoqa2-title-input',title:'photoqa2-title',defaultTitle:'DOKUMENTASI QUALITY ASSURANCE 2'},
  {number:1,input:'photo1-title-input',title:'photo1-title',defaultTitle:'DOKUMENTASI FOTO 1'},
  {number:2,input:'photo2-title-input',title:'photo2-title',defaultTitle:'DOKUMENTASI FOTO 2'},
  {number:3,input:'photo3-title-input',title:'photo3-title',defaultTitle:'DOKUMENTASI FOTO 3'},
@@ -1904,7 +1924,7 @@ function updatePrintSubtitle(){
  document.getElementById('printSubtitle').textContent=PAGE_NAMES[activePage]+' · '+monthLabel(currentMonth)+' · '+fmt(p.length)+' record';
 }
 
-/* NAVIGASI 15 HALAMAN */
+/* NAVIGASI 16 HALAMAN */
 function showPage(page){
  if(!PAGE_NAMES[page])return;
  activePage=page;
@@ -1975,7 +1995,73 @@ document.querySelectorAll('[data-filter]').forEach(el=>{
 document.getElementById('handling-defect-select').addEventListener('change',renderHandling);
 document.getElementById('handling-title-input').addEventListener('input',renderHandling);
 
+/* EXPORT JPG FULL HD - HALAMAN YANG SEDANG DIPILIH */
+async function exportCurrentPageJPG(){
+ const button=document.getElementById('jpgBtn');
+ const page=document.getElementById('page-'+activePage);
+ if(!page)return;
+ if(typeof window.html2canvas!=='function'){
+  alert('Library export JPG belum termuat. Periksa koneksi internet lalu coba lagi.');
+  return;
+ }
+ const oldText=button.textContent;
+ button.disabled=true;
+ button.textContent='Menyiapkan JPG...';
+ try{
+  const images=[...page.querySelectorAll('img')];
+  await Promise.all(images.map(img=>{
+   if(img.complete)return Promise.resolve();
+   return new Promise(resolve=>{
+    img.addEventListener('load',resolve,{once:true});
+    img.addEventListener('error',resolve,{once:true});
+   });
+  }));
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const sourceCanvas=await html2canvas(page,{
+   backgroundColor:'#071426',scale:2,useCORS:true,allowTaint:false,
+   logging:false,imageTimeout:15000,scrollX:0,scrollY:0,
+   windowWidth:Math.max(document.documentElement.clientWidth,1),
+   onclone:(clonedDoc)=>{
+    const clonedPage=clonedDoc.getElementById('page-'+activePage);
+    if(clonedPage){
+     clonedPage.classList.remove('hidden');
+     clonedPage.querySelectorAll('.no-print').forEach(el=>el.style.display='none');
+     clonedPage.style.display='block';
+     clonedPage.style.overflow='visible';
+     clonedPage.style.height='auto';
+     clonedPage.style.maxHeight='none';
+    }
+   }
+  });
+  const output=document.createElement('canvas');
+  output.width=1920;output.height=1080;
+  const ctx=output.getContext('2d');
+  ctx.fillStyle='#071426';ctx.fillRect(0,0,1920,1080);
+  const scale=Math.min(1920/sourceCanvas.width,1080/sourceCanvas.height);
+  const drawWidth=Math.round(sourceCanvas.width*scale);
+  const drawHeight=Math.round(sourceCanvas.height*scale);
+  ctx.drawImage(sourceCanvas,Math.round((1920-drawWidth)/2),
+   Math.round((1080-drawHeight)/2),drawWidth,drawHeight);
+  const blob=await new Promise(resolve=>output.toBlob(resolve,'image/jpeg',0.96));
+  if(!blob)throw new Error('Gagal membuat file JPG.');
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+  const safeName=(PAGE_NAMES[activePage]||activePage)
+   .normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+   .replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase();
+  link.href=url;link.download='QUALITY-REPORT-'+safeName+'-FULL-HD.jpg';
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+ }catch(err){
+  console.error('Export JPG:',err);
+  alert('Export JPG gagal: '+(err.message||err)+'. Coba ulangi setelah halaman selesai dimuat.');
+ }finally{
+  button.disabled=false;button.textContent=oldText;
+ }
+}
+
 /* TOMBOL */
+document.getElementById('jpgBtn').addEventListener('click',exportCurrentPageJPG);
 document.getElementById('refreshBtn').addEventListener('click',syncData);
 document.getElementById('pdfBtn').addEventListener('click',()=>{updatePrintSubtitle();window.print();});
 document.getElementById('fullBtn').addEventListener('click',()=>{
@@ -1985,7 +2071,7 @@ document.getElementById('fullBtn').addEventListener('click',()=>{
 
 /* KEYBOARD NAVIGASI SESUAI URUTAN MENU */
 const PRESENTATION_ORDER=[
- 'intro','photoqa','overview','trend','machine','product','defect',
+ 'intro','photoqa','photoqa2','overview','trend','machine','product','defect',
  'data','operator','handling','photo1','photo2','photo3','photo4','closing'
 ];
 
