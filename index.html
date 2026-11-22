@@ -1462,8 +1462,15 @@ function setStatus(mode,msg){
  document.getElementById('statusDot').className='dot '+mode;
  document.getElementById('statusText').textContent=msg;
 }
+function normalizeMachineName(value){
+ let name=String(value??'').trim().replace(/\s+/g,' ').toUpperCase();
+ // Samakan penulisan FLAT PRINT n menjadi FLAT n, termasuk FLAT PRINT 7 = FLAT 7.
+ name=name.replace(/^MESIN\s+/,'');
+ name=name.replace(/^FLAT\s+PRINT\s+(\d+)$/,'FLAT $1');
+ return name;
+}
 function normalizeRows(rows){
- return (rows||[]).map(r=>({...r,jumlah:Number(r.jumlah)||0,tanggal:String(r.tanggal||'').slice(0,10),bulan:String(r.bulan||String(r.tanggal||'').slice(0,7))})).filter(r=>r.tanggal&&r.bulan);
+ return (rows||[]).map(r=>({...r,mesin:normalizeMachineName(r.mesin),jumlah:Number(r.jumlah)||0,tanggal:String(r.tanggal||'').slice(0,10),bulan:String(r.bulan||String(r.tanggal||'').slice(0,7))})).filter(r=>r.tanggal&&r.bulan);
 }
 function getMonths(){return [...new Set(allData.map(x=>x.bulan))].sort();}
 function filtered(){return allData.filter(r=>!currentMonth||r.bulan===currentMonth);}
@@ -1808,12 +1815,12 @@ function renderMachineDefectBreakdown(rows){
    ${machines.map(([machine],index)=>`
     <button type="button" class="btn machine-defect-tab ${index===selectedDefectMachineIndex?'active':''}"
      data-machine-index="${index}" aria-pressed="${index===selectedDefectMachineIndex}">
-     MESIN ${escapeHtml(machine)}
+     ${escapeHtml(machine)}
     </button>
    `).join('')}
   </div>
   <div class="machine-defect-block">
-   <h4>MESIN ${escapeHtml(selectedMachine)}</h4>
+   <h4>${escapeHtml(selectedMachine)}</h4>
    <div class="subnote">Total defect mesin: ${fmt(machineTotal)} PCS</div>
    ${defects.length?`<div class="bar-list">
     ${defects.map(([name,value])=>`
