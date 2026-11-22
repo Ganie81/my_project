@@ -966,6 +966,26 @@ html:fullscreen .topbar{
 
 }
  
+
+
+/* DEFECT BREAKDOWN: TAMPILKAN SATU MESIN DALAM SATU WAKTU */
+#page-defect .machine-defect-tabs{
+ display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;
+}
+#page-defect .machine-defect-tab{
+ padding:9px 13px;font-size:11px;white-space:nowrap;
+}
+#page-defect .machine-defect-tab.active{
+ background:linear-gradient(120deg,#39a5ff,#54d6df);
+ border-color:transparent;color:#06182a;
+ box-shadow:0 5px 15px rgba(54,162,255,.2);
+}
+#page-defect .machine-defect-block{margin:0}
+@media(max-width:560px){
+ #page-defect .machine-defect-tabs{gap:6px}
+ #page-defect .machine-defect-tab{padding:8px 10px;font-size:10px}
+}
+
 /* PENDEKKAN JARAK HEADER DARI ATAS LAYAR */
 .app{
  padding-top:5px !important;
@@ -1765,15 +1785,54 @@ function renderDefect(){
 
  renderMachineDefectBreakdown(r);
 }
+let selectedDefectMachineIndex=0;
+
 function renderMachineDefectBreakdown(rows){
- const container=document.getElementById('machine-defect-breakdown');const machines=groupSum(rows,'mesin');
- if(!machines.length){container.innerHTML='<div class="empty">Belum ada data mesin.</div>';return;}
- container.innerHTML=machines.map(([machine])=>{
-  const machineRows=rows.filter(r=>safe(r.mesin)===machine);const defects=groupSum(machineRows,'defect').slice(0,5);const machineTotal=sum(machineRows);
-  return `<div class="machine-defect-block"><h4>MESIN ${escapeHtml(machine)}</h4><div class="subnote">Total defect mesin: ${fmt(machineTotal)} PCS</div><div class="bar-list">
-   ${defects.map(([name,value])=>`<div class="bar-row"><div class="bar-label" title="${escapeHtml(name)}">${escapeHtml(name)}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(1,value/Math.max(1,defects[0][1])*100)}%"></div></div><div class="bar-value">${fmt(value)} PCS<small>${pctText(value,machineTotal)}</small></div></div>`).join('')}
-  </div></div>`;
- }).join('');
+ const container=document.getElementById('machine-defect-breakdown');
+ const machines=groupSum(rows,'mesin');
+ if(!machines.length){
+  selectedDefectMachineIndex=0;
+  container.innerHTML='<div class="empty">Belum ada data mesin.</div>';
+  return;
+ }
+
+ if(selectedDefectMachineIndex>=machines.length)selectedDefectMachineIndex=0;
+ const selectedMachine=machines[selectedDefectMachineIndex][0];
+ const machineRows=rows.filter(r=>safe(r.mesin)===selectedMachine);
+ const defects=groupSum(machineRows,'defect').slice(0,5);
+ const machineTotal=sum(machineRows);
+ const maxValue=defects.length?defects[0][1]:0;
+
+ container.innerHTML=`
+  <div class="machine-defect-tabs no-print" role="group" aria-label="Pilih mesin">
+   ${machines.map(([machine],index)=>`
+    <button type="button" class="btn machine-defect-tab ${index===selectedDefectMachineIndex?'active':''}"
+     data-machine-index="${index}" aria-pressed="${index===selectedDefectMachineIndex}">
+     MESIN ${escapeHtml(machine)}
+    </button>
+   `).join('')}
+  </div>
+  <div class="machine-defect-block">
+   <h4>MESIN ${escapeHtml(selectedMachine)}</h4>
+   <div class="subnote">Total defect mesin: ${fmt(machineTotal)} PCS</div>
+   ${defects.length?`<div class="bar-list">
+    ${defects.map(([name,value])=>`
+     <div class="bar-row">
+      <div class="bar-label" title="${escapeHtml(name)}">${escapeHtml(name)}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(1,value/Math.max(1,maxValue)*100)}%"></div></div>
+      <div class="bar-value">${fmt(value)} PCS<small>${pctText(value,machineTotal)}</small></div>
+     </div>
+    `).join('')}
+   </div>`:'<div class="empty">Belum ada data defect untuk mesin ini.</div>'}
+  </div>
+ `;
+
+ container.querySelectorAll('[data-machine-index]').forEach(button=>{
+  button.addEventListener('click',()=>{
+   selectedDefectMachineIndex=Number(button.dataset.machineIndex)||0;
+   renderMachineDefectBreakdown(rows);
+  });
+ });
 }
 function renderData(){
  const r=filtered().slice().sort((a,b)=>b.tanggal.localeCompare(a.tanggal));renderKpis('kpi-data',r);
