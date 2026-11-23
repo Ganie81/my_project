@@ -996,6 +996,91 @@ html:fullscreen .topbar{
   padding-top:3px !important;
  }
 }
+
+/* =========================================================
+   MENU TERSEMBUNYI PENGATURAN MENU PRESENTASI (QUALITY REPORT)
+========================================================= */
+#qualityReportMenuTrigger{
+ cursor:pointer;
+ user-select:none;
+ transition:color .2s ease, text-shadow .2s ease;
+}
+#qualityReportMenuTrigger:hover{
+ color:#79ddec;
+ text-shadow:0 0 16px rgba(97,217,232,.45);
+}
+.qr-hidden-panel{
+ background:linear-gradient(145deg,rgba(14,37,60,.98),rgba(8,22,38,.98));
+ border:1px solid rgba(97,217,232,.35);
+ border-radius:18px;
+ padding:16px 18px;
+ margin:0 0 16px;
+ box-shadow:0 16px 38px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.qr-hidden-header{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ flex-wrap:wrap;
+ padding-bottom:12px;
+ margin-bottom:13px;
+ border-bottom:1px solid rgba(133,177,216,.2);
+}
+.qr-hidden-title{
+ font-size:13px;
+ font-weight:950;
+ letter-spacing:.04em;
+ color:#79ddec;
+}
+.qr-hidden-actions{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+}
+.qr-hidden-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+ gap:8px;
+}
+.qr-menu-item{
+ display:flex;
+ align-items:center;
+ gap:9px;
+ padding:9px 11px;
+ border-radius:11px;
+ background:rgba(18,45,73,.65);
+ border:1px solid rgba(133,177,216,.18);
+ color:#e4f1ff;
+ font-size:11px;
+ font-weight:800;
+ cursor:pointer;
+ transition:background .15s ease, border-color .15s ease;
+}
+.qr-menu-item:hover{
+ background:rgba(34,79,122,.75);
+ border-color:rgba(97,217,232,.45);
+}
+.qr-menu-item.locked{
+ opacity:.65;
+ cursor:not-allowed;
+}
+.qr-menu-item input[type="checkbox"]{
+ width:15px;
+ height:15px;
+ accent-color:#42a5ff;
+ cursor:pointer;
+ margin:0;
+}
+.qr-menu-item.locked input[type="checkbox"]{
+ cursor:not-allowed;
+}
+.btn.qr-lock-active{
+ background:linear-gradient(135deg,#f7c65b,#e09f24);
+ border:0;
+ color:#1a1100;
+ font-weight:950;
+}
 </style>
 </head>
 
@@ -1010,7 +1095,7 @@ html:fullscreen .topbar{
   </button>
   <div>
    <div class="eyebrow">PT BEHAESTEX · DEPARTEMEN PRINTING</div>
-   <h1>QUALITY REPORT</h1>
+   <h1 id="qualityReportMenuTrigger" title="Klik untuk membuka/menutup pengaturan menu presentasi">QUALITY REPORT</h1>
    <p>Executive Quality Performance Dashboard</p>
   </div>
  </div>
@@ -1021,6 +1106,19 @@ html:fullscreen .topbar{
    <button class="btn primary" id="pdfBtn">⇩ Export PDF</button>
  </div>
 </header>
+
+<!-- PANEL MENU TERSEMBUNYI PENGATURAN MENU PRESENTASI -->
+<section id="qrHiddenMenuPanel" class="qr-hidden-panel hidden no-print" aria-label="Pengaturan Menu Presentasi">
+ <div class="qr-hidden-header">
+  <div class="qr-hidden-title">⚙ PENGATURAN MENU PRESENTASI (PILIH HALAMAN DITAMPILKAN)</div>
+  <div class="qr-hidden-actions">
+   <button type="button" class="btn" id="qrSelectAllBtn">☑ Pilih Semua</button>
+   <button type="button" class="btn" id="qrLockMenuBtn">🔓 Kunci Pilihan</button>
+   <button type="button" class="btn" id="qrCloseMenuBtn">✕ Tutup</button>
+  </div>
+ </div>
+ <div class="qr-hidden-grid" id="qrMenuChecklist"></div>
+</section>
 
 <div class="status">
  <span class="dot offline" id="statusDot"></span>
@@ -1990,6 +2088,145 @@ function updatePrintSubtitle(){
  document.getElementById('printSubtitle').textContent=PAGE_NAMES[activePage]+' · '+monthLabel(currentMonth)+' · '+fmt(p.length)+' record';
 }
 
+/* =========================================================
+   LOGIKA MENU TERSEMBUNYI PENGATURAN MENU PRESENTASI
+========================================================= */
+const QR_MENU_STORAGE_KEY='QLTY_HIDDEN_MENU_VISIBILITY_V1';
+const QR_MENU_LOCK_KEY='QLTY_HIDDEN_MENU_LOCKED_V1';
+
+function getAllNavButtons(){
+ return Array.from(document.querySelectorAll('.nav-list .nav'));
+}
+
+function getVisiblePresentationOrder(){
+ return getAllNavButtons()
+  .filter(btn=>!btn.classList.contains('hidden'))
+  .map(btn=>btn.dataset.page);
+}
+
+let qrMenuState=(()=>{
+ try{
+  const raw=localStorage.getItem(QR_MENU_STORAGE_KEY);
+  if(raw){
+   const parsed=JSON.parse(raw);
+   if(parsed&&typeof parsed==='object')return parsed;
+  }
+ }catch(e){}
+ return {};
+})();
+
+let qrMenuLocked=(()=>{
+ try{return localStorage.getItem(QR_MENU_LOCK_KEY)==='true';}catch(e){return false;}
+})();
+
+function saveQrMenuConfig(){
+ try{
+  localStorage.setItem(QR_MENU_STORAGE_KEY,JSON.stringify(qrMenuState));
+  localStorage.setItem(QR_MENU_LOCK_KEY,String(qrMenuLocked));
+ }catch(e){}
+}
+
+function applyQrMenuVisibility(){
+ const navButtons=getAllNavButtons();
+ navButtons.forEach(btn=>{
+  const pageKey=btn.dataset.page;
+  const isVisible=qrMenuState[pageKey]!==false;
+  btn.classList.toggle('hidden',!isVisible);
+ });
+
+ const visiblePages=getVisiblePresentationOrder();
+ if(visiblePages.length>0&&!visiblePages.includes(activePage)){
+  showPage(visiblePages[0]);
+ }else if(visiblePages.length===0){
+  document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
+ }
+}
+
+function updateQrLockUI(){
+ const lockBtn=document.getElementById('qrLockMenuBtn');
+ const selectAllBtn=document.getElementById('qrSelectAllBtn');
+ const items=document.querySelectorAll('#qrMenuChecklist .qr-menu-item');
+ if(lockBtn){
+  lockBtn.textContent=qrMenuLocked?'🔒 Terkunci (Buka Kunci)':'🔓 Kunci Pilihan';
+  lockBtn.classList.toggle('qr-lock-active',qrMenuLocked);
+ }
+ if(selectAllBtn){
+  selectAllBtn.disabled=qrMenuLocked;
+  selectAllBtn.style.opacity=qrMenuLocked?'0.55':'1';
+  selectAllBtn.style.cursor=qrMenuLocked?'not-allowed':'pointer';
+ }
+ items.forEach(label=>{
+  label.classList.toggle('locked',qrMenuLocked);
+  const cb=label.querySelector('input[type="checkbox"]');
+  if(cb)cb.disabled=qrMenuLocked;
+ });
+}
+
+function buildQrHiddenMenuChecklist(){
+ const container=document.getElementById('qrMenuChecklist');
+ if(!container)return;
+ const navButtons=getAllNavButtons();
+ container.innerHTML='';
+ navButtons.forEach(btn=>{
+  const pageKey=btn.dataset.page;
+  if(qrMenuState[pageKey]===undefined)qrMenuState[pageKey]=true;
+  const labelText=btn.textContent.trim();
+
+  const label=document.createElement('label');
+  label.className='qr-menu-item';
+
+  const cb=document.createElement('input');
+  cb.type='checkbox';
+  cb.checked=qrMenuState[pageKey]!==false;
+  cb.dataset.targetPage=pageKey;
+
+  cb.addEventListener('change',()=>{
+   if(qrMenuLocked){
+    cb.checked=qrMenuState[pageKey]!==false;
+    return;
+   }
+   qrMenuState[pageKey]=cb.checked;
+   saveQrMenuConfig();
+   applyQrMenuVisibility();
+  });
+
+  const span=document.createElement('span');
+  span.textContent=labelText;
+
+  label.appendChild(cb);
+  label.appendChild(span);
+  container.appendChild(label);
+ });
+ updateQrLockUI();
+}
+
+document.getElementById('qualityReportMenuTrigger').addEventListener('click',()=>{
+ const panel=document.getElementById('qrHiddenMenuPanel');
+ panel.classList.toggle('hidden');
+});
+
+document.getElementById('qrCloseMenuBtn').addEventListener('click',()=>{
+ document.getElementById('qrHiddenMenuPanel').classList.add('hidden');
+});
+
+document.getElementById('qrSelectAllBtn').addEventListener('click',()=>{
+ if(qrMenuLocked)return;
+ getAllNavButtons().forEach(btn=>{
+  qrMenuState[btn.dataset.page]=true;
+ });
+ document.querySelectorAll('#qrMenuChecklist input[type="checkbox"]').forEach(cb=>{
+  cb.checked=true;
+ });
+ saveQrMenuConfig();
+ applyQrMenuVisibility();
+});
+
+document.getElementById('qrLockMenuBtn').addEventListener('click',()=>{
+ qrMenuLocked=!qrMenuLocked;
+ saveQrMenuConfig();
+ updateQrLockUI();
+});
+
 /* NAVIGASI 16 HALAMAN */
 function showPage(page){
  if(!PAGE_NAMES[page])return;
@@ -2135,22 +2372,21 @@ document.getElementById('fullBtn').addEventListener('click',()=>{
  else document.exitFullscreen?.();
 });
 
-/* KEYBOARD NAVIGASI SESUAI URUTAN MENU */
-const PRESENTATION_ORDER=[
- 'intro','photoqa','photoqa2','overview','trend','machine','product','defect',
- 'data','operator','handling','photo1','photo2','photo3','photo4','closing'
-];
-
+/* KEYBOARD NAVIGASI SESUAI URUTAN MENU YANG TAMPIL */
 document.addEventListener('keydown',e=>{
  if(e.key==='ArrowRight'||e.key==='PageDown'){
   e.preventDefault();
-  const i=PRESENTATION_ORDER.indexOf(activePage);
-  showPage(PRESENTATION_ORDER[Math.min(PRESENTATION_ORDER.length-1,i+1)]);
+  const order=getVisiblePresentationOrder();
+  if(!order.length)return;
+  const i=order.indexOf(activePage);
+  showPage(order[Math.min(order.length-1,i+1)]);
  }
  if(e.key==='ArrowLeft'||e.key==='PageUp'){
   e.preventDefault();
-  const i=PRESENTATION_ORDER.indexOf(activePage);
-  showPage(PRESENTATION_ORDER[Math.max(0,i-1)]);
+  const order=getVisiblePresentationOrder();
+  if(!order.length)return;
+  const i=order.indexOf(activePage);
+  showPage(order[Math.max(0,i-1)]);
  }
  if(e.key==='Escape'&&document.fullscreenElement)document.exitFullscreen?.();
 });
@@ -2174,13 +2410,19 @@ document.getElementById('handling-editor-toggle').addEventListener('click',()=>{
  toggle.setAttribute('aria-expanded',String(!isOpen));
 });
 
+/* INISIALISASI MENU TERSEMBUNYI */
+buildQrHiddenMenuChecklist();
+applyQrMenuVisibility();
+
 /* LOAD CACHE DULU, KEMUDIAN SINKRONISASI */
 (async function loadCacheFirst(){
  try{
   const cache=await loadQLTYCache();
   if(cache){
    allData=normalizeRows(cache.data);meta=cache.meta||{};
-   fillFilters();renderAll();showPage(activePage);
+   fillFilters();renderAll();
+   const visiblePages=getVisiblePresentationOrder();
+   if(visiblePages.length)showPage(visiblePages.includes(activePage)?activePage:visiblePages[0]);
    setStatus('offline','Data terakhir tersedia · Memeriksa pembaruan...');
    document.getElementById('updateTime').textContent='· '+(cache.savedAt?new Date(cache.savedAt).toLocaleString('id-ID'):'');
   }
