@@ -1081,6 +1081,41 @@ html:fullscreen .topbar{
  color:#1a1100;
  font-weight:950;
 }
+
+
+/* KECILKAN JUDUL GAMBAR: HALAMAN 02, 03, 12, 13, 14, 15 */
+#page-photoqa .photo-title,
+#page-photoqa2 .photo-title,
+#page-photo1 .photo-title,
+#page-photo2 .photo-title,
+#page-photo3 .photo-title,
+#page-photo4 .photo-title{
+ font-size:clamp(16px,2.2vw,22px);
+ line-height:1.25;
+ margin-bottom:12px;
+}
+@media(max-width:560px){
+ #page-photoqa .photo-title,
+ #page-photoqa2 .photo-title,
+ #page-photo1 .photo-title,
+ #page-photo2 .photo-title,
+ #page-photo3 .photo-title,
+ #page-photo4 .photo-title{
+  font-size:16px;
+  margin-bottom:10px;
+ }
+}
+@media print{
+ #page-photoqa .photo-title,
+ #page-photoqa2 .photo-title,
+ #page-photo1 .photo-title,
+ #page-photo2 .photo-title,
+ #page-photo3 .photo-title,
+ #page-photo4 .photo-title{
+  font-size:18px;
+  margin-bottom:6mm;
+ }
+}
 </style>
 </head>
 
