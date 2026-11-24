@@ -764,7 +764,14 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 
 /* PERLEBAR DIAGRAM BATANG RANKING DEFECT MESIN */
 #page-machine .grid.two{
- grid-template-columns:minmax(0,1.8fr) minmax(250px,.8fr);
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ align-items:stretch;
+}
+#page-machine .grid.two > .card{
+ min-width:0;
+}
+#page-machine #chart-machine{
+ max-width:100%;
 }
 #page-machine #machine-ranking .bar-row{
  grid-template-columns:minmax(85px,125px) minmax(0,1fr) minmax(75px,90px);
@@ -1694,7 +1701,9 @@ function drawDonut(id,items,legendId){
   const x2=cx+Math.cos(mid)*(radius+17);const y2=cy+Math.sin(mid)*(radius+17);
   const right=Math.cos(mid)>=0;const x3=x2+(right?23:-23);
   ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.lineTo(x3,y2);ctx.strokeStyle=colors[i%colors.length];ctx.lineWidth=1.3;ctx.stroke();
-  ctx.fillStyle='#edf5ff';ctx.font='bold 10px sans-serif';ctx.textAlign=right?'left':'right';ctx.fillText(pctText(item[1],total),x3+(right?3:-3),y2-3);
+  ctx.fillStyle='#edf5ff';ctx.font='bold 10px sans-serif';ctx.textAlign=right?'left':'right';const callout=String(item[0]||'')+' '+pctText(item[1],total);
+   ctx.font='bold 9px sans-serif';
+   ctx.fillText(callout,x3+(right?3:-3),y2-3);
   start=end;
  });
  ctx.textAlign='center';ctx.fillStyle='#edf5ff';ctx.font='bold 20px sans-serif';ctx.fillText(fmt(total),cx,cy+1);
@@ -1906,7 +1915,7 @@ function renderTrend(){
 }function renderMachine(){
  const r=filtered();renderKpis('kpi-machine',r);
  const machines=groupSum(r,'mesin');const total=sum(r);
- drawBars('machine-ranking',machines,total);drawDonut('chart-machine',machines.slice(0,7),'legend-machine');
+ drawBars('machine-ranking',machines,total);drawDonut('chart-machine',machines.slice(0,8),'legend-machine');
 }
 function renderProduct(){const r=filtered();renderKpis('kpi-product',r);drawBars('product-ranking',groupSum(r,'produk').slice(0,10),sum(r));}
 function renderDefect(){
@@ -2432,7 +2441,7 @@ window.addEventListener('resize',()=>{
  setTimeout(()=>{
   if(activePage==='overview')drawDonut('chart-overview',groupSum(filtered(),'defect').slice(0,5),'legend-overview');
   if(activePage==='trend')drawTop3Trend(filtered());
-  if(activePage==='machine')drawDonut('chart-machine',groupSum(filtered(),'mesin').slice(0,7),'legend-machine');
+  if(activePage==='machine')drawDonut('chart-machine',groupSum(filtered(),'mesin').slice(0,8),'legend-machine');
  },120);
 });
 
