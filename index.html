@@ -255,33 +255,33 @@ tr:hover td{background:#122b49}
 .analysis-item .analysis-value{color:#152e48;font-size:clamp(17px,2.5vw,23px);font-weight:950}
 .analysis-item .analysis-detail{color:#52677c;font-size:14px;margin-top:5px;line-height:1.6}
 
-/* HALAMAN FOTO DARI GITHUB */
-.photo-paper{
- background:#fff;color:#172337;border-radius:12px;padding:20px;min-height:0;
- display:flex;flex-direction:column;box-shadow:0 10px 30px #0002;
+/* GAMBAR FULL HALAMAN TANPA JUDUL */
+#page-photoqa .photo-paper,
+#page-photoqa2 .photo-paper,
+#page-photo1 .photo-paper,
+#page-photo2 .photo-paper,
+#page-photo3 .photo-paper,
+#page-photo4 .photo-paper{
+ background:#071426;color:#172337;border-radius:15px;padding:0;
+ min-height:calc(100vh - 210px);
+ display:flex;align-items:center;justify-content:center;
+ box-shadow:0 15px 35px rgba(0,0,0,.2);
  width:100%;overflow:hidden;
 }
-.photo-title{
- color:#102b49;text-align:left;text-transform:uppercase;
- font-size:clamp(20px,3vw,28px);font-weight:950;
- line-height:1.3;margin:0 0 15px;padding:0;overflow-wrap:anywhere;
-}
-.photo-paper img{
+#page-photoqa .photo-paper img,
+#page-photoqa2 .photo-paper img,
+#page-photo1 .photo-paper img,
+#page-photo2 .photo-paper img,
+#page-photo3 .photo-paper img,
+#page-photo4 .photo-paper img{
  display:block;width:100%;height:auto;max-width:100%;
- max-height:none;min-height:0;flex:0 0 auto;object-fit:contain;background:#fff;
+ max-height:calc(100vh - 210px);min-height:0;flex:0 0 auto;
+ object-fit:contain;background:transparent;
 }
+
 .photo-empty{
  flex:0 0 auto;min-height:260px;display:grid;place-items:center;
  background:#f0f2f5;color:#64748b;text-align:center;padding:20px;
-}
-.photo-title-editor{
- display:flex;gap:10px;align-items:center;margin-bottom:13px;
- background:#0d2038;border:1px solid var(--line);padding:13px;border-radius:12px
-}
-.photo-title-editor label{display:grid;gap:6px;flex:1;color:var(--muted);font-size:11px;font-weight:900}
-.photo-title-editor input{
- width:100%;min-width:0;background:#142d49;color:white;
- border:1px solid #315171;border-radius:8px;padding:11px;outline:none
 }
 
 @media(max-width:900px){
@@ -319,11 +319,9 @@ tr:hover td{background:#122b49}
  .kpi-top{font-size:11px}
  .kpi-value{font-size:26px}
  .kpi-note{font-size:11px}
- .photo-paper{padding:10px}
+ .photo-paper{padding:0}
  .photo-paper img{min-height:0}
  .photo-empty{min-height:220px}
- .photo-title{font-size:20px;margin:0 0 12px}
- .photo-title-editor{padding:10px}
  .cover-page,.closing-page{height:390px;min-height:390px;padding:25px 18px}
  .cover-kicker{font-size:9px;letter-spacing:2px;padding:9px 12px}
  .cover-bottom{margin-top:38px;font-size:9px}
@@ -348,13 +346,12 @@ tr:hover td{background:#122b49}
   break-after:page;page-break-after:always;
  }
  .report-paper{box-shadow:none;border-radius:0;min-height:0;height:277mm;break-inside:avoid;page-break-inside:avoid}
- .photo-paper{box-shadow:none;border-radius:0;min-height:0;height:auto;padding:5mm;break-inside:avoid;page-break-inside:avoid}
- .photo-paper img{width:100%;height:auto;max-height:250mm;min-height:0;object-fit:contain}
+ .photo-paper{box-shadow:none;border-radius:0;min-height:0;height:auto;padding:0;break-inside:avoid;page-break-inside:avoid}
+ .photo-paper img{width:100%;height:auto;max-height:275mm;min-height:0;object-fit:contain}
  .photo-empty{min-height:0}
- .photo-title{font-size:24px;margin:0 0 8mm;text-align:left}
  .analysis-item{break-inside:avoid}
 }
- 
+
 /* PERBAIKAN PRESENTASI FULLSCREEN DI HP */
 @media(max-width:900px){
  html,body{
@@ -483,8 +480,6 @@ tr:hover td{background:#122b49}
 
 /* =========================================================
    PREMIUM ENTERPRISE REDESIGN
-   Lapisan visual tambahan — seluruh HTML dan JavaScript
-   asli, API, filter, grafik, cache, serta navigasi dipertahankan.
 ========================================================= */
 :root{
  --bg:#06111f;
@@ -665,7 +660,6 @@ tr:hover td{background:rgba(51,135,190,.13)}
 .footer{color:#7894af;font-size:10px}
 .empty{color:#91a9c2}
 
-/* Cover dan closing tetap mempertahankan konten, diberi finishing premium */
 .cover-page,.closing-page{
  border:1px solid rgba(102,197,226,.35);
  border-radius:24px;
@@ -694,14 +688,13 @@ tr:hover td{background:rgba(51,135,190,.13)}
 }
 .closing-caption{color:#9ab5cd}
 
-/* Kertas laporan dan dokumentasi dibuat lebih bersih */
-.report-editor,.photo-title-editor{
+.report-editor{
  background:linear-gradient(145deg,#102a44,#0b1d31);
  border:1px solid rgba(133,177,216,.2);
  border-radius:14px;
 }
-.report-editor label,.photo-title-editor label{color:#a9bfd5}
-.report-editor input,.report-editor select,.photo-title-editor input{
+.report-editor label{color:#a9bfd5}
+.report-editor input,.report-editor select{
  background:#0b2036;
  border:1px solid #345875;
  border-radius:10px;
@@ -711,11 +704,9 @@ tr:hover td{background:rgba(51,135,190,.13)}
  border-radius:15px;
  box-shadow:0 15px 35px rgba(0,0,0,.2);
 }
-.photo-paper{padding:clamp(14px,2vw,24px)}
-.photo-title{letter-spacing:-.025em}
+.photo-paper{padding:0}
 #page-intro .cover-page,#page-closing .closing-page{border-radius:24px}
 
-/* Fokus keyboard dan scrollbar */
 button:focus-visible,select:focus-visible,input:focus-visible{
  outline:2px solid #65dce8;outline-offset:3px;
 }
@@ -752,7 +743,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  .chart-box{height:235px}
  .cover-page,.closing-page{border-radius:18px}
  .report-paper{padding:18px}
- .photo-paper{padding:10px}
+ .photo-paper{padding:0}
 }
 @media print{
  body{background:#fff!important}
@@ -761,7 +752,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  .cover-page,.closing-page{box-shadow:none!important}
 }
 
-
 /* HALAMAN MACHINE ANALYSIS: PROPORSI KOTAK DAN RANKING */
 #page-machine .grid.two{
  grid-template-columns:minmax(0,42fr) minmax(0,58fr);
@@ -769,7 +759,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 }
 #page-machine .grid.two > .card{min-width:0;}
 #page-machine #chart-machine{max-width:100%;}
-/* Ruang label dan angka dipadatkan agar batang lebih panjang */
 #page-machine #machine-ranking .bar-row{
  grid-template-columns:minmax(58px,20%) minmax(0,1fr) minmax(58px,68px);
  gap:6px;
@@ -784,7 +773,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  }
 }
 
-/* Judul Defect Handling menjadi tombol buka/tutup input laporan */
 .handling-toggle-title{
  display:inline-flex;align-items:center;gap:9px;padding:0;margin:0;border:0;
  background:transparent;color:inherit;cursor:pointer;text-align:left;
@@ -793,9 +781,8 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 .handling-toggle-icon{font-size:20px;line-height:1;color:#65d9e8;transition:transform .2s ease}
 .handling-toggle-title[aria-expanded="false"] .handling-toggle-icon{transform:rotate(-90deg)}
 .handling-toggle-title:focus-visible{outline:2px solid #65d9e8;outline-offset:5px;border-radius:5px}
- 
+
 /* HALAMAN 04 - GRAFIK GABUNGAN 3 DEFECT TERBESAR */
-/* HALAMAN 04 - TINGGI TOTAL MENDEKATI HALAMAN 01 */
 #page-trend .trend-chart-card{
  min-height:0;
  height:450px;
@@ -855,7 +842,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  }
 }
 
-/* MODE PRESENTASI LAPTOP / OHP - KHUSUS SAAT FULLSCREEN */
 @media screen and (min-width:901px){
  html:fullscreen #page-trend .trend-chart-card{
   height:600px !important;
@@ -866,7 +852,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{
  }
 }
 
- /* FIX TOMBOL PRESENTASI HP PORTRAIT */
+/* FIX TOMBOL PRESENTASI HP PORTRAIT */
 @media (max-width:560px) and (orientation:portrait){
 
  .topbar{
@@ -898,10 +884,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{
 
 }
 
-/* =========================================================
-   MODE PRESENTASI (FULLSCREEN):
-   HEADER & KOTAK PRESENTATION MENU TETAP MENGAMBANG (TIDAK TENGGELAM)
-========================================================= */
 html:fullscreen .app{
  overflow:visible !important;
 }
@@ -935,7 +917,6 @@ html:fullscreen .topbar{
  }
 }
 
-/* HP PORTRAIT - SUSUNAN KHUSUS MODE PRESENTASI */
 @media screen and (max-width:600px) and (orientation:portrait){
 
   html:fullscreen .topbar{
@@ -972,8 +953,6 @@ html:fullscreen .topbar{
   }
 
 }
- 
-
 
 /* DEFECT BREAKDOWN: TAMPILKAN SATU MESIN DALAM SATU WAKTU */
 #page-defect .machine-defect-tabs{
@@ -1088,41 +1067,6 @@ html:fullscreen .topbar{
  color:#1a1100;
  font-weight:950;
 }
-
-
-/* KECILKAN JUDUL GAMBAR: HALAMAN 02, 03, 12, 13, 14, 15 */
-#page-photoqa .photo-title,
-#page-photoqa2 .photo-title,
-#page-photo1 .photo-title,
-#page-photo2 .photo-title,
-#page-photo3 .photo-title,
-#page-photo4 .photo-title{
- font-size:clamp(16px,2.2vw,22px);
- line-height:1.25;
- margin-bottom:12px;
-}
-@media(max-width:560px){
- #page-photoqa .photo-title,
- #page-photoqa2 .photo-title,
- #page-photo1 .photo-title,
- #page-photo2 .photo-title,
- #page-photo3 .photo-title,
- #page-photo4 .photo-title{
-  font-size:16px;
-  margin-bottom:10px;
- }
-}
-@media print{
- #page-photoqa .photo-title,
- #page-photoqa2 .photo-title,
- #page-photo1 .photo-title,
- #page-photo2 .photo-title,
- #page-photo3 .photo-title,
- #page-photo4 .photo-title{
-  font-size:18px;
-  margin-bottom:6mm;
- }
-}
 </style>
 </head>
 
@@ -1152,12 +1096,17 @@ html:fullscreen .topbar{
 <!-- PANEL MENU TERSEMBUNYI PENGATURAN MENU PRESENTASI -->
 <section id="qrHiddenMenuPanel" class="qr-hidden-panel hidden no-print" aria-label="Pengaturan Menu Presentasi">
  <div class="qr-hidden-header">
-  <div class="qr-hidden-title">⚙ PENGATURAN MENU PRESENTASI (PILIH HALAMAN DITAMPILKAN)</div>
+  <div class="qr-hidden-title">⚙ PENGATURAN MENU PRESENTASI (PILIH & KUNCI HALAMAN DITAMPILKAN)</div>
   <div class="qr-hidden-actions">
    <button type="button" class="btn" id="qrSelectAllBtn">☑ Pilih Semua</button>
-   <button type="button" class="btn" id="qrLockMenuBtn">🔓 Kunci Pilihan</button>
+   <button type="button" class="btn" id="qrShareLockBtn" title="Salin link terkunci untuk dibagikan ke user lain">🔗 Salin Link Terkunci</button>
+   <button type="button" class="btn" id="qrDownloadLockedBtn" title="Unduh file HTML dengan menu terkunci tertanam untuk semua user">⬇ Unduh HTML Terkunci</button>
+   <button type="button" class="btn" id="qrLockMenuBtn">🔓 Kunci Pilihan (PIN)</button>
    <button type="button" class="btn" id="qrCloseMenuBtn">✕ Tutup</button>
   </div>
+ </div>
+ <div id="qrLockStatusInfo" style="font-size:11px;color:#9db2ca;margin-bottom:10px;">
+  Pilih menu yang ingin ditampilkan, lalu klik <b>Kunci Pilihan (PIN)</b> agar user lain hanya bisa melihat menu terpilih.
  </div>
  <div class="qr-hidden-grid" id="qrMenuChecklist"></div>
 </section>
@@ -1218,13 +1167,7 @@ html:fullscreen .topbar{
 
 <!-- HALAMAN 02: GAMBAR QA -->
 <section class="page hidden" id="page-photoqa">
- <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR QA
-   <input id="photoqa-title-input" value="DOKUMENTASI QUALITY ASSURANCE" placeholder="Masukkan judul gambar">
-  </label>
- </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photoqa-title">DOKUMENTASI QUALITY ASSURANCE</h2>
   <img src="./GAMBARQA.jpg" alt="Dokumentasi Quality Assurance"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBARQA.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
@@ -1233,13 +1176,7 @@ html:fullscreen .topbar{
 
 <!-- HALAMAN 03: GAMBAR QA 2 -->
 <section class="page hidden" id="page-photoqa2">
- <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR QA 2
-   <input id="photoqa2-title-input" value="DOKUMENTASI QUALITY ASSURANCE 2" placeholder="Masukkan judul gambar">
-  </label>
- </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photoqa2-title">DOKUMENTASI QUALITY ASSURANCE 2</h2>
   <img src="./GAMBARQA2.jpg" alt="Dokumentasi Quality Assurance 2"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBARQA2.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
@@ -1267,8 +1204,7 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-
-<!-- HALAMAN 04: DEFECT TREND -->
+<!-- HALAMAN 05: DEFECT TREND -->
 <section class="page hidden" id="page-trend">
  <div class="page-head">
   <div>
@@ -1295,8 +1231,7 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-
-<!-- HALAMAN 05: MACHINE ANALYSIS -->
+<!-- HALAMAN 06: MACHINE ANALYSIS -->
 <section class="page hidden" id="page-machine">
  <div class="page-head">
   <div><h2>Machine Analysis</h2><p>Kontribusi defect berdasarkan mesin produksi.</p></div>
@@ -1316,7 +1251,7 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-<!-- HALAMAN 06: PRODUCT ANALYSIS -->
+<!-- HALAMAN 07: PRODUCT ANALYSIS -->
 <section class="page hidden" id="page-product">
  <div class="page-head">
   <div><h2>Product Analysis</h2><p>Produk dengan jumlah defect tertinggi.</p></div>
@@ -1329,7 +1264,7 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-<!-- HALAMAN 07: DEFECT BREAKDOWN -->
+<!-- HALAMAN 08: DEFECT BREAKDOWN -->
 <section class="page hidden" id="page-defect">
  <div class="page-head">
   <div><h2>Defect Breakdown</h2><p>Analisis jenis defect, kontribusi grup, dan mesin.</p></div>
@@ -1352,7 +1287,7 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-<!-- HALAMAN 08: DATA SUMMARY -->
+<!-- HALAMAN 09: DATA SUMMARY -->
 <section class="page hidden" id="page-data">
  <div class="page-head">
   <div><h2>Data Summary</h2><p>Rincian record QLTY sesuai periode terpilih.</p></div>
@@ -1374,7 +1309,7 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-<!-- HALAMAN 09: TOP 10 OPERATOR -->
+<!-- HALAMAN 10: TOP 10 OPERATOR -->
 <section class="page hidden operator-ranking-page" id="page-operator">
  <div class="page-head">
   <div><h2>Top 10 Operator Defect</h2><p>Ranking operator berdasarkan jumlah defect dan kontribusi persentase.</p></div>
@@ -1396,7 +1331,7 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-<!-- HALAMAN 10: DEFECT HANDLING -->
+<!-- HALAMAN 11: DEFECT HANDLING -->
 <section class="page hidden" id="page-handling">
 <div class="page-head">
  <div><button type="button" class="handling-toggle-title" id="handling-editor-toggle" aria-expanded="true" aria-controls="handling-report-editor"><h2>Defect Handling Analysis</h2><span class="handling-toggle-icon" aria-hidden="true">⌄</span></button><p>Analisis penanganan berdasarkan jenis defect yang dipilih.</p></div>
@@ -1415,59 +1350,43 @@ html:fullscreen .topbar{
 </div>
 </section>
 
-<!-- HALAMAN 11: GAMBAR1 -->
+<!-- HALAMAN 12: GAMBAR1 -->
 <section class="page hidden" id="page-photo1">
- <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR 1<input id="photo1-title-input" value="DOKUMENTASI FOTO 1" placeholder="Masukkan judul gambar"></label>
- </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photo1-title">DOKUMENTASI FOTO 1</h2>
   <img src="./GAMBAR1.jpg" alt="Dokumentasi Foto 1"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBAR1.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
  </div>
 </section>
 
-<!-- HALAMAN 12: GAMBAR2 -->
+<!-- HALAMAN 13: GAMBAR2 -->
 <section class="page hidden" id="page-photo2">
- <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR 2<input id="photo2-title-input" value="DOKUMENTASI FOTO 2" placeholder="Masukkan judul gambar"></label>
- </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photo2-title">DOKUMENTASI FOTO 2</h2>
   <img src="./GAMBAR2.jpg" alt="Dokumentasi Foto 2"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBAR2.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
  </div>
 </section>
 
-<!-- HALAMAN 13: GAMBAR3 -->
+<!-- HALAMAN 14: GAMBAR3 -->
 <section class="page hidden" id="page-photo3">
- <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR 3<input id="photo3-title-input" value="DOKUMENTASI FOTO 3" placeholder="Masukkan judul gambar"></label>
- </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photo3-title">DOKUMENTASI FOTO 3</h2>
   <img src="./GAMBAR3.jpg" alt="Dokumentasi Foto 3"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBAR3.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
  </div>
 </section>
 
-<!-- HALAMAN 14: GAMBAR4 -->
+<!-- HALAMAN 15: GAMBAR4 -->
 <section class="page hidden" id="page-photo4">
- <div class="photo-title-editor no-print">
-  <label>JUDUL GAMBAR 4<input id="photo4-title-input" value="DOKUMENTASI FOTO 4" placeholder="Masukkan judul gambar"></label>
- </div>
  <div class="photo-paper">
-  <h2 class="photo-title" id="photo4-title">DOKUMENTASI FOTO 4</h2>
   <img src="./GAMBAR4.jpg" alt="Dokumentasi Foto 4"
    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
   <div class="photo-empty" style="display:none">GAMBAR4.jpg TIDAK DITEMUKAN. Periksa nama file di GitHub.</div>
  </div>
 </section>
 
-<!-- HALAMAN 15: CLOSING -->
+<!-- HALAMAN 16: CLOSING -->
 <section class="page hidden" id="page-closing">
  <div class="closing-page">
   <div class="closing-content">
@@ -1498,7 +1417,6 @@ const DB_NAME='QLTY_EXECUTIVE_DATABASE';
 const DB_STORE='REPORT_DATA';
 const DB_VERSION=1;
 const MONTH_STORAGE_KEY='QLTY_GLOBAL_MONTH_V2';
-const PHOTO_TITLES_KEY='QLTY_PHOTO_TITLES_V2';
 
 function openQLTYDB(){
  return new Promise((resolve,reject)=>{
@@ -1604,7 +1522,6 @@ function setStatus(mode,msg){
 }
 function normalizeMachineName(value){
  let name=String(value??'').trim().replace(/\s+/g,' ').toUpperCase();
- // Samakan penulisan FLAT PRINT n menjadi FLAT n, termasuk FLAT PRINT 7 = FLAT 7.
  name=name.replace(/^MESIN\s+/,'');
  name=name.replace(/^FLAT\s+PRINT\s+(\d+)$/,'FLAT $1');
  return name;
@@ -1636,15 +1553,13 @@ function groupSum(rows,key){
  });
  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
 }
- function formatGroupKashift(group){
+function formatGroupKashift(group){
  const key=String(group??'').trim().toUpperCase();
-
  const leaders={
   'A':'A - (RIDWAN)',
   'B':'B - (ULIS)',
   'C':'C - (SAICHU)'
  };
-
  return leaders[key]||group;
 }
 function uniqueCount(rows,key){
@@ -1742,7 +1657,6 @@ function drawTop3Trend(rows){
  ctx.clearRect(0,0,w,h);
 
  const colors=['#39FF14','#FF2BD6','#00E5FF'];
-
  const top3=groupSum(rows,'defect').slice(0,3);
 
  if(!top3.length){
@@ -1754,17 +1668,13 @@ function drawTop3Trend(rows){
   return;
  }
 
- const dates=[...new Set(rows.map(r=>r.tanggal))]
-  .filter(Boolean)
-  .sort();
-
+ const dates=[...new Set(rows.map(r=>r.tanggal))].filter(Boolean).sort();
  if(!dates.length){
   if(legend)legend.innerHTML='';
   return;
  }
 
  const daily={};
-
  top3.forEach(([name])=>{
   daily[name]={};
   dates.forEach(date=>daily[name][date]=0);
@@ -1792,11 +1702,9 @@ function drawTop3Trend(rows){
  const xPos=i=>pad.l+(dates.length===1?cw/2:i*cw/(dates.length-1));
  const yPos=value=>pad.t+ch-(value/maxY)*ch;
 
- // LATAR GRAFIK
  ctx.fillStyle='rgba(4,15,28,.22)';
  ctx.fillRect(pad.l,pad.t,cw,ch);
 
- // GARIS KOORDINAT HORIZONTAL
  ctx.font='bold 10px sans-serif';
  ctx.textAlign='right';
 
@@ -1815,10 +1723,8 @@ function drawTop3Trend(rows){
   ctx.fillText(fmt(Math.round(value)),pad.l-9,y+4);
  }
 
- // GARIS KOORDINAT VERTIKAL
  dates.forEach((date,i)=>{
   const x=xPos(i);
-
   ctx.beginPath();
   ctx.moveTo(x,pad.t);
   ctx.lineTo(x,pad.t+ch);
@@ -1827,10 +1733,8 @@ function drawTop3Trend(rows){
   ctx.stroke();
  });
 
- // GARIS TREN MASING-MASING DEFECT
- top3.forEach(([name,total],seriesIndex)=>{
+ top3.forEach(([name],seriesIndex)=>{
   const color=colors[seriesIndex];
-
   const points=dates.map((date,i)=>({
    x:xPos(i),
    y:yPos(daily[name][date]||0),
@@ -1838,15 +1742,12 @@ function drawTop3Trend(rows){
    date
   }));
 
-  // GARIS UTAMA
   ctx.save();
   ctx.beginPath();
-
   points.forEach((p,i)=>{
    if(i===0)ctx.moveTo(p.x,p.y);
    else ctx.lineTo(p.x,p.y);
   });
-
   ctx.strokeStyle=color;
   ctx.lineWidth=3;
   ctx.lineJoin='round';
@@ -1856,8 +1757,7 @@ function drawTop3Trend(rows){
   ctx.stroke();
   ctx.restore();
 
-  // TITIK DATA
-  points.forEach((p,i)=>{
+  points.forEach(p=>{
    ctx.beginPath();
    ctx.arc(p.x,p.y,4,0,Math.PI*2);
    ctx.fillStyle=color;
@@ -1872,7 +1772,6 @@ function drawTop3Trend(rows){
   });
  });
 
- // LABEL TANGGAL SUMBU X
  const labelStep=Math.max(1,Math.ceil(dates.length/12));
  ctx.textAlign='center';
  ctx.font='bold 10px sans-serif';
@@ -1884,7 +1783,6 @@ function drawTop3Trend(rows){
   }
  });
 
- // LABEL SUMBU Y
  ctx.save();
  ctx.translate(13,pad.t+ch/2);
  ctx.rotate(-Math.PI/2);
@@ -1894,7 +1792,6 @@ function drawTop3Trend(rows){
  ctx.fillText('JUMLAH DEFECT (PCS)',0,0);
  ctx.restore();
 
- // LEGENDA DAN TOTAL MASING-MASING DEFECT
  if(legend){
   legend.innerHTML=top3.map(([name,total],i)=>`
    <div class="trend-legend-item">
@@ -1905,7 +1802,6 @@ function drawTop3Trend(rows){
   `).join('');
  }
 }
-
 
 /* HALAMAN ANALISIS */
 function renderOverview(){
@@ -1920,7 +1816,8 @@ function renderTrend(){
  const r=filtered();
  renderKpis('kpi-trend',r);
  drawTop3Trend(r);
-}function renderMachine(){
+}
+function renderMachine(){
  const r=filtered();renderKpis('kpi-machine',r);
  const machines=groupSum(r,'mesin');const total=sum(r);
  drawBars('machine-ranking',machines,total);drawDonut('chart-machine',machines.slice(0,8),'legend-machine');
@@ -2073,52 +1970,6 @@ function renderHandling(){
  }).join('');
 }
 
-/* JUDUL FOTO DISIMPAN DI BROWSER */
-const PHOTO_CONFIG=[
- {number:'qa',input:'photoqa-title-input',title:'photoqa-title',defaultTitle:'DOKUMENTASI QUALITY ASSURANCE'},
- {number:'qa2',input:'photoqa2-title-input',title:'photoqa2-title',defaultTitle:'DOKUMENTASI QUALITY ASSURANCE 2'},
- {number:1,input:'photo1-title-input',title:'photo1-title',defaultTitle:'DOKUMENTASI FOTO 1'},
- {number:2,input:'photo2-title-input',title:'photo2-title',defaultTitle:'DOKUMENTASI FOTO 2'},
- {number:3,input:'photo3-title-input',title:'photo3-title',defaultTitle:'DOKUMENTASI FOTO 3'},
- {number:4,input:'photo4-title-input',title:'photo4-title',defaultTitle:'DOKUMENTASI FOTO 4'}
-];
-
-function loadPhotoTitles(){
- let saved={};
- try{saved=JSON.parse(localStorage.getItem(PHOTO_TITLES_KEY)||'{}')||{};}catch(e){}
- PHOTO_CONFIG.forEach(item=>{
-  const input=document.getElementById(item.input);
-  const heading=document.getElementById(item.title);
-  const title=String(saved[item.number]||item.defaultTitle).toUpperCase();
-  input.value=title;
-  heading.textContent=title;
- });
-}
-
-function savePhotoTitle(number){
- const item=PHOTO_CONFIG.find(x=>String(x.number)===String(number));
- if(!item)return;
- const input=document.getElementById(item.input);
- const heading=document.getElementById(item.title);
- const title=input.value.trim().toUpperCase()||item.defaultTitle;
- input.value=title;
- heading.textContent=title;
- let saved={};
- try{saved=JSON.parse(localStorage.getItem(PHOTO_TITLES_KEY)||'{}')||{};}catch(e){}
- saved[number]=title;
- try{localStorage.setItem(PHOTO_TITLES_KEY,JSON.stringify(saved));}catch(e){}
-}
-
-PHOTO_CONFIG.forEach(item=>{
- document.getElementById(item.input).addEventListener('input',()=>{
-  document.getElementById(item.title).textContent=
-   document.getElementById(item.input).value.toUpperCase()||item.defaultTitle;
- });
- document.getElementById(item.input).addEventListener('change',()=>savePhotoTitle(item.number));
- document.getElementById(item.input).addEventListener('blur',()=>savePhotoTitle(item.number));
-});
-loadPhotoTitles();
-
 /* TANGGAL OTOMATIS HALAMAN PEMBUKA */
 function updateCoverDate(){
  const now=new Date();
@@ -2129,11 +1980,34 @@ function updateCoverDate(){
 }
 updateCoverDate();
 
-/* RENDER SEMUA HALAMAN */
+/* RENDER HALAMAN AKTIF DULU AGAR INSTAN */
+const renderedPagesCache=new Set();
+function renderPageByKey(page){
+ if(page==='overview')renderOverview();
+ else if(page==='trend')renderTrend();
+ else if(page==='machine')renderMachine();
+ else if(page==='product')renderProduct();
+ else if(page==='defect')renderDefect();
+ else if(page==='data')renderData();
+ else if(page==='operator')renderOperator();
+ else if(page==='handling')fillHandlingDefects();
+ renderedPagesCache.add(page);
+}
 function renderAll(){
- renderOverview();renderTrend();renderMachine();renderProduct();renderDefect();renderData();renderOperator();fillHandlingDefects();
+ renderedPagesCache.clear();
+ renderPageByKey(activePage);
  document.getElementById('footerInfo').textContent=`${fmt(allData.length)} record · Update: ${meta.waktuUpdate||'belum tersedia'}`;
  updatePrintSubtitle();
+ const runBackground=()=>{
+  ['overview','trend','machine','product','defect','data','operator','handling'].forEach(p=>{
+   if(!renderedPagesCache.has(p))renderPageByKey(p);
+  });
+ };
+ if('requestIdleCallback' in window){
+  requestIdleCallback(runBackground,{timeout:1200});
+ }else{
+  setTimeout(runBackground,250);
+ }
 }
 function updatePrintSubtitle(){
  const p=filtered();
@@ -2141,10 +2015,22 @@ function updatePrintSubtitle(){
 }
 
 /* =========================================================
-   LOGIKA MENU TERSEMBUNYI PENGATURAN MENU PRESENTASI
+   LOGIKA MENU TERSEMBUNYI PENGATURAN MENU PRESENTASI (DENGAN KUNCI PIN, LINK & HTML TERKUNCI)
 ========================================================= */
 const QR_MENU_STORAGE_KEY='QLTY_HIDDEN_MENU_VISIBILITY_V1';
 const QR_MENU_LOCK_KEY='QLTY_HIDDEN_MENU_LOCKED_V1';
+const QR_MENU_PIN_KEY='QLTY_HIDDEN_MENU_PIN_HASH_V1';
+const EMBEDDED_QR_CONFIG={enabled:false,state:{},locked:false,pinHash:''};
+
+function hashPinSimple(pin){
+ let h=2166136261;
+ const s='BHTX_QR_'+String(pin||'');
+ for(let i=0;i<s.length;i++){
+  h^=s.charCodeAt(i);
+  h=Math.imul(h,16777619);
+ }
+ return (h>>>0).toString(16);
+}
 
 function getAllNavButtons(){
  return Array.from(document.querySelectorAll('.nav-list .nav'));
@@ -2164,17 +2050,55 @@ let qrMenuState=(()=>{
    if(parsed&&typeof parsed==='object')return parsed;
   }
  }catch(e){}
+ if(EMBEDDED_QR_CONFIG.enabled&&EMBEDDED_QR_CONFIG.state){
+  return Object.assign({},EMBEDDED_QR_CONFIG.state);
+ }
  return {};
 })();
 
 let qrMenuLocked=(()=>{
- try{return localStorage.getItem(QR_MENU_LOCK_KEY)==='true';}catch(e){return false;}
+ try{
+  const saved=localStorage.getItem(QR_MENU_LOCK_KEY);
+  if(saved!==null)return saved==='true';
+ }catch(e){}
+ return Boolean(EMBEDDED_QR_CONFIG.enabled&&EMBEDDED_QR_CONFIG.locked);
+})();
+
+let qrMenuPinHash=(()=>{
+ try{
+  const saved=localStorage.getItem(QR_MENU_PIN_KEY);
+  if(saved)return saved;
+ }catch(e){}
+ return EMBEDDED_QR_CONFIG.enabled?(EMBEDDED_QR_CONFIG.pinHash||''):'';
+})();
+
+(function applyLockedUrlConfig(){
+ try{
+  const params=new URLSearchParams(window.location.search);
+  const menuParam=params.get('menu');
+  const lockParam=params.get('lock');
+  const pinParam=params.get('pin');
+  if(menuParam!==null){
+   const allowed=new Set(menuParam.split(',').map(s=>s.trim()).filter(Boolean));
+   getAllNavButtons().forEach(btn=>{
+    qrMenuState[btn.dataset.page]=allowed.has(btn.dataset.page);
+   });
+   if(lockParam==='1'){
+    qrMenuLocked=true;
+    if(pinParam)qrMenuPinHash=pinParam;
+   }
+   localStorage.setItem(QR_MENU_STORAGE_KEY,JSON.stringify(qrMenuState));
+   localStorage.setItem(QR_MENU_LOCK_KEY,String(qrMenuLocked));
+   if(qrMenuPinHash)localStorage.setItem(QR_MENU_PIN_KEY,qrMenuPinHash);
+  }
+ }catch(e){}
 })();
 
 function saveQrMenuConfig(){
  try{
   localStorage.setItem(QR_MENU_STORAGE_KEY,JSON.stringify(qrMenuState));
   localStorage.setItem(QR_MENU_LOCK_KEY,String(qrMenuLocked));
+  localStorage.setItem(QR_MENU_PIN_KEY,qrMenuPinHash);
  }catch(e){}
 }
 
@@ -2184,6 +2108,7 @@ function applyQrMenuVisibility(){
   const pageKey=btn.dataset.page;
   const isVisible=qrMenuState[pageKey]!==false;
   btn.classList.toggle('hidden',!isVisible);
+  btn.style.display=isVisible?'':'none';
  });
 
  const visiblePages=getVisiblePresentationOrder();
@@ -2197,15 +2122,21 @@ function applyQrMenuVisibility(){
 function updateQrLockUI(){
  const lockBtn=document.getElementById('qrLockMenuBtn');
  const selectAllBtn=document.getElementById('qrSelectAllBtn');
+ const statusInfo=document.getElementById('qrLockStatusInfo');
  const items=document.querySelectorAll('#qrMenuChecklist .qr-menu-item');
  if(lockBtn){
-  lockBtn.textContent=qrMenuLocked?'🔒 Terkunci (Buka Kunci)':'🔓 Kunci Pilihan';
+  lockBtn.textContent=qrMenuLocked?'🔒 Terkunci (Buka Kunci PIN)':'🔓 Kunci Pilihan (PIN)';
   lockBtn.classList.toggle('qr-lock-active',qrMenuLocked);
  }
  if(selectAllBtn){
   selectAllBtn.disabled=qrMenuLocked;
   selectAllBtn.style.opacity=qrMenuLocked?'0.55':'1';
   selectAllBtn.style.cursor=qrMenuLocked?'not-allowed':'pointer';
+ }
+ if(statusInfo){
+  statusInfo.innerHTML=qrMenuLocked
+   ?'🔒 <b>MENU PRESENTASI TERKUNCI:</b> User lain hanya dapat melihat menu yang dipilih. Klik <b>Terkunci (Buka Kunci PIN)</b> dan masukkan PIN untuk mengubah pilihan.'
+   :'Pilih menu yang ingin ditampilkan, lalu klik <b>Kunci Pilihan (PIN)</b> agar user lain hanya bisa melihat menu terpilih.';
  }
  items.forEach(label=>{
   label.classList.toggle('locked',qrMenuLocked);
@@ -2254,6 +2185,14 @@ function buildQrHiddenMenuChecklist(){
 
 document.getElementById('qualityReportMenuTrigger').addEventListener('click',()=>{
  const panel=document.getElementById('qrHiddenMenuPanel');
+ if(qrMenuLocked&&panel.classList.contains('hidden')){
+  const inputPin=prompt('Menu presentasi sedang terkunci. Masukkan PIN untuk membuka pengaturan:');
+  if(inputPin===null)return;
+  if(qrMenuPinHash&&hashPinSimple(inputPin.trim())!==qrMenuPinHash){
+   alert('PIN salah! Pengaturan menu tetap terkunci.');
+   return;
+  }
+ }
  panel.classList.toggle('hidden');
 });
 
@@ -2274,62 +2213,192 @@ document.getElementById('qrSelectAllBtn').addEventListener('click',()=>{
 });
 
 document.getElementById('qrLockMenuBtn').addEventListener('click',()=>{
- qrMenuLocked=!qrMenuLocked;
- saveQrMenuConfig();
- updateQrLockUI();
+ if(!qrMenuLocked){
+  const visiblePages=getVisiblePresentationOrder();
+  if(!visiblePages.length){
+   alert('Pilih minimal 1 menu presentasi terlebih dahulu sebelum mengunci!');
+   return;
+  }
+  const newPin=prompt('Buat PIN kunci menu presentasi (contoh: 1234):');
+  if(newPin===null)return;
+  const cleanPin=newPin.trim();
+  if(!cleanPin){
+   alert('PIN tidak boleh kosong!');
+   return;
+  }
+  qrMenuPinHash=hashPinSimple(cleanPin);
+  qrMenuLocked=true;
+  saveQrMenuConfig();
+  applyQrMenuVisibility();
+  updateQrLockUI();
+  document.getElementById('qrHiddenMenuPanel').classList.add('hidden');
+  alert('Menu presentasi berhasil dikunci! Hanya '+visiblePages.length+' menu terpilih yang ditampilkan.');
+ }else{
+  const checkPin=prompt('Masukkan PIN untuk membuka kunci menu presentasi:');
+  if(checkPin===null)return;
+  if(qrMenuPinHash&&hashPinSimple(checkPin.trim())!==qrMenuPinHash){
+   alert('PIN salah! Menu tetap terkunci.');
+   return;
+  }
+  qrMenuLocked=false;
+  saveQrMenuConfig();
+  updateQrLockUI();
+  alert('Kunci menu presentasi berhasil dibuka.');
+ }
 });
 
-/* NAVIGASI 16 HALAMAN */
+document.getElementById('qrDownloadLockedBtn').addEventListener('click',()=>{
+ const visiblePages=getVisiblePresentationOrder();
+ if(!visiblePages.length){
+  alert('Pilih minimal 1 menu presentasi terlebih dahulu!');
+  return;
+ }
+ if(!qrMenuLocked){
+  const newPin=prompt('Masukkan PIN kunci sebelum mengunduh HTML terkunci (contoh: 1234):');
+  if(newPin===null)return;
+  const cleanPin=newPin.trim();
+  if(!cleanPin){
+   alert('PIN tidak boleh kosong!');
+   return;
+  }
+  qrMenuPinHash=hashPinSimple(cleanPin);
+  qrMenuLocked=true;
+  saveQrMenuConfig();
+  applyQrMenuVisibility();
+  updateQrLockUI();
+ }
+ const embeddedObj={
+  enabled:true,
+  state:qrMenuState,
+  locked:true,
+  pinHash:qrMenuPinHash
+ };
+ const serialized=JSON.stringify(embeddedObj).replace(/</g,'\\u003c');
+ let fullHtml=document.documentElement.outerHTML;
+ if(!fullHtml.toLowerCase().startsWith('<!doctype')){
+  fullHtml='<!DOCTYPE html>\n'+fullHtml;
+ }
+ const updatedHtml=fullHtml.replace(
+  /const EMBEDDED_QR_CONFIG=\{[\s\S]*?\};/,
+  'const EMBEDDED_QR_CONFIG='+serialized+';'
+ );
+ const blob=new Blob([updatedHtml],{type:'text/html;charset=utf-8'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;
+ a.download='index_machine_analysis_revisi_FINAL_3_TERKUNCI.html';
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),2000);
+ alert('File HTML terkunci berhasil diunduh! File ini sudah menanamkan pilihan menu Anda agar user lain hanya bisa melihat menu terpilih.');
+});
+
+document.getElementById('qrShareLockBtn').addEventListener('click',()=>{
+ const visiblePages=getVisiblePresentationOrder();
+ if(!visiblePages.length){
+  alert('Pilih minimal 1 menu presentasi terlebih dahulu!');
+  return;
+ }
+ if(!qrMenuLocked){
+  const newPin=prompt('Masukkan PIN kunci sebelum membuat link terkunci (contoh: 1234):');
+  if(newPin===null)return;
+  const cleanPin=newPin.trim();
+  if(!cleanPin){
+   alert('PIN tidak boleh kosong!');
+   return;
+  }
+  qrMenuPinHash=hashPinSimple(cleanPin);
+  qrMenuLocked=true;
+  saveQrMenuConfig();
+  applyQrMenuVisibility();
+  updateQrLockUI();
+ }
+ const shareUrl=new URL(window.location.href);
+ shareUrl.searchParams.set('menu',visiblePages.join(','));
+ shareUrl.searchParams.set('lock','1');
+ if(qrMenuPinHash)shareUrl.searchParams.set('pin',qrMenuPinHash);
+ const finalUrl=shareUrl.toString();
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(finalUrl).then(()=>{
+   alert('Link presentasi terkunci berhasil disalin!\n\nJika user lain membuka link ini, hanya menu pilihan Anda yang tampil dan sisanya otomatis disembunyikan.');
+  }).catch(()=>{
+   prompt('Salin link presentasi terkunci berikut:',finalUrl);
+  });
+ }else{
+  prompt('Salin link presentasi terkunci berikut:',finalUrl);
+ }
+});
+
+/* NAVIGASI 16 HALAMAN (INSTAN) */
 function showPage(page){
  if(!PAGE_NAMES[page])return;
+ const allowed=getVisiblePresentationOrder();if(allowed.length>0&&!allowed.includes(page))page=allowed[0];
+ if(qrMenuState[page]===false){
+  const fallback=getVisiblePresentationOrder()[0];
+  if(!fallback)return;
+  page=fallback;
+ }
  activePage=page;
  document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!=='page-'+page));
  document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.page===page));
 
  const activeButton=document.querySelector(`.nav[data-page="${page}"]`);
  if(activeButton){
-  activeButton.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});
+  activeButton.scrollIntoView({behavior:'auto',block:'nearest',inline:'nearest'});
+ }
+
+ if(allData.length&&!renderedPagesCache.has(page)){
+  renderPageByKey(page);
  }
 
  updatePrintSubtitle();
- window.scrollTo({top:0,behavior:'smooth'});
+ window.scrollTo(0,0);
 
- setTimeout(()=>{
+ requestAnimationFrame(()=>{
   if(page==='overview')drawDonut('chart-overview',groupSum(filtered(),'defect').slice(0,5),'legend-overview');
   if(page==='trend')drawTop3Trend(filtered());
   if(page==='machine')drawDonut('chart-machine',groupSum(filtered(),'mesin').slice(0,7),'legend-machine');
- },80);
+ });
 }
 
-/* SINKRONISASI GOOGLE SPREADSHEET + CACHE */
+/* SINKRONISASI GOOGLE SPREADSHEET + CACHE (DENGAN TIMEOUT CEPAT) */
 async function syncData(){
  const notice=document.getElementById('apiNotice');notice.classList.add('hidden');
- setStatus('offline','Menghubungkan ke Spreadsheet...');
+ if(!allData.length)setStatus('offline','Menghubungkan ke Spreadsheet...');
+ const controller=new AbortController();
+ const timerId=setTimeout(()=>controller.abort(),12000);
  try{
   const url=API_URL+(API_URL.includes('?')?'&':'?')+'t='+Date.now();
-  const response=await fetch(url,{method:'GET',cache:'no-store',redirect:'follow'});
+  const response=await fetch(url,{method:'GET',cache:'no-store',redirect:'follow',signal:controller.signal});
+  clearTimeout(timerId);
   if(!response.ok)throw new Error('HTTP '+response.status);
   const json=await response.json();
   if(json.status!=='success'||!Array.isArray(json.data))throw new Error(json.message||'Format data API tidak sesuai.');
   const newData=normalizeRows(json.data);
-  await saveQLTYCache({data:newData,meta:json,savedAt:new Date().toISOString()});
   allData=newData;meta=json;
   fillFilters();renderAll();showPage(activePage);
   setStatus('online','Terhubung · Data berhasil diperbarui');
   document.getElementById('updateTime').textContent='· '+(meta.waktuUpdate||'');
+  saveQLTYCache({data:newData,meta:json,savedAt:new Date().toISOString()}).catch(e=>console.warn('Cache save:',e));
  }catch(err){
+  clearTimeout(timerId);
   console.error(err);
   try{
    const cache=await loadQLTYCache();
    if(cache){
-    allData=normalizeRows(cache.data);meta=cache.meta||{};
-    fillFilters();renderAll();showPage(activePage);
+    if(!allData.length){
+     allData=normalizeRows(cache.data);meta=cache.meta||{};
+     fillFilters();renderAll();showPage(activePage);
+    }
     setStatus('offline','Mode offline · Menggunakan data terakhir tersimpan');
     document.getElementById('updateTime').textContent='· '+(cache.savedAt?new Date(cache.savedAt).toLocaleString('id-ID'):'');
-   }else{setStatus('offline','Belum ada data tersimpan');}
+   }else{
+    setStatus('offline','Belum ada data tersimpan');
+    notice.textContent='Sinkronisasi tertunda/gagal: '+(err.name==='AbortError'?'Respon Spreadsheet terlalu lama':err.message)+'. Klik Sinkronisasi ulang jika koneksi sudah lancar.';
+    notice.classList.remove('hidden');
+   }
   }catch(cacheError){console.error('IndexedDB:',cacheError);setStatus('offline','Database lokal tidak dapat dibaca');}
-  notice.textContent='Sinkronisasi gagal: '+err.message+'. Dashboard mencoba menggunakan data terakhir dari IndexedDB. Pastikan koneksi internet aktif untuk sinkronisasi pertama.';
-  notice.classList.remove('hidden');
  }
 }
 
@@ -2346,7 +2415,7 @@ document.querySelectorAll('[data-filter]').forEach(el=>{
  });
 });
 
-/* EVENT HALAMAN 10 */
+/* EVENT HALAMAN 11 */
 document.getElementById('handling-defect-select').addEventListener('change',renderHandling);
 document.getElementById('handling-title-input').addEventListener('input',renderHandling);
 
