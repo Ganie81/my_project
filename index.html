@@ -203,7 +203,7 @@ tr:hover td{background:#122b49}
  padding:clamp(28px,6vw,75px);isolation:isolate;
 }
 .closing-page:before,.closing-page:after{
- content:"";position:absolute;z-index:-1;pointer-events:none;border:1px solid #53d4e82b;border-radius:50%;
+ content:"";position:absolute;pointer-events:none;z-index:-1;border:1px solid #53d4e82b;border-radius:50%;
 }
 .closing-page:before{width:560px;height:560px;left:-230px;top:-310px}
 .closing-page:after{width:460px;height:460px;right:-210px;bottom:-260px}
@@ -2317,6 +2317,7 @@ document.getElementById('qrShareLockBtn').addEventListener('click',()=>{
  const shareUrl=new URL(window.location.href);
  shareUrl.searchParams.set('menu',visiblePages.join(','));
  shareUrl.searchParams.set('lock','1');
+ shareUrl.searchParams.set('fresh',String(Date.now()));
  if(qrMenuPinHash)shareUrl.searchParams.set('pin',qrMenuPinHash);
  const finalUrl=shareUrl.toString();
  if(navigator.clipboard&&navigator.clipboard.writeText){
@@ -2365,12 +2366,19 @@ function showPage(page){
 /* SINKRONISASI GOOGLE SPREADSHEET + CACHE (DENGAN TIMEOUT CEPAT) */
 async function syncData(){
  const notice=document.getElementById('apiNotice');notice.classList.add('hidden');
- if(!allData.length)setStatus('offline','Menghubungkan ke Spreadsheet...');
+ setStatus(allData.length?'online':'offline','Menyinkronkan data terbaru dari Spreadsheet...');
  const controller=new AbortController();
- const timerId=setTimeout(()=>controller.abort(),12000);
+ const timerId=setTimeout(()=>controller.abort(),15000);
  try{
-  const url=API_URL+(API_URL.includes('?')?'&':'?')+'t='+Date.now();
-  const response=await fetch(url,{method:'GET',cache:'no-store',redirect:'follow',signal:controller.signal});
+  const sep=API_URL.includes('?')?'&':'?';
+  const url=API_URL+sep+'nocache='+Date.now()+'&r='+Math.random().toString(36).slice(2,8);
+  const response=await fetch(url,{
+   method:'GET',
+   cache:'no-store',
+   redirect:'follow',
+   headers:{'Cache-Control':'no-cache, no-store, must-revalidate','Pragma':'no-cache'},
+   signal:controller.signal
+  });
   clearTimeout(timerId);
   if(!response.ok)throw new Error('HTTP '+response.status);
   const json=await response.json();
@@ -2378,8 +2386,8 @@ async function syncData(){
   const newData=normalizeRows(json.data);
   allData=newData;meta=json;
   fillFilters();renderAll();showPage(activePage);
-  setStatus('online','Terhubung · Data berhasil diperbarui');
-  document.getElementById('updateTime').textContent='· '+(meta.waktuUpdate||'');
+  setStatus('online','Terhubung · Data terbaru ('+fmt(allData.length)+' record)');
+  document.getElementById('updateTime').textContent='· '+(meta.waktuUpdate||new Date().toLocaleString('id-ID'));
   saveQLTYCache({data:newData,meta:json,savedAt:new Date().toISOString()}).catch(e=>console.warn('Cache save:',e));
  }catch(err){
   clearTimeout(timerId);
@@ -2538,17 +2546,19 @@ applyQrMenuVisibility();
 /* LOAD CACHE DULU, KEMUDIAN SINKRONISASI */
 (async function loadCacheFirst(){
  try{
+  const params=new URLSearchParams(window.location.search);
+  const isSharedOrFresh=params.has('menu')||params.has('lock')||params.has('fresh');
   const cache=await loadQLTYCache();
-  if(cache){
+  if(cache&&!isSharedOrFresh){
    allData=normalizeRows(cache.data);meta=cache.meta||{};
    fillFilters();renderAll();
    const visiblePages=getVisiblePresentationOrder();
    if(visiblePages.length)showPage(visiblePages.includes(activePage)?activePage:visiblePages[0]);
-   setStatus('offline','Data terakhir tersedia · Memeriksa pembaruan...');
+   setStatus('offline','Data cache dimuat · Mengambil data terbaru...');
    document.getElementById('updateTime').textContent='· '+(cache.savedAt?new Date(cache.savedAt).toLocaleString('id-ID'):'');
   }
  }catch(err){console.warn('Cache IndexedDB:',err);}
- syncData();
+ await syncData();
 })();
 
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
