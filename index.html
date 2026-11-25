@@ -1969,12 +1969,10 @@ function drawTop3Trend(rows){
    ctx.stroke();
 
    const label=fmt(p.value);
-   const labelOffsets=[-10,-21,-32];
-   let labelY=p.y+labelOffsets[seriesIndex];
-   if(labelY<10)labelY=p.y+13+(seriesIndex*10);
-   if(labelY>h-30)labelY=p.y-12-(seriesIndex*9);
+   // Jarak angka 2 px dari tepi titik data (radius titik 4 px).
+   const labelY=p.y+(seriesIndex===2?6:-6);
    ctx.save();
-   ctx.font='bold 8px sans-serif';
+   ctx.font='500 8px sans-serif';
    ctx.textAlign='center';
    ctx.textBaseline='middle';
    ctx.lineWidth=2.5;
