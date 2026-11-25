@@ -1123,6 +1123,72 @@ html:fullscreen .topbar{
   margin-bottom:6mm;
  }
 }
+
+
+/* PERMINTAAN: HALAMAN FOTO 02, 03, 12, 13, 14, 15 HANYA MENAMPILKAN GAMBAR */
+#page-photoqa .photo-title-editor,
+#page-photoqa2 .photo-title-editor,
+#page-photo1 .photo-title-editor,
+#page-photo2 .photo-title-editor,
+#page-photo3 .photo-title-editor,
+#page-photo4 .photo-title-editor,
+#page-photoqa .photo-title,
+#page-photoqa2 .photo-title,
+#page-photo1 .photo-title,
+#page-photo2 .photo-title,
+#page-photo3 .photo-title,
+#page-photo4 .photo-title{
+ display:none !important;
+}
+
+/* Area gambar dimulai sejajar bagian atas area konten/menu presentasi. */
+.layout{align-items:start}
+#page-photoqa,
+#page-photoqa2,
+#page-photo1,
+#page-photo2,
+#page-photo3,
+#page-photo4{
+ margin:0 !important;
+ padding:0 !important;
+}
+#page-photoqa .photo-paper,
+#page-photoqa2 .photo-paper,
+#page-photo1 .photo-paper,
+#page-photo2 .photo-paper,
+#page-photo3 .photo-paper,
+#page-photo4 .photo-paper{
+ width:100%;
+ min-height:0;
+ margin:0;
+ padding:0;
+ border:0;
+ border-radius:0;
+ background:transparent;
+ box-shadow:none;
+}
+#page-photoqa .photo-paper img,
+#page-photoqa2 .photo-paper img,
+#page-photo1 .photo-paper img,
+#page-photo2 .photo-paper img,
+#page-photo3 .photo-paper img,
+#page-photo4 .photo-paper img{
+ display:block;
+ width:100%;
+ max-width:100%;
+ height:auto;
+ margin:0;
+ object-fit:contain;
+}
+@media print{
+ #page-photoqa .photo-paper,
+ #page-photoqa2 .photo-paper,
+ #page-photo1 .photo-paper,
+ #page-photo2 .photo-paper,
+ #page-photo3 .photo-paper,
+ #page-photo4 .photo-paper{padding:0;border:0;box-shadow:none}
+}
+
 </style>
 </head>
 
@@ -2141,142 +2207,104 @@ function updatePrintSubtitle(){
 }
 
 /* =========================================================
-   LOGIKA MENU TERSEMBUNYI PENGATURAN MENU PRESENTASI
+   MENU PRESENTASI - KUNCI GLOBAL SERVER + PIN ADMIN
 ========================================================= */
-const QR_MENU_STORAGE_KEY='QLTY_HIDDEN_MENU_VISIBILITY_V1';
-const QR_MENU_LOCK_KEY='QLTY_HIDDEN_MENU_LOCKED_V1';
+const QR_PAGE_KEYS=['intro','photoqa','photoqa2','overview','trend','machine','product','defect','data','operator','handling','photo1','photo2','photo3','photo4','closing'];
+let qrMenuState={};
+let qrMenuLocked=false;
+let qrShareToken='';
+let qrIsRestrictedLink=false;
 
-function getAllNavButtons(){
- return Array.from(document.querySelectorAll('.nav-list .nav'));
+function getAllNavButtons(){return Array.from(document.querySelectorAll('.nav-list .nav'));}
+function getVisiblePresentationOrder(){return getAllNavButtons().filter(btn=>!btn.classList.contains('hidden')).map(btn=>btn.dataset.page);}
+function qrPost(payload){
+ return fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),redirect:'follow'}).then(r=>r.json());
 }
-
-function getVisiblePresentationOrder(){
- return getAllNavButtons()
-  .filter(btn=>!btn.classList.contains('hidden'))
-  .map(btn=>btn.dataset.page);
-}
-
-let qrMenuState=(()=>{
+async function loadQrServerConfig(){
  try{
-  const raw=localStorage.getItem(QR_MENU_STORAGE_KEY);
-  if(raw){
-   const parsed=JSON.parse(raw);
-   if(parsed&&typeof parsed==='object')return parsed;
+  const token=new URLSearchParams(location.search).get('qltyToken')||'';
+  const url=API_URL+'?action=getPageLock&token='+encodeURIComponent(token)+'&t='+Date.now();
+  const r=await fetch(url,{cache:'no-store',redirect:'follow'});const j=await r.json();
+  if(j.status!=='success')throw new Error(j.message||'Gagal membaca pengaturan halaman.');
+  qrMenuLocked=!!j.locked;qrShareToken=token;qrIsRestrictedLink=!!token;
+  const selected=Array.isArray(j.pages)&&j.pages.length?j.pages:QR_PAGE_KEYS;
+  qrMenuState={};QR_PAGE_KEYS.forEach(k=>qrMenuState[k]=selected.includes(k));
+  if(token&&!j.tokenValid){
+   qrMenuState={};QR_PAGE_KEYS.forEach(k=>qrMenuState[k]=false);
+   document.getElementById('apiNotice').textContent='Tautan khusus tidak valid atau sudah diganti oleh Admin.';
+   document.getElementById('apiNotice').classList.remove('hidden');
   }
- }catch(e){}
- return {};
-})();
-
-let qrMenuLocked=(()=>{
- try{return localStorage.getItem(QR_MENU_LOCK_KEY)==='true';}catch(e){return false;}
-})();
-
-function saveQrMenuConfig(){
- try{
-  localStorage.setItem(QR_MENU_STORAGE_KEY,JSON.stringify(qrMenuState));
-  localStorage.setItem(QR_MENU_LOCK_KEY,String(qrMenuLocked));
- }catch(e){}
+  applyQrMenuVisibility();buildQrHiddenMenuChecklist();updateQrLockUI();
+  return true;
+ }catch(e){
+  console.warn('Pengaturan halaman global:',e);
+  // Bila API lock belum tersedia, jangan mengunci berdasarkan localStorage.
+  QR_PAGE_KEYS.forEach(k=>qrMenuState[k]=true);
+  applyQrMenuVisibility();buildQrHiddenMenuChecklist();
+  return false;
+ }
 }
-
+function saveQrMenuConfig(){ /* Konfigurasi hanya boleh disimpan server-side melalui PIN Admin. */ }
 function applyQrMenuVisibility(){
  const navButtons=getAllNavButtons();
  navButtons.forEach(btn=>{
-  const pageKey=btn.dataset.page;
-  const isVisible=qrMenuState[pageKey]!==false;
-  btn.classList.toggle('hidden',!isVisible);
+  const key=btn.dataset.page;
+  const visible=qrMenuState[key]!==false;
+  btn.classList.toggle('hidden',!visible);
+  const page=document.getElementById('page-'+key);
+  if(page&&!visible)page.classList.add('hidden');
  });
-
- const visiblePages=getVisiblePresentationOrder();
- if(visiblePages.length>0&&!visiblePages.includes(activePage)){
-  showPage(visiblePages[0]);
- }else if(visiblePages.length===0){
-  document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
- }
+ const visible=getVisiblePresentationOrder();
+ if(visible.length){if(!visible.includes(activePage))showPage(visible[0]);}
+ else document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
 }
-
 function updateQrLockUI(){
  const lockBtn=document.getElementById('qrLockMenuBtn');
  const selectAllBtn=document.getElementById('qrSelectAllBtn');
  const items=document.querySelectorAll('#qrMenuChecklist .qr-menu-item');
- if(lockBtn){
-  lockBtn.textContent=qrMenuLocked?'🔒 Terkunci (Buka Kunci)':'🔓 Kunci Pilihan';
-  lockBtn.classList.toggle('qr-lock-active',qrMenuLocked);
- }
- if(selectAllBtn){
-  selectAllBtn.disabled=qrMenuLocked;
-  selectAllBtn.style.opacity=qrMenuLocked?'0.55':'1';
-  selectAllBtn.style.cursor=qrMenuLocked?'not-allowed':'pointer';
- }
- items.forEach(label=>{
-  label.classList.toggle('locked',qrMenuLocked);
-  const cb=label.querySelector('input[type="checkbox"]');
-  if(cb)cb.disabled=qrMenuLocked;
- });
+ if(lockBtn){lockBtn.textContent=qrMenuLocked?'🔒 Kunci Global Aktif · Ubah Pilihan':'🔐 Simpan & Kunci Global';lockBtn.classList.toggle('qr-lock-active',qrMenuLocked);}
+ if(selectAllBtn){selectAllBtn.disabled=qrIsRestrictedLink;selectAllBtn.style.opacity=qrIsRestrictedLink?'0.5':'1';}
+ items.forEach(label=>{label.classList.toggle('locked',qrIsRestrictedLink);const cb=label.querySelector('input[type="checkbox"]');if(cb)cb.disabled=qrIsRestrictedLink;});
 }
-
 function buildQrHiddenMenuChecklist(){
- const container=document.getElementById('qrMenuChecklist');
- if(!container)return;
- const navButtons=getAllNavButtons();
+ const container=document.getElementById('qrMenuChecklist');if(!container)return;
  container.innerHTML='';
- navButtons.forEach(btn=>{
-  const pageKey=btn.dataset.page;
-  if(qrMenuState[pageKey]===undefined)qrMenuState[pageKey]=true;
-  const labelText=btn.textContent.trim();
-
-  const label=document.createElement('label');
-  label.className='qr-menu-item';
-
-  const cb=document.createElement('input');
-  cb.type='checkbox';
-  cb.checked=qrMenuState[pageKey]!==false;
-  cb.dataset.targetPage=pageKey;
-
-  cb.addEventListener('change',()=>{
-   if(qrMenuLocked){
-    cb.checked=qrMenuState[pageKey]!==false;
-    return;
-   }
-   qrMenuState[pageKey]=cb.checked;
-   saveQrMenuConfig();
-   applyQrMenuVisibility();
-  });
-
-  const span=document.createElement('span');
-  span.textContent=labelText;
-
-  label.appendChild(cb);
-  label.appendChild(span);
-  container.appendChild(label);
+ getAllNavButtons().forEach(btn=>{
+  const key=btn.dataset.page;if(qrMenuState[key]===undefined)qrMenuState[key]=true;
+  const label=document.createElement('label');label.className='qr-menu-item';
+  const cb=document.createElement('input');cb.type='checkbox';cb.checked=qrMenuState[key]!==false;cb.dataset.targetPage=key;
+  cb.addEventListener('change',()=>{if(qrIsRestrictedLink){cb.checked=qrMenuState[key]!==false;return;}qrMenuState[key]=cb.checked;applyQrMenuVisibility();});
+  const span=document.createElement('span');span.textContent=btn.textContent.trim();label.append(cb,span);container.appendChild(label);
  });
  updateQrLockUI();
 }
-
 document.getElementById('qualityReportMenuTrigger').addEventListener('click',()=>{
- const panel=document.getElementById('qrHiddenMenuPanel');
- panel.classList.toggle('hidden');
+ if(qrIsRestrictedLink){alert('Tautan khusus hanya untuk melihat halaman yang dipilih Admin.');return;}
+ document.getElementById('qrHiddenMenuPanel').classList.toggle('hidden');
 });
-
-document.getElementById('qrCloseMenuBtn').addEventListener('click',()=>{
- document.getElementById('qrHiddenMenuPanel').classList.add('hidden');
-});
-
+document.getElementById('qrCloseMenuBtn').addEventListener('click',()=>document.getElementById('qrHiddenMenuPanel').classList.add('hidden'));
 document.getElementById('qrSelectAllBtn').addEventListener('click',()=>{
- if(qrMenuLocked)return;
- getAllNavButtons().forEach(btn=>{
-  qrMenuState[btn.dataset.page]=true;
- });
- document.querySelectorAll('#qrMenuChecklist input[type="checkbox"]').forEach(cb=>{
-  cb.checked=true;
- });
- saveQrMenuConfig();
+ if(qrIsRestrictedLink)return;
+ QR_PAGE_KEYS.forEach(k=>qrMenuState[k]=true);
+ document.querySelectorAll('#qrMenuChecklist input[type="checkbox"]').forEach(cb=>cb.checked=true);
  applyQrMenuVisibility();
 });
-
-document.getElementById('qrLockMenuBtn').addEventListener('click',()=>{
- qrMenuLocked=!qrMenuLocked;
- saveQrMenuConfig();
- updateQrLockUI();
+document.getElementById('qrLockMenuBtn').addEventListener('click',async()=>{
+ if(qrIsRestrictedLink)return;
+ const pin=prompt('Masukkan PIN ADMIN untuk menyimpan/mengubah kunci global:');
+ if(pin===null)return;
+ const pages=QR_PAGE_KEYS.filter(k=>qrMenuState[k]!==false);
+ if(!pages.length){alert('Pilih minimal satu halaman.');return;}
+ const btn=document.getElementById('qrLockMenuBtn');btn.disabled=true;btn.textContent='Menyimpan...';
+ try{
+  const result=await qrPost({action:'adminLockPages',pin:pin,pages:pages});
+  if(result.status!=='success')throw new Error(result.message||'Gagal menyimpan kunci.');
+  qrMenuLocked=true;qrShareToken=result.token||'';updateQrLockUI();
+  const shareUrl=new URL(location.href);shareUrl.search='';shareUrl.hash='';shareUrl.searchParams.set('qltyToken',qrShareToken);
+  try{await navigator.clipboard.writeText(shareUrl.toString());alert('Pilihan halaman berhasil dikunci secara global.\nTautan khusus sudah disalin:\n'+shareUrl.toString());}
+  catch(e){prompt('Kunci global berhasil. Salin tautan khusus ini:',shareUrl.toString());}
+ }catch(err){alert('Gagal: '+err.message);}
+ finally{btn.disabled=false;updateQrLockUI();}
 });
 
 /* NAVIGASI 16 HALAMAN */
@@ -2462,9 +2490,11 @@ document.getElementById('handling-editor-toggle').addEventListener('click',()=>{
  toggle.setAttribute('aria-expanded',String(!isOpen));
 });
 
-/* INISIALISASI MENU TERSEMBUNYI */
-buildQrHiddenMenuChecklist();
-applyQrMenuVisibility();
+/* INISIALISASI MENU GLOBAL; TAUTAN BERTOKEN DISEMBUNYIKAN SAMPAI VALIDASI SERVER SELESAI */
+if(new URLSearchParams(location.search).has('qltyToken')){
+ document.querySelectorAll('.nav-list .nav,.page').forEach(el=>el.classList.add('hidden'));
+}
+loadQrServerConfig();
 
 /* LOAD CACHE DULU, KEMUDIAN SINKRONISASI */
 (async function loadCacheFirst(){
