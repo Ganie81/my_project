@@ -2010,11 +2010,34 @@ function updateCoverDate(){
 }
 updateCoverDate();
 
-/* RENDER SEMUA HALAMAN */
+/* RENDER HALAMAN AKTIF DULU AGAR INSTAN, HALAMAN LAIN DIREnder SAAT DIBUKA */
+const renderedPagesCache=new Set();
+function renderPageByKey(page){
+ if(page==='overview')renderOverview();
+ else if(page==='trend')renderTrend();
+ else if(page==='machine')renderMachine();
+ else if(page==='product')renderProduct();
+ else if(page==='defect')renderDefect();
+ else if(page==='data')renderData();
+ else if(page==='operator')renderOperator();
+ else if(page==='handling')fillHandlingDefects();
+ renderedPagesCache.add(page);
+}
 function renderAll(){
- renderOverview();renderTrend();renderMachine();renderProduct();renderDefect();renderData();renderOperator();fillHandlingDefects();
+ renderedPagesCache.clear();
+ renderPageByKey(activePage);
  document.getElementById('footerInfo').textContent=`${fmt(allData.length)} record · Update: ${meta.waktuUpdate||'belum tersedia'}`;
  updatePrintSubtitle();
+ const runBackground=()=>{
+  ['overview','trend','machine','product','defect','data','operator','handling'].forEach(p=>{
+   if(!renderedPagesCache.has(p))renderPageByKey(p);
+  });
+ };
+ if('requestIdleCallback' in window){
+  requestIdleCallback(runBackground,{timeout:1200});
+ }else{
+  setTimeout(runBackground,250);
+ }
 }
 function updatePrintSubtitle(){
  const p=filtered();
@@ -2281,7 +2304,7 @@ Jika user lain membuka link ini, hanya menu pilihan Anda yang tampil dan sisanya
  }
 });
 
-/* NAVIGASI 16 HALAMAN */
+/* NAVIGASI 16 HALAMAN (INSTAN) */
 function showPage(page){
  if(!PAGE_NAMES[page])return;
  if(qrMenuState[page]===false){
@@ -2295,48 +2318,60 @@ function showPage(page){
 
  const activeButton=document.querySelector(`.nav[data-page="${page}"]`);
  if(activeButton){
-  activeButton.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});
+  activeButton.scrollIntoView({behavior:'auto',block:'nearest',inline:'nearest'});
+ }
+
+ if(allData.length&&!renderedPagesCache.has(page)){
+  renderPageByKey(page);
  }
 
  updatePrintSubtitle();
- window.scrollTo({top:0,behavior:'smooth'});
+ window.scrollTo(0,0);
 
- setTimeout(()=>{
+ requestAnimationFrame(()=>{
   if(page==='overview')drawDonut('chart-overview',groupSum(filtered(),'defect').slice(0,5),'legend-overview');
   if(page==='trend')drawTop3Trend(filtered());
   if(page==='machine')drawDonut('chart-machine',groupSum(filtered(),'mesin').slice(0,7),'legend-machine');
- },80);
+ });
 }
 
-/* SINKRONISASI GOOGLE SPREADSHEET + CACHE */
+/* SINKRONISASI GOOGLE SPREADSHEET + CACHE (DENGAN TIMEOUT CEPAT) */
 async function syncData(){
  const notice=document.getElementById('apiNotice');notice.classList.add('hidden');
- setStatus('offline','Menghubungkan ke Spreadsheet...');
+ if(!allData.length)setStatus('offline','Menghubungkan ke Spreadsheet...');
+ const controller=new AbortController();
+ const timerId=setTimeout(()=>controller.abort(),12000);
  try{
   const url=API_URL+(API_URL.includes('?')?'&':'?')+'t='+Date.now();
-  const response=await fetch(url,{method:'GET',cache:'no-store',redirect:'follow'});
+  const response=await fetch(url,{method:'GET',cache:'no-store',redirect:'follow',signal:controller.signal});
+  clearTimeout(timerId);
   if(!response.ok)throw new Error('HTTP '+response.status);
   const json=await response.json();
   if(json.status!=='success'||!Array.isArray(json.data))throw new Error(json.message||'Format data API tidak sesuai.');
   const newData=normalizeRows(json.data);
-  await saveQLTYCache({data:newData,meta:json,savedAt:new Date().toISOString()});
   allData=newData;meta=json;
   fillFilters();renderAll();showPage(activePage);
   setStatus('online','Terhubung · Data berhasil diperbarui');
   document.getElementById('updateTime').textContent='· '+(meta.waktuUpdate||'');
+  saveQLTYCache({data:newData,meta:json,savedAt:new Date().toISOString()}).catch(e=>console.warn('Cache save:',e));
  }catch(err){
+  clearTimeout(timerId);
   console.error(err);
   try{
    const cache=await loadQLTYCache();
    if(cache){
-    allData=normalizeRows(cache.data);meta=cache.meta||{};
-    fillFilters();renderAll();showPage(activePage);
+    if(!allData.length){
+     allData=normalizeRows(cache.data);meta=cache.meta||{};
+     fillFilters();renderAll();showPage(activePage);
+    }
     setStatus('offline','Mode offline · Menggunakan data terakhir tersimpan');
     document.getElementById('updateTime').textContent='· '+(cache.savedAt?new Date(cache.savedAt).toLocaleString('id-ID'):'');
-   }else{setStatus('offline','Belum ada data tersimpan');}
+   }else{
+    setStatus('offline','Belum ada data tersimpan');
+    notice.textContent='Sinkronisasi tertunda/gagal: '+(err.name==='AbortError'?'Respon Spreadsheet terlalu lama':err.message)+'. Klik Sinkronisasi ulang jika koneksi sudah lancar.';
+    notice.classList.remove('hidden');
+   }
   }catch(cacheError){console.error('IndexedDB:',cacheError);setStatus('offline','Database lokal tidak dapat dibaca');}
-  notice.textContent='Sinkronisasi gagal: '+err.message+'. Dashboard mencoba menggunakan data terakhir dari IndexedDB. Pastikan koneksi internet aktif untuk sinkronisasi pertama.';
-  notice.classList.remove('hidden');
  }
 }
 
