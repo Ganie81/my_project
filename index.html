@@ -1189,7 +1189,34 @@ html:fullscreen .topbar{
  #page-photo4 .photo-paper{padding:0;border:0;box-shadow:none}
 }
 
-</style>
+
+/* POSISI TOMBOL HEADER: MEPEt KANAN DAN ATAS */
+.topbar{position:relative}
+.top-actions{
+ position:absolute;top:2px;right:2px;z-index:20;
+ align-items:flex-start;
+}
+.export-wrap{position:relative}
+#exportBtn{background:linear-gradient(180deg,#173653,#102740);color:#eaf5ff}
+.export-menu{
+ position:absolute;top:calc(100% + 6px);right:0;min-width:125px;
+ padding:5px;border:1px solid rgba(141,187,224,.28);border-radius:10px;
+ background:#102740;box-shadow:0 10px 25px rgba(0,0,0,.35);z-index:100;
+}
+.export-option{
+ display:block;width:100%;padding:9px 10px;text-align:left;border:0;
+ border-radius:7px;background:transparent;color:#eaf5ff;
+ font-size:11px;font-weight:850;cursor:pointer;
+}
+.export-option:hover{background:rgba(65,150,205,.22)}
+@media(max-width:900px){
+ .top-actions{width:auto;max-width:calc(100% - 4px);justify-content:flex-end;flex-wrap:wrap}
+}
+@media(max-width:560px){
+ .top-actions{display:flex;grid-template-columns:none;width:auto;gap:5px}
+ .top-actions .btn{width:auto;padding:8px 9px;font-size:10px}
+}
+\n</style>
 </head>
 
 <body>
@@ -1210,8 +1237,13 @@ html:fullscreen .topbar{
  <div class="top-actions">
   <button class="btn" id="refreshBtn">↻ Sinkronisasi</button>
   <button class="btn" id="fullBtn">⛶ Presentasi</button>
-  <button class="btn" id="jpgBtn">▧ Export JPG</button>
-   <button class="btn primary" id="pdfBtn">⇩ Export PDF</button>
+  <div class="export-wrap">
+   <button class="btn" id="exportBtn" aria-haspopup="true" aria-expanded="false">⇩ EXPORT</button>
+   <div class="export-menu hidden" id="exportMenu">
+    <button type="button" class="export-option" id="exportJpgOption">Export JPG</button>
+    <button type="button" class="export-option" id="exportPdfOption">Export PDF</button>
+   </div>
+  </div>
  </div>
 </header>
 
@@ -1922,7 +1954,7 @@ function drawTop3Trend(rows){
   ctx.stroke();
   ctx.restore();
 
-  // TITIK DATA
+  // TITIK DATA + ANGKA PENCAPAIAN TANPA SATUAN
   points.forEach((p,i)=>{
    ctx.beginPath();
    ctx.arc(p.x,p.y,4,0,Math.PI*2);
@@ -1935,6 +1967,22 @@ function drawTop3Trend(rows){
    ctx.strokeStyle='#ffffff';
    ctx.lineWidth=1;
    ctx.stroke();
+
+   const label=fmt(p.value);
+   const labelOffsets=[-10,-21,-32];
+   let labelY=p.y+labelOffsets[seriesIndex];
+   if(labelY<10)labelY=p.y+13+(seriesIndex*10);
+   if(labelY>h-30)labelY=p.y-12-(seriesIndex*9);
+   ctx.save();
+   ctx.font='bold 8px sans-serif';
+   ctx.textAlign='center';
+   ctx.textBaseline='middle';
+   ctx.lineWidth=2.5;
+   ctx.strokeStyle='rgba(4,15,28,.95)';
+   ctx.strokeText(label,p.x,labelY);
+   ctx.fillStyle='#ffffff';
+   ctx.fillText(label,p.x,labelY);
+   ctx.restore();
   });
  });
 
@@ -2380,7 +2428,7 @@ document.getElementById('handling-title-input').addEventListener('input',renderH
 
 /* EXPORT JPG FULL HD - HALAMAN YANG SEDANG DIPILIH */
 async function exportCurrentPageJPG(){
- const button=document.getElementById('jpgBtn');
+ const button=document.getElementById('exportBtn');
  const page=document.getElementById('page-'+activePage);
  if(!page)return;
  if(typeof window.html2canvas!=='function'){
@@ -2389,7 +2437,7 @@ async function exportCurrentPageJPG(){
  }
  const oldText=button.textContent;
  button.disabled=true;
- button.textContent='Menyiapkan JPG...';
+ button.textContent='Menyiapkan...';
  try{
   const images=[...page.querySelectorAll('img')];
   await Promise.all(images.map(img=>{
@@ -2444,9 +2492,30 @@ async function exportCurrentPageJPG(){
 }
 
 /* TOMBOL */
-document.getElementById('jpgBtn').addEventListener('click',exportCurrentPageJPG);
+const exportBtn=document.getElementById('exportBtn');
+const exportMenu=document.getElementById('exportMenu');
+exportBtn.addEventListener('click',()=>{
+ const isOpen=!exportMenu.classList.contains('hidden');
+ exportMenu.classList.toggle('hidden',isOpen);
+ exportBtn.setAttribute('aria-expanded',String(!isOpen));
+});
+document.getElementById('exportJpgOption').addEventListener('click',()=>{
+ exportMenu.classList.add('hidden');
+ exportBtn.setAttribute('aria-expanded','false');
+ exportCurrentPageJPG();
+});
+document.getElementById('exportPdfOption').addEventListener('click',()=>{
+ exportMenu.classList.add('hidden');
+ exportBtn.setAttribute('aria-expanded','false');
+ updatePrintSubtitle();window.print();
+});
+document.addEventListener('click',e=>{
+ if(!e.target.closest('.export-wrap')){
+  exportMenu.classList.add('hidden');
+  exportBtn.setAttribute('aria-expanded','false');
+ }
+});
 document.getElementById('refreshBtn').addEventListener('click',syncData);
-document.getElementById('pdfBtn').addEventListener('click',()=>{updatePrintSubtitle();window.print();});
 document.getElementById('fullBtn').addEventListener('click',()=>{
  if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
  else document.exitFullscreen?.();
