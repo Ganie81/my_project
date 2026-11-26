@@ -1801,7 +1801,8 @@ function drawDonut(id,items,legendId){
   return middleColors[(i-2+middleColors.length)%middleColors.length];
  });
  const cx=w/2,cy=h/2;const radius=Math.min(w,h)*.25;const inner=radius*.60;let start=-Math.PI/2;
- const sliceGap=0.045;
+ // Jarak fisik antar-potongan dijaga sekitar 0,5 px pada tepi luar.
+ const sliceGap=0.5/Math.max(1,radius);
  shown.forEach((item,i)=>{
   const angle=item[1]/total*Math.PI*2;const end=start+angle;
   const gap=Math.min(sliceGap,angle*.22);
@@ -1813,9 +1814,6 @@ function drawDonut(id,items,legendId){
   ctx.closePath();
   ctx.fillStyle=colors[i];
   ctx.fill();
-  ctx.strokeStyle='#0B1B2D';
-  ctx.lineWidth=2.5;
-  ctx.stroke();
   const mid=start+angle/2;const x1=cx+Math.cos(mid)*(radius+2);const y1=cy+Math.sin(mid)*(radius+2);
   const x2=cx+Math.cos(mid)*(radius+12);const y2=cy+Math.sin(mid)*(radius+12);
   const right=Math.cos(mid)>=0;
