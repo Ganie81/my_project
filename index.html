@@ -1790,11 +1790,32 @@ function drawDonut(id,items,legendId){
  const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);
  const total=items.reduce((a,x)=>a+x[1],0);
  if(!total){ctx.fillStyle='#a9bfd8';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.fillText('Tidak ada data',w/2,h/2);return;}
- const colors=['#36a2ff','#53d4e8','#36d399','#f7c65b','#a78bfa','#ff8297','#7dd3fc','#f59e0b'];
- const shown=items.slice(0,7);const cx=w/2,cy=h/2;const radius=Math.min(w,h)*.25;const inner=radius*.60;let start=-Math.PI/2;
+ const shown=items.slice(0,7);
+ // Warna peringkat: tertinggi merah tua soft, kedua kuning/oranye soft,
+ // terendah hijau soft tua. Potongan tengah memakai warna kontras.
+ const middleColors=['#4FA8D8','#A78BDA','#D58AAE','#58B8B0','#D59A68'];
+ const colors=shown.map((item,i)=>{
+  if(i===0)return '#C96F78';
+  if(i===1)return '#E5B85F';
+  if(i===shown.length-1 && shown.length>2)return '#27845F';
+  return middleColors[(i-2+middleColors.length)%middleColors.length];
+ });
+ const cx=w/2,cy=h/2;const radius=Math.min(w,h)*.25;const inner=radius*.60;let start=-Math.PI/2;
+ const sliceGap=0.045;
  shown.forEach((item,i)=>{
   const angle=item[1]/total*Math.PI*2;const end=start+angle;
-  ctx.beginPath();ctx.arc(cx,cy,radius,start,end);ctx.arc(cx,cy,inner,end,start,true);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();
+  const gap=Math.min(sliceGap,angle*.22);
+  const sliceStart=start+gap/2;
+  const sliceEnd=end-gap/2;
+  ctx.beginPath();
+  ctx.arc(cx,cy,radius,sliceStart,sliceEnd);
+  ctx.arc(cx,cy,inner,sliceEnd,sliceStart,true);
+  ctx.closePath();
+  ctx.fillStyle=colors[i];
+  ctx.fill();
+  ctx.strokeStyle='#0B1B2D';
+  ctx.lineWidth=2.5;
+  ctx.stroke();
   const mid=start+angle/2;const x1=cx+Math.cos(mid)*(radius+2);const y1=cy+Math.sin(mid)*(radius+2);
   const x2=cx+Math.cos(mid)*(radius+12);const y2=cy+Math.sin(mid)*(radius+12);
   const right=Math.cos(mid)>=0;
@@ -1807,7 +1828,7 @@ function drawDonut(id,items,legendId){
   if(align==='left' && textX+textWidth>w-safePad){textX=w-safePad;align='right';}
   if(align==='right' && textX-textWidth<safePad){textX=safePad;align='left';}
   const x3=right?Math.min(w-safePad,Math.max(safePad,textX-3)):Math.max(safePad,Math.min(w-safePad,textX+3));
-  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.lineTo(x3,y2);ctx.strokeStyle=colors[i%colors.length];ctx.lineWidth=1.2;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.lineTo(x3,y2);ctx.strokeStyle=colors[i];ctx.lineWidth=1.2;ctx.stroke();
   ctx.fillStyle='#edf5ff';ctx.textAlign=align;
   ctx.fillText(callout,textX,y2-3);
   start=end;
@@ -1816,7 +1837,7 @@ function drawDonut(id,items,legendId){
  ctx.fillStyle='#a9bfd8';ctx.font='bold 10px sans-serif';ctx.fillText('TOTAL PCS',cx,cy+18);
  if(legendId){
   const legend=document.getElementById(legendId);
-  if(legend)legend.innerHTML=shown.map((x,i)=>`<span><i style="background:${colors[i%colors.length]}"></i>${escapeHtml(x[0])} · ${pctText(x[1],total)}</span>`).join('');
+  if(legend)legend.innerHTML=shown.map((x,i)=>`<span><i style="background:${colors[i]}"></i>${escapeHtml(x[0])} · ${pctText(x[1],total)}</span>`).join('');
  }
 }
 
