@@ -694,6 +694,41 @@ tr:hover td{background:rgba(51,135,190,.13)}
 }
 .closing-caption{color:#9ab5cd}
 
+/* Ornament khusus Opening Presentation QM: dinamis, tegas, dan berbeda dari cover utama */
+.qm-cover{
+ background:
+  radial-gradient(ellipse at 78% 22%,rgba(255,174,74,.22),transparent 34%),
+  radial-gradient(ellipse at 16% 82%,rgba(24,205,190,.20),transparent 38%),
+  linear-gradient(128deg,#07182b 0%,#103b55 48%,#09243b 100%);
+ border-color:rgba(255,183,91,.58);
+}
+.qm-cover:before{
+ width:72%;height:145%;right:-19%;top:-26%;
+ border:0;border-radius:0;transform:rotate(28deg);
+ background:linear-gradient(90deg,transparent 0 32%,rgba(30,203,190,.13) 32% 34%,rgba(255,183,91,.17) 34% 47%,transparent 47% 100%);
+}
+.qm-cover:after{
+ width:330px;height:330px;left:-115px;bottom:-145px;
+ border:2px solid rgba(255,190,104,.42);border-radius:28px;
+ transform:rotate(45deg);
+ box-shadow:0 0 0 22px rgba(255,190,104,.045),0 0 0 46px rgba(36,211,192,.045);
+}
+.qm-cover .cover-grid{
+ opacity:.19;
+ background-image:linear-gradient(135deg,transparent 0 47%,rgba(255,190,104,.8) 48%,transparent 49%),linear-gradient(rgba(90,224,211,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(90,224,211,.55) 1px,transparent 1px);
+ background-size:100% 100%,34px 34px,34px 34px;
+ mask-image:linear-gradient(125deg,transparent 4%,black 52%,transparent 96%);
+}
+.qm-cover .cover-kicker{
+ color:#ffd49b;border-color:rgba(255,190,104,.7);
+ background:rgba(6,27,46,.62);
+}
+.qm-cover .cover-kicker:before,.qm-cover .cover-kicker:after{background:#ffbd70}
+.qm-cover .cover-title{text-shadow:0 8px 34px rgba(25,221,199,.28)}
+.qm-cover .cover-line{background:linear-gradient(90deg,transparent,#ffbd70,#28d3c0,transparent)}
+.qm-cover .cover-meeting{color:#ffe2bd}
+.qm-cover .cover-bottom{color:#8fe4d9}
+
 /* Kertas laporan dan dokumentasi dibuat lebih bersih */
 .report-editor,.photo-title-editor{
  background:linear-gradient(145deg,#102a44,#0b1d31);
@@ -1273,21 +1308,22 @@ html:fullscreen .topbar{
 
  <div class="nav-list">
   <button class="nav active" data-page="intro"><span class="num">01</span> ✦ OPENING PRESENTATION</button>
-  <button class="nav" data-page="photoqa"><span class="num">02</span> ▧ GAMBARQA.jpg</button>
-  <button class="nav" data-page="photoqa2"><span class="num">03</span> ▧ GAMBARQA2.jpg</button>
-  <button class="nav" data-page="overview"><span class="num">04</span> ◫ QUALITY OVERVIEW</button>
-  <button class="nav" data-page="trend"><span class="num">05</span> ↗ DEFECT TREND</button>
-  <button class="nav" data-page="machine"><span class="num">06</span> ⚙ MACHINE ANALYSIS</button>
-  <button class="nav" data-page="product"><span class="num">07</span> ◈ PRODUCT ANALYSIS</button>
-  <button class="nav" data-page="defect"><span class="num">08</span> ◉ DEFECT BREAKDOWN</button>
-  <button class="nav" data-page="data"><span class="num">09</span> ▤ DATA SUMMARY</button>
-  <button class="nav" data-page="operator"><span class="num">10</span> ★ TOP 10 OPERATOR</button>
-  <button class="nav" data-page="handling"><span class="num">11</span> ◈ DEFECT HANDLING</button>
-  <button class="nav" data-page="photo1"><span class="num">12</span> ▧ GAMBAR1.jpg</button>
-  <button class="nav" data-page="photo2"><span class="num">13</span> ▧ GAMBAR2.jpg</button>
-  <button class="nav" data-page="photo3"><span class="num">14</span> ▧ GAMBAR3.jpg</button>
-  <button class="nav" data-page="photo4"><span class="num">15</span> ▧ GAMBAR4.jpg</button>
-  <button class="nav" data-page="closing"><span class="num">16</span> ✦ CLOSING PRESENTATION</button>
+  <button class="nav" data-page="introqm"><span class="num">02</span> ✦ OPENING PRESENTATION QM</button>
+  <button class="nav" data-page="photoqa"><span class="num">03</span> ▧ GAMBARQA.jpg</button>
+  <button class="nav" data-page="photoqa2"><span class="num">04</span> ▧ GAMBARQA2.jpg</button>
+  <button class="nav" data-page="overview"><span class="num">05</span> ◫ QUALITY OVERVIEW</button>
+  <button class="nav" data-page="trend"><span class="num">06</span> ↗ DEFECT TREND</button>
+  <button class="nav" data-page="machine"><span class="num">07</span> ⚙ MACHINE ANALYSIS</button>
+  <button class="nav" data-page="product"><span class="num">08</span> ◈ PRODUCT ANALYSIS</button>
+  <button class="nav" data-page="defect"><span class="num">09</span> ◉ DEFECT BREAKDOWN</button>
+  <button class="nav" data-page="data"><span class="num">10</span> ▤ DATA SUMMARY</button>
+  <button class="nav" data-page="operator"><span class="num">11</span> ★ TOP 10 OPERATOR</button>
+  <button class="nav" data-page="handling"><span class="num">12</span> ◈ DEFECT HANDLING</button>
+  <button class="nav" data-page="photo1"><span class="num">13</span> ▧ GAMBAR1.jpg</button>
+  <button class="nav" data-page="photo2"><span class="num">14</span> ▧ GAMBAR2.jpg</button>
+  <button class="nav" data-page="photo3"><span class="num">15</span> ▧ GAMBAR3.jpg</button>
+  <button class="nav" data-page="photo4"><span class="num">16</span> ▧ GAMBAR4.jpg</button>
+  <button class="nav" data-page="closing"><span class="num">17</span> ✦ CLOSING PRESENTATION</button>
  </div>
 
  <div class="side-foot">QUALITY MANAGEMENT<br>Data source: Google Spreadsheet · QM / QLTY</div>
@@ -1314,7 +1350,21 @@ html:fullscreen .topbar{
  </div>
 </section>
 
-<!-- HALAMAN 02: GAMBAR QA -->
+<!-- HALAMAN 02: OPENING PRESENTATION QM -->
+<section class="page hidden" id="page-introqm">
+ <div class="cover-page qm-cover">
+  <div class="cover-grid"></div>
+  <div class="cover-content">
+   <div class="cover-kicker">PT BEHAESTEX · DEPARTMENT PRINTING</div>
+   <h1 class="cover-title">DEFECT<br>MANAGEMENT</h1>
+   <div class="cover-line"></div>
+   <div class="cover-meeting">QUALITY MAINTENANCE - <span id="coverDateQM"></span></div>
+   <div class="cover-bottom">QUALITY PERFORMANCE · CONTINUOUS IMPROVEMENT</div>
+  </div>
+ </div>
+</section>
+
+<!-- HALAMAN 03: GAMBAR QA -->
 <section class="page hidden" id="page-photoqa">
  <div class="photo-title-editor no-print">
   <label>JUDUL GAMBAR QA
@@ -1666,6 +1716,7 @@ document.getElementById('toggleKpiBtn').addEventListener('click',toggleKpi);
 
 const PAGE_NAMES={
  intro:'Opening Presentation',
+ introqm:'Opening Presentation QM',
  photoqa:'GAMBAR QA',
  photoqa2:'GAMBAR QA 2',
  overview:'Quality Overview',
@@ -2259,6 +2310,13 @@ function updateCoverDate(){
   }).toUpperCase();
 }
 updateCoverDate();
+const coverDateQM=document.getElementById('coverDateQM');
+if(coverDateQM){
+ const now=new Date();
+ coverDateQM.textContent=now.toLocaleDateString('id-ID',{
+  weekday:'long',day:'2-digit',month:'long',year:'numeric'
+ }).toUpperCase();
+}
 
 /* RENDER SEMUA HALAMAN */
 function renderAll(){
@@ -2274,7 +2332,7 @@ function updatePrintSubtitle(){
 /* =========================================================
    MENU PRESENTASI - KUNCI GLOBAL SERVER + PIN ADMIN
 ========================================================= */
-const QR_PAGE_KEYS=['intro','photoqa','photoqa2','overview','trend','machine','product','defect','data','operator','handling','photo1','photo2','photo3','photo4','closing'];
+const QR_PAGE_KEYS=['intro','introqm','photoqa','photoqa2','overview','trend','machine','product','defect','data','operator','handling','photo1','photo2','photo3','photo4','closing'];
 let qrMenuState={};
 let qrMenuLocked=false;
 let qrShareToken='';
